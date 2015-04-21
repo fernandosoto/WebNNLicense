@@ -5,5 +5,11 @@ package Backend;
  */
 public interface DBCommunication
 {
-    public void addLicense(String lic);
+    void addLicense(License lic);
+
+    int addPurchase(Purchase pur);
+
+    License getLicense(int pk);
+
+    Purchase getPurchase(int pk);
 }

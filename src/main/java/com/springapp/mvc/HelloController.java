@@ -23,7 +23,6 @@ public class HelloController {
 	{
 		Date now = new Date();
 		model.addAttribute("message","Hello world the time is: " + now.toString());
-
 		return "time";
 	}
 }
