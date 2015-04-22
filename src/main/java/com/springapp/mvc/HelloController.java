@@ -1,6 +1,9 @@
 package com.springapp.mvc;
 
+import Backend.DBCommunication;
+import Backend.MySQL;
 import Backend.Purchase;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -13,8 +16,11 @@ import java.util.Date;
 @Controller
 public class HelloController {
 
+	@Autowired
+	private DBCommunication db;
+
 	@RequestMapping(value = "/",method = RequestMethod.GET)
-	public String printWelcome(ModelMap model){
+	public String printWelcome(ModelMap model) {
 		model.addAttribute("message", "Add something");
 		model.addAttribute("purchase", new Purchase());
 		return "hello";
@@ -30,8 +36,11 @@ public class HelloController {
 	@RequestMapping(value = "/",method = RequestMethod.POST)
 	public String printWelcome(@ModelAttribute Purchase purchase,ModelMap model) {
 		System.out.println(purchase.getProductName());
-		model.addAttribute("purchase",purchase);
-		return "result";
+		//DBCommunication db =
+		try {
+			db.addPurchase(purchase);
+		} catch (Exception e){}
+		return "hello";
 	}
 
 }
