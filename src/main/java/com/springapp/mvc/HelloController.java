@@ -14,7 +14,7 @@ import java.util.Date;
 public class HelloController {
 
 	@RequestMapping(value = "/",method = RequestMethod.GET)
-	public String printWelcome(ModelMap model) {
+	public String printWelcome(ModelMap model){
 		model.addAttribute("message", "Add something");
 		model.addAttribute("purchase", new Purchase());
 		return "hello";
@@ -30,7 +30,8 @@ public class HelloController {
 	@RequestMapping(value = "/",method = RequestMethod.POST)
 	public String printWelcome(@ModelAttribute Purchase purchase,ModelMap model) {
 		System.out.println(purchase.getProductName());
-		return "hello";
+		model.addAttribute("purchase",purchase);
+		return "result";
 	}
 
 }
