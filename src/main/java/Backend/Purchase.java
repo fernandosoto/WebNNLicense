@@ -12,6 +12,10 @@ public class Purchase
     private long distributorId;
     private String freeText;
 
+    public Purchase()
+    {
+    }
+
     public Purchase(long purchaseId, long manufacturerId, String productName, String type, long distributorId, String freeText) {
         this.purchaseId = purchaseId;
         this.manufacturerId = manufacturerId;
