@@ -17,7 +17,7 @@ import java.util.Date;
 public class HelloController {
 
 	@Autowired
-	private MySQL db;
+	private DBCommunication db;
 
 	@RequestMapping(value = "/",method = RequestMethod.GET)
 	public String printWelcome(ModelMap model) {

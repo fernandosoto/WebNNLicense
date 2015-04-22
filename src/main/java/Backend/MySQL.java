@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
+import org.springframework.jdbc.core.JdbcTemplate;
 /**
  * Created by Fernando on 2015-04-21.
  */
@@ -17,6 +18,7 @@ import java.sql.PreparedStatement;
 public class MySQL implements DBCommunication {
     //Connection con = null;
     private DataSource dataSource;
+    private JdbcTemplate db;
 
     public MySQL(String server) throws Exception {
         Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -27,6 +29,7 @@ public class MySQL implements DBCommunication {
 
     public void setDataSource(DataSource dataSource){
         this.dataSource = dataSource;
+        db = new JdbcTemplate(dataSource);
     }
 
     @Override
@@ -35,36 +38,11 @@ public class MySQL implements DBCommunication {
     }
 
     @Override
-    public int addPurchase(Purchase pur) throws Exception{
-        System.out.println(pur.getManufacturerId());
-        Connection con = null;
-        PreparedStatement stmt = null;
-        try {
-            con = dataSource.getConnection();
-            System.out.println(con.toString());
-            String sql = "INSERT INTO PURCHASE(MANUFACTURER_ID, PRODUCT_NAME, LICENSE_TYPE, DISTRIBUTOR_ID, FREE_TEXT) VALUES('"
-                    + pur.getManufacturerId() + "', '" + pur.getProductName() + "', '"
-                    + pur.getType() + "', '" + pur.getDistributorId() + "', '" + pur.getFreeText() + "');";
-            stmt = con.prepareStatement(sql);
-            System.out.println(stmt.toString());
-            stmt.executeUpdate();
-        } catch (Exception e){
-            System.out.println("NO FUCKING CONNECTION!");
-        } finally {
-            if (stmt != null) {
-                try {
-                    stmt.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }if (con != null){
-                try {
-                    con.close();
-                } catch (SQLException e){}
-            }
-
-        }
-        return 1;
+    public void addPurchase(Purchase pur) throws Exception{
+        String sql = "INSERT INTO PURCHASE(MANUFACTURER_ID, PRODUCT_NAME, LICENSE_TYPE, DISTRIBUTOR_ID, FREE_TEXT) VALUES('"
+                + pur.getManufacturerId() + "', '" + pur.getProductName() + "', '"
+                + pur.getType() + "', '" + pur.getDistributorId() + "', '" + pur.getFreeText() + "');";
+        db.update(sql);
     }
 
     @Override

@@ -7,7 +7,7 @@ public interface DBCommunication
 {
     void addLicense(License lic);
 
-    int addPurchase(Purchase pur) throws Exception;
+    void addPurchase(Purchase pur) throws Exception;
 
     License getLicense(int pk);
 
