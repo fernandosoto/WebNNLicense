@@ -17,7 +17,7 @@ import java.util.Date;
 public class HelloController {
 
 	@Autowired
-	private DBCommunication db;
+	private MySQL db;
 
 	@RequestMapping(value = "/",method = RequestMethod.GET)
 	public String printWelcome(ModelMap model) {
@@ -36,7 +36,10 @@ public class HelloController {
 	@RequestMapping(value = "/",method = RequestMethod.POST)
 	public String printWelcome(@ModelAttribute Purchase purchase,ModelMap model) {
 		System.out.println(purchase.getProductName());
-		//DBCommunication db = model.
+		//DBCommunication db =
+		try {
+			db.addPurchase(purchase);
+		} catch (Exception e){}
 		return "hello";
 	}
 

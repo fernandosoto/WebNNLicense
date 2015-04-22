@@ -36,15 +36,20 @@ public class MySQL implements DBCommunication {
 
     @Override
     public int addPurchase(Purchase pur) throws Exception{
+        System.out.println(pur.getManufacturerId());
         Connection con = null;
         PreparedStatement stmt = null;
         try {
             con = dataSource.getConnection();
-            String sql = "INSERT INTO PURCHASE(MANUFACTURER_ID, PRODUCT_NAME, TYPE, DISTRIBUTOR_ID, FREE_TEXT) VALUES('"
+            System.out.println(con.toString());
+            String sql = "INSERT INTO PURCHASE(MANUFACTURER_ID, PRODUCT_NAME, LICENSE_TYPE, DISTRIBUTOR_ID, FREE_TEXT) VALUES('"
                     + pur.getManufacturerId() + "', '" + pur.getProductName() + "', '"
                     + pur.getType() + "', '" + pur.getDistributorId() + "', '" + pur.getFreeText() + "');";
             stmt = con.prepareStatement(sql);
+            System.out.println(stmt.toString());
             stmt.executeUpdate();
+        } catch (Exception e){
+            System.out.println("NO FUCKING CONNECTION!");
         } finally {
             if (stmt != null) {
                 try {
