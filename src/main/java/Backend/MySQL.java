@@ -1,5 +1,6 @@
 package Backend;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
@@ -10,7 +11,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
+import java.util.List;
+
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 /**
  * Created by Fernando on 2015-04-21.
  */
@@ -52,8 +56,9 @@ public class MySQL implements DBCommunication {
     }
 
     @Override
-    public void addDistributor(Distributor diri) {
-
+    public void addDistributor(Distributor d) {
+        String sql = "INSERT INTO DISTRIBUTOR(DISTRIBUTOR_NAME, FREE_TEXT) VALUES('" + d.getName() + "', '" + d.getFreeText() + "');";
+       db.update(sql);
     }
 
     @Override
@@ -62,7 +67,37 @@ public class MySQL implements DBCommunication {
     }
 
     @Override
-    public Purchase getPurchase(int pk) {
-        return null;
+    public List<Purchase> searchPurchaseById(int pk) {
+        String sql = "SELECT * FROM PURCHASE WHERE PURCHASE_ID = " + pk + ";";
+        List<Purchase> p = db.query(sql, new RowMapper<Purchase>() {
+            @Override
+            public Purchase mapRow(ResultSet rs, int i) throws SQLException {
+                    return new Purchase(rs.getLong("PURCHASE_ID"), rs.getLong("MANUFACTURER_ID"), rs.getString("PRODUCT_NAME"),
+                            rs.getString("TYPE") , rs.getLong("DISTRIBUTOR_ID"), rs.getString("FREE_TEXT"));
+            }
+        });
+
+        for(Purchase purchase : p){
+            System.out.println(purchase.getProductName());
+        }
+        return p;
     }
+
+    @Override
+    public List<Purchase> searchPurchaseByName(String name) {
+        String sql = "SELECT * FROM PURCHASE WHERE PRODUCT_NAME = " + name + ";";
+        List<Purchase> p = db.query(sql, new RowMapper<Purchase>() {
+            @Override
+            public Purchase mapRow(ResultSet rs, int i) throws SQLException {
+                return new Purchase(rs.getLong("PURCHASE_ID"), rs.getLong("MANUFACTURER_ID"), rs.getString("PRODUCT_NAME"),
+                        rs.getString("TYPE") , rs.getLong("DISTRIBUTOR_ID"), rs.getString("FREE_TEXT"));
+            }
+        });
+
+        for(Purchase purchase : p){
+            System.out.println(purchase.getProductName());
+        }
+        return p;
+    }
+
 }

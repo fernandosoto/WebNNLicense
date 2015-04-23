@@ -40,7 +40,11 @@ public class HelloController {
 		try {
 			db.addPurchase(purchase);
 		} catch (Exception e){}
+		db.searchPurchaseById((int) purchase.getPurchaseId());
+
 		return "hello";
 	}
+
+
 
 }

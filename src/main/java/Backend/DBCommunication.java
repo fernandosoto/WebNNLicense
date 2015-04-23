@@ -1,5 +1,8 @@
 package Backend;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Fernando on 2015-04-21.
  */
@@ -15,5 +18,7 @@ public interface DBCommunication
 
     License getLicense(int pk);
 
-    Purchase getPurchase(int pk);
+    List<Purchase> searchPurchaseById(int pk);
+
+    List<Purchase> searchPurchaseByName(String name);
 }
