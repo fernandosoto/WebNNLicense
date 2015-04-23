@@ -11,18 +11,20 @@ public class Purchase
     private String type;
     private String distributorName;
     private String freeText;
+    private long upgradeFrom;
 
     public Purchase()
     {
     }
 
-    public Purchase(long purchaseId, String manufacturerName, String productName, String type, String distributorName, String freeText) {
+    public Purchase(long purchaseId, String manufacturerName, String productName, String type, String distributorName, String freeText, long upgradeFrom) {
         this.purchaseId = purchaseId;
         this.manufacturerName = manufacturerName;
         this.productName = productName;
         this.type = type;
         this.distributorName = distributorName;
         this.freeText = freeText;
+        this.upgradeFrom = upgradeFrom;
     }
 
     public long getPurchaseId() {
@@ -33,11 +35,11 @@ public class Purchase
         this.purchaseId = purchaseId;
     }
 
-    public String getManufacturerId() {
+    public String getManufacturerName() {
         return manufacturerName;
     }
 
-    public void setManufacturerId(String manufacturerId) {
+    public void setManufacturerName(String manufacturerId) {
         this.manufacturerName = manufacturerId;
     }
 
@@ -57,11 +59,11 @@ public class Purchase
         this.type = type;
     }
 
-    public String getDistributorId() {
+    public String getDistributorName() {
         return distributorName;
     }
 
-    public void setDistributorId(String distributorId) {
+    public void setDistributorName(String distributorId) {
         this.distributorName = distributorId;
     }
 
@@ -72,4 +74,8 @@ public class Purchase
     public void setFreeText(String freeText) {
         this.freeText = freeText;
     }
+
+    public long getUpgradeFrom() { return upgradeFrom; }
+
+    public void setUpgradeFrom(long upgradeFrom) { this.upgradeFrom = upgradeFrom; }
 }

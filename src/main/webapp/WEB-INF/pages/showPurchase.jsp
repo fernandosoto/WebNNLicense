@@ -21,6 +21,7 @@
       <p>Product Name: ${purchase.productName}</p>
       <p>Type: ${purchase.type}</p>
       <p>FreeText: ${purchase.freeText}</p>
+      <p>Upgraded From: ${purchase.upgradeFrom}</p>
       <br>
     </c:forEach>
   </form:form>

@@ -25,7 +25,7 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <bean id="PurchaseDAO" class="Backend.MySQL">
+    <bean id="PurchaseDAO" class="Backend.DAO.PurchaseDAO">
         <property name="dataSource" ref="dataSource" />
     </bean>
 </beans>
