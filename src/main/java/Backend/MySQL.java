@@ -26,11 +26,22 @@ public class MySQL implements DBCommunication {
     }
 
     @Override
-    public void addPurchase(Purchase pur) throws Exception{
+    public void addPurchase(Purchase pur) {
         String sql = "INSERT INTO PURCHASE(MANUFACTURER_ID, PRODUCT_NAME, LICENSE_TYPE, DISTRIBUTOR_ID, FREE_TEXT) VALUES('"
                 + pur.getManufacturerId() + "', '" + pur.getProductName() + "', '"
                 + pur.getType() + "', '" + pur.getDistributorId() + "', '" + pur.getFreeText() + "');";
         db.update(sql);
+    }
+
+    @Override
+    public void addManufacturer(Manufacturer m) {
+        String sql = "INSERT INTO MANUFACTURER(MANUFACTURER_NAME, FREE_TEXT) VALUES('" + m.getName() + "', '" + m.getFreeText() + "');";
+        db.update(sql);
+    }
+
+    @Override
+    public void addDistributor(Distributor diri) {
+
     }
 
     @Override
