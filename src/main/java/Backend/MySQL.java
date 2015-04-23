@@ -85,12 +85,12 @@ public class MySQL implements DBCommunication {
 
     @Override
     public List<Purchase> searchPurchaseByName(String name) {
-        String sql = "SELECT * FROM PURCHASE WHERE PRODUCT_NAME = " + name + ";";
+        String sql = "SELECT * FROM PURCHASE WHERE PRODUCT_NAME = '" + name + "';";
         List<Purchase> p = db.query(sql, new RowMapper<Purchase>() {
             @Override
             public Purchase mapRow(ResultSet rs, int i) throws SQLException {
                 return new Purchase(rs.getLong("PURCHASE_ID"), rs.getLong("MANUFACTURER_ID"), rs.getString("PRODUCT_NAME"),
-                        rs.getString("TYPE") , rs.getLong("DISTRIBUTOR_ID"), rs.getString("FREE_TEXT"));
+                        rs.getString("LICENSE_TYPE") , rs.getLong("DISTRIBUTOR_ID"), rs.getString("FREE_TEXT"));
             }
         });
 

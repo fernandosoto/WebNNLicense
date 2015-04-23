@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Date;
+import java.util.List;
 
 @Controller
 public class HelloController {
@@ -45,6 +46,21 @@ public class HelloController {
 		return "hello";
 	}
 
+	@RequestMapping(value = "/searchPurchase",method = RequestMethod.POST)
+	public String showPurchase(@ModelAttribute Purchase purchase, ModelMap model)
+	{
+		List<Purchase> p = db.searchPurchaseByName(purchase.getProductName());
+		model.addAttribute("purchases",p);
+
+		return "showPurchase";
+	}
+
+	@RequestMapping(value = "/searchPurchase")
+	public String searchPurchase(ModelMap model)
+	{
+		model.addAttribute("purchase", new Purchase());
+		return "searchPurchase";
+	}
 
 
 }
