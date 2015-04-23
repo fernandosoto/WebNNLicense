@@ -7,7 +7,11 @@ public interface DBCommunication
 {
     void addLicense(License lic);
 
-    void addPurchase(Purchase pur) throws Exception;
+    void addPurchase(Purchase pur);
+
+    void addManufacturer(Manufacturer m);
+
+    void addDistributor(Distributor d);
 
     License getLicense(int pk);
 
