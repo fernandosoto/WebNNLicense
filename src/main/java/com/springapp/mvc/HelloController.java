@@ -36,11 +36,11 @@ public class HelloController {
 	@RequestMapping(value = "/",method = RequestMethod.POST)
 	public String printWelcome(@ModelAttribute Purchase purchase,ModelMap model) {
 		System.out.println(purchase.getProductName());
-		//DBCommunication db =
+		//MySQL db = new MySQL();
 		try {
 			db.addPurchase(purchase);
 		} catch (Exception e){}
-		return "hello";
+		return "result";
 	}
 
 }
