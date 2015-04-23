@@ -16,11 +16,12 @@
 <body>
   <form:form modelAttribute="purchases">
     <c:forEach items="${purchases}" var="purchase">
-      <p>ManufacturerID: ${purchase.manufacturerId}</p>
-      <p>DistributorID: ${purchase.distributorId}</p>
+      <p>Manufacturer Name: ${purchase.manufacturerId}</p>
+      <p>Distributor Name: ${purchase.distributorId}</p>
       <p>Product Name: ${purchase.productName}</p>
       <p>Type: ${purchase.type}</p>
       <p>FreeText: ${purchase.freeText}</p>
+      <br>
     </c:forEach>
   </form:form>
 </body>

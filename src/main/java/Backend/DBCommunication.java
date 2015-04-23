@@ -18,7 +18,7 @@ public interface DBCommunication
 
     License getLicense(int pk);
 
-    List<Purchase> searchPurchaseById(int pk);
+    //List<Purchase> searchPurchaseById(int pk);
 
     List<Purchase> searchPurchaseByName(String name);
 }

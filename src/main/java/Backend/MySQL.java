@@ -62,35 +62,37 @@ public class MySQL implements DBCommunication {
     }
 
     @Override
-    public License getLicense(int pk) {
-        return null;
-    }
+    public License getLicense(int pk) { return null; }
 
-    @Override
-    public List<Purchase> searchPurchaseById(int pk) {
-        String sql = "SELECT * FROM PURCHASE WHERE PURCHASE_ID = " + pk + ";";
-        List<Purchase> p = db.query(sql, new RowMapper<Purchase>() {
-            @Override
-            public Purchase mapRow(ResultSet rs, int i) throws SQLException {
-                    return new Purchase(rs.getLong("PURCHASE_ID"), rs.getLong("MANUFACTURER_ID"), rs.getString("PRODUCT_NAME"),
-                            rs.getString("TYPE") , rs.getLong("DISTRIBUTOR_ID"), rs.getString("FREE_TEXT"));
-            }
-        });
-
-        for(Purchase purchase : p){
-            System.out.println(purchase.getProductName());
-        }
-        return p;
-    }
+//    @Override
+//    public List<Purchase> searchPurchaseById(int pk) {
+//        String sql = "SELECT * FROM PURCHASE WHERE PURCHASE_ID = " + pk + ";";
+//        List<Purchase> p = db.query(sql, new RowMapper<Purchase>() {
+//            @Override
+//            public Purchase mapRow(ResultSet rs, int i) throws SQLException {
+//                    return new Purchase(rs.getLong("PURCHASE_ID"), rs.getLong("MANUFACTURER_ID"), rs.getString("PRODUCT_NAME"),
+//                            rs.getString("TYPE") , rs.getLong("DISTRIBUTOR_ID"), rs.getString("FREE_TEXT"));
+//            }
+//        });
+//
+//        for(Purchase purchase : p){
+//            System.out.println(purchase.getProductName());
+//        }
+//        return p;
+//    }
 
     @Override
     public List<Purchase> searchPurchaseByName(String name) {
-        String sql = "SELECT * FROM PURCHASE WHERE PRODUCT_NAME = '" + name + "';";
+        String sql = "SELECT P.PURCHASE_ID, P.PRODUCT_NAME, P.LICENSE_TYPE, P.FREE_TEXT, D.DISTRIBUTOR_NAME, M.MANUFACTURER_NAME" +
+                        " FROM PURCHASE P, MANUFACTURER M, DISTRIBUTOR D" +
+                        " WHERE M.MANUFACTURER_ID = P.MANUFACTURER_ID AND D.DISTRIBUTOR_ID = P.DISTRIBUTOR_ID" +
+                        " AND P.PRODUCT_NAME LIKE '" + name + "%';";
+
         List<Purchase> p = db.query(sql, new RowMapper<Purchase>() {
             @Override
             public Purchase mapRow(ResultSet rs, int i) throws SQLException {
-                return new Purchase(rs.getLong("PURCHASE_ID"), rs.getLong("MANUFACTURER_ID"), rs.getString("PRODUCT_NAME"),
-                        rs.getString("LICENSE_TYPE") , rs.getLong("DISTRIBUTOR_ID"), rs.getString("FREE_TEXT"));
+                return new Purchase(rs.getLong("PURCHASE_ID"), rs.getString("MANUFACTURER_NAME"), rs.getString("PRODUCT_NAME"),
+                        rs.getString("LICENSE_TYPE") , rs.getString("DISTRIBUTOR_NAME"), rs.getString("FREE_TEXT"));
             }
         });
 

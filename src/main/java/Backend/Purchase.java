@@ -6,22 +6,22 @@ package Backend;
 public class Purchase
 {
     private long purchaseId;
-    private long manufacturerId;
+    private String manufacturerName;
     private String productName;
     private String type;
-    private long distributorId;
+    private String distributorName;
     private String freeText;
 
     public Purchase()
     {
     }
 
-    public Purchase(long purchaseId, long manufacturerId, String productName, String type, long distributorId, String freeText) {
+    public Purchase(long purchaseId, String manufacturerName, String productName, String type, String distributorName, String freeText) {
         this.purchaseId = purchaseId;
-        this.manufacturerId = manufacturerId;
+        this.manufacturerName = manufacturerName;
         this.productName = productName;
         this.type = type;
-        this.distributorId = distributorId;
+        this.distributorName = distributorName;
         this.freeText = freeText;
     }
 
@@ -33,12 +33,12 @@ public class Purchase
         this.purchaseId = purchaseId;
     }
 
-    public long getManufacturerId() {
-        return manufacturerId;
+    public String getManufacturerId() {
+        return manufacturerName;
     }
 
-    public void setManufacturerId(long manufacturerId) {
-        this.manufacturerId = manufacturerId;
+    public void setManufacturerId(String manufacturerId) {
+        this.manufacturerName = manufacturerId;
     }
 
     public String getProductName() {
@@ -57,12 +57,12 @@ public class Purchase
         this.type = type;
     }
 
-    public long getDistributorId() {
-        return distributorId;
+    public String getDistributorId() {
+        return distributorName;
     }
 
-    public void setDistributorId(long distributorId) {
-        this.distributorId = distributorId;
+    public void setDistributorId(String distributorId) {
+        this.distributorName = distributorId;
     }
 
     public String getFreeText() {
