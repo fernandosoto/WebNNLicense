@@ -9,11 +9,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Search Purchase</title>
+    <title>${msg}</title>
 </head>
 <body>
   <form:form commandName="purchase" method="post">
-    ProductName:<br><form:input path="productName" type="text"/><br>
+    ${message}:<br><form:input path="${var}" type="text"/><br>
     <input type="submit" value="Submit" /> <input type="reset" value="Reset" />
   </form:form>
 </body>

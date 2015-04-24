@@ -16,8 +16,8 @@
 <body>
   <form:form modelAttribute="purchases">
     <c:forEach items="${purchases}" var="purchase">
-      <p>Manufacturer Name: ${purchase.manufacturerId}</p>
-      <p>Distributor Name: ${purchase.distributorId}</p>
+      <p>Manufacturer Name: ${purchase.manufacturerName}</p>
+      <p>Distributor Name: ${purchase.distributorName}</p>
       <p>Product Name: ${purchase.productName}</p>
       <p>Type: ${purchase.type}</p>
       <p>FreeText: ${purchase.freeText}</p>
