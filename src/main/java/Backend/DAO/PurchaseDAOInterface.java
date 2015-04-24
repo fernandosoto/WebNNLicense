@@ -11,6 +11,8 @@ import java.util.List;
 public interface PurchaseDAOInterface {
     public void addPurchase(Purchase pur);
 
+    public Purchase searchPurchaseById(long id);
+
     public List<Purchase> searchPurchaseByName(String name);
 
     public List<Purchase> searchPurchaseByDistributorName(String name);
