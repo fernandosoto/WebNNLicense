@@ -4,8 +4,13 @@ package Backend;
  * Created by Isak on 2015-04-22.
  */
 public class Manufacturer {
+    private long id;
     private String name;
     private String freeText;
+
+    public long getId() { return id; }
+
+    public void setId(long id) { this.id = id; }
 
     public String getFreeText() {
         return freeText;
