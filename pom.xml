@@ -85,7 +85,17 @@
             <artifactId>spring-jdbc</artifactId>
             <version>3.2.1.RELEASE</version>
         </dependency>
+
+        <dependency>
+            <groupId>jstl</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
+
+
     </dependencies>
+
+
 
     <build>
         <finalName>NNLicense2</finalName>

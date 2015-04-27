@@ -30,6 +30,7 @@ public class searchController
         model.addAttribute("message","Product Name");
         model.addAttribute("var","productName");
         model.addAttribute("purchase", new Purchase());
+        
         return "searchPurchase";
     }
 
@@ -38,7 +39,6 @@ public class searchController
     {
         List<Purchase> p = pdao.searchPurchaseByName(purchase.getProductName());
         model.addAttribute("purchases",p);
-
         return "showPurchase";
     }
 
@@ -57,7 +57,6 @@ public class searchController
     {
         List<Purchase> p = pdao.searchPurchaseByDistributorName(purchase.getDistributorName());
         model.addAttribute("purchases",p);
-
         return "showPurchase";
     }
 
@@ -76,7 +75,6 @@ public class searchController
     {
         List<Purchase> p = pdao.searchPurchaseByManufacturerName(purchase.getManufacturerName());
         model.addAttribute("purchases",p);
-
         return "showPurchase";
     }
 
