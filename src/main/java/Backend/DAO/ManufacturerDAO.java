@@ -3,6 +3,7 @@ package Backend.DAO;
 import Backend.Manufacturer;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
@@ -17,6 +18,7 @@ public class ManufacturerDAO implements ManufacturerDAOInterface {
     private JdbcTemplate db;
 
     @Override
+    @Transactional
     public void addManufacturer(Manufacturer m) {
         String sql = "INSERT INTO MANUFACTURER(MANUFACTURER_NAME, FREE_TEXT) VALUES('" + m.getName() + "', '" + m.getFreeText() + "');";
         db.update(sql);
