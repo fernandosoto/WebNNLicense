@@ -34,7 +34,7 @@ public class searchController
     }
 
     @RequestMapping(value = "/searchPurchaseName",method = RequestMethod.POST)
-    public String showPurchase(@ModelAttribute Purchase purchase, ModelMap model)
+    public String showPurchaseByName(@ModelAttribute Purchase purchase, ModelMap model)
     {
         List<Purchase> p = pdao.searchPurchaseByName(purchase.getProductName());
         model.addAttribute("purchases",p);

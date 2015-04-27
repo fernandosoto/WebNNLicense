@@ -22,8 +22,9 @@ public class HelloController {
 	public String printWelcome(ModelMap model) {
 		model.addAttribute("message", "Add something");
 		model.addAttribute("purchase", new Purchase());
-		return "hello";
+		return "main/index";
 	}
+
 	@RequestMapping("/time")
 	public String printTime(ModelMap model)
 	{
