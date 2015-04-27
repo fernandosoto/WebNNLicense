@@ -118,6 +118,8 @@ public class PurchaseDAO implements PurchaseDAOInterface {
         return p;
     }
 
+
+
     private long getUpgradedFrom(long newPurchaseId){
         long id;
         try {

@@ -19,5 +19,7 @@ public interface LicenseDAOInterface {
 
     License searchLicenseById(Long id);
 
+    public void editLicense(License lic, String userName);
+
     void setDataSource(DataSource dataSource);
 }
