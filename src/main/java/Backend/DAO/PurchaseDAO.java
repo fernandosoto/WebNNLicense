@@ -5,6 +5,7 @@ import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
@@ -19,6 +20,7 @@ public class PurchaseDAO implements PurchaseDAOInterface {
     private DataSource dataSource;
     private JdbcTemplate db;
 
+    @Transactional
     public void addPurchase(Purchase pur) {
         String sql = "INSERT INTO PURCHASE(MANUFACTURER_ID, PRODUCT_NAME, LICENSE_TYPE, DISTRIBUTOR_ID, FREE_TEXT) VALUES('"
                 + pur.getManufacturerName() + "', '" + pur.getProductName() + "', '"
