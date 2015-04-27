@@ -1,5 +1,7 @@
 package Backend;
 
+import java.util.Date;
+
 /**
  * Created by Fernando on 2015-04-21.
  */
@@ -12,12 +14,14 @@ public class Purchase
     private String distributorName;
     private String freeText;
     private long upgradeFrom;
+    private String createdBy;
+    private Date createdDate;
 
     public Purchase()
     {
     }
 
-    public Purchase(long purchaseId, String manufacturerName, String productName, String type, String distributorName, String freeText, long upgradeFrom) {
+    public Purchase(long purchaseId, String manufacturerName, String productName, String type, String distributorName, String freeText, long upgradeFrom, String createdBy, Date createdDate) {
         this.purchaseId = purchaseId;
         this.manufacturerName = manufacturerName;
         this.productName = productName;
@@ -25,6 +29,8 @@ public class Purchase
         this.distributorName = distributorName;
         this.freeText = freeText;
         this.upgradeFrom = upgradeFrom;
+        this.createdBy = createdBy;
+        this.createdDate = createdDate;
     }
 
     public long getPurchaseId() {
