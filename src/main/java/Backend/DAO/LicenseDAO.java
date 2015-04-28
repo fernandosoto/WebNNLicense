@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -70,6 +71,30 @@ public class LicenseDAO implements LicenseDAOInterface {
         });
 
         return l.get(0);
+    }
+
+    @Override
+    @Transactional
+    public void editLicense(License lic, String userName){
+        License oldLic = searchLicenseById(lic.getLicenseId());
+
+        StringBuilder sb = new StringBuilder();
+
+        if (!oldLic.getUser().equals(lic.getUser())){
+            sb.append("License User Changed: \"" + oldLic.getUser() + "\" to \"" + lic.getUser() + "\" |");
+        }
+        if (!oldLic.getSerialKey().equals(lic.getSerialKey())){
+            sb.append("Serial Key Changed: \"" + oldLic.getSerialKey() + "\" to \"" + lic.getSerialKey() + "\" |");
+        }
+        if (oldLic.getExpireDate().compareTo(lic.getExpireDate()) != 0){
+            sb.append("Expire Date Changed: \"" + oldLic.getExpireDate().toString() + "\" to \"" + lic.getExpireDate().toString() + "\" |");
+        }
+
+        String sql = "INSERT INTO MODIFY(MODIFIED_BY, MODIFIED_DATE, LICENSE_KEY_ID, FREE_TEXT) VALUES('" + userName + "', "
+                + new Date(System.currentTimeMillis()) + ", " + lic.getLicenseId() + ", '" + sb.toString() + "');"
+                + "UPDATE LICENSE_KEY SET LICENSE_USER = " + lic.getUser() + ", SERIAL_KEY = " + lic.getSerialKey()
+                + "EXPIRE_DATE = " + lic.getExpireDate() + " WHERE LICENSE_KEY_ID = " + oldLic.getLicenseId() + ";";
+        db.update(sql);
     }
 
     @Override
