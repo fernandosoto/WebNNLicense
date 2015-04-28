@@ -1,6 +1,6 @@
 package Backend;
 
-import java.util.Date;
+import java.sql.Date;
 
 /**
  * Created by Fernando on 2015-04-21.
@@ -16,12 +16,17 @@ public class Purchase
     private long upgradeFrom;
     private String createdBy;
     private Date createdDate;
+    private Date deletedDate;
+    private String deletedBy;
+
 
     public Purchase()
     {
     }
 
-    public Purchase(long purchaseId, String manufacturerName, String productName, String type, String distributorName, String freeText, long upgradeFrom, String createdBy, Date createdDate) {
+    public Purchase(long purchaseId, String manufacturerName, String productName, String type,
+                    String distributorName, String freeText, long upgradeFrom, String createdBy,
+                    Date createdDate, Date deletedDate, String deletedBy) {
         this.purchaseId = purchaseId;
         this.manufacturerName = manufacturerName;
         this.productName = productName;
@@ -31,6 +36,24 @@ public class Purchase
         this.upgradeFrom = upgradeFrom;
         this.createdBy = createdBy;
         this.createdDate = createdDate;
+        this.deletedDate = deletedDate;
+        this.deletedBy = deletedBy;
+    }
+
+    public Purchase(long purchaseId, String manufacturerName, String productName, String type, String distributorName,
+                    String freeText, long upgradeFrom, String createdBy, Date createdDate) {
+        this.purchaseId = purchaseId;
+        this.manufacturerName = manufacturerName;
+        this.productName = productName;
+        this.type = type;
+        this.distributorName = distributorName;
+        this.freeText = freeText;
+        this.upgradeFrom = upgradeFrom;
+        this.createdBy = createdBy;
+        this.createdDate = createdDate;
+        deletedDate = null;
+        deletedBy = null;
+
     }
 
     public long getPurchaseId() {
@@ -68,6 +91,22 @@ public class Purchase
     public String getDistributorName() {
         return distributorName;
     }
+
+    public String getCreatedBy() {return createdBy; }
+
+    public void setCreatedBy(String createdBy) {this.createdBy = createdBy; }
+
+    public Date getCreatedDate() {return createdDate; }
+
+    public void setCreatedDate(Date createdDate) {this.createdDate = createdDate; }
+
+    public Date getDeletedDate() {return deletedDate; }
+
+    public void setDeletedDate(Date deletedDate) {this.deletedDate = deletedDate; }
+
+    public String getDeletedBy() {return deletedBy; }
+
+    public void setDeletedBy(String deletedBy) {this.deletedBy = deletedBy; }
 
     public void setDistributorName(String distributorId) {
         this.distributorName = distributorId;

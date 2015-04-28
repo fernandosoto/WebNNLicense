@@ -44,7 +44,7 @@ public class DistributorDAO implements DistributorDAOInterface {
             @Override
             public Distributor mapRow(ResultSet rs, int i) throws SQLException {
                 return new Distributor(rs.getLong("DISTRIBUTOR_ID"), rs.getString("DISTRIBUTOR_NAME"), rs.getString("FREE_TEXT"));
-            }
+        }
         });
     }
 
