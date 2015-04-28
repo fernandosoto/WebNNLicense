@@ -23,8 +23,6 @@ public class PurchaseDAO implements PurchaseDAOInterface {
 
     @Transactional
     public void addPurchase(Purchase pur, String userName) {
-
-
         String sql = "INSERT INTO PURCHASE(MANUFACTURER_ID, PRODUCT_NAME, LICENSE_TYPE, DISTRIBUTOR_ID, FREE_TEXT) VALUES('"
                 + pur.getManufacturerName() + "', '" + pur.getProductName() + "', '"
                 + pur.getType() + "', '" + pur.getDistributorName() + "', '" + pur.getFreeText() + "');"
@@ -33,17 +31,40 @@ public class PurchaseDAO implements PurchaseDAOInterface {
         db.update(sql);
     }
 
+    @Override
+    public void deletePurchase(Purchase pur, String userName) {
+        String sql = "INSERT INTO DELETED_PURCHASE(DELETED_BY, DELETED_DATE, PURCHASE_ID) VALUES ('" + userName + "', "
+                + new Date(System.currentTimeMillis()) + ", " + pur.getPurchaseId() + ");";
+        db.update(sql);
+    }
+
+    public List<Purchase> searchDeletedPurchase(){
+        String sql = "SELECT P.PURCHASE_ID, P.PRODUCT_NAME, P.LICENSE_TYPE, DP.DELETED_DATE, DP.DELETED_BY, P.FREE_TEXT, D.DISTRIBUTOR_NAME, M.MANUFACTURER_NAME" +
+                " FROM PURCHASE P, MANUFACTURER M, DISTRIBUTOR D, DELETED_PURCHASE DP" +
+                " WHERE DP.PURCHASE_ID != P.PURCHASE_ID;";
+
+        List<Purchase> p = db.query(sql, new RowMapper<Purchase>() {
+            @Override
+            public Purchase mapRow(ResultSet rs, int i) throws SQLException {
+                return new Purchase(rs.getLong("PURCHASE_ID"), rs.getString("MANUFACTURER_NAME"), rs.getString("PRODUCT_NAME"),
+                        rs.getString("LICENSE_TYPE"), rs.getString("DISTRIBUTOR_NAME"), rs.getString("FREE_TEXT"), getUpgradedFrom(rs.getLong("PURCHASE_ID")),
+                        rs.getString("CREATED_BY"), rs.getDate("CREATED_DATE"), rs.getDate("DELETED_DATE"), rs.getString("DELTED_BY"));
+            }
+        });
+        return p;
+    }
+
     public Purchase searchPurchaseById(long id) {
         String sql = "SELECT P.PURCHASE_ID, P.PRODUCT_NAME, P.LICENSE_TYPE, P.FREE_TEXT, D.DISTRIBUTOR_NAME, M.MANUFACTURER_NAME, C.CREATED_BY, C.CREATED_DATE" +
-                " FROM PURCHASE P, MANUFACTURER M, DISTRIBUTOR D, CREATOR C" +
+                " FROM PURCHASE P, MANUFACTURER M, DISTRIBUTOR D, CREATOR C, DELETED_PURCHASE DP" +
                 " WHERE M.MANUFACTURER_ID = P.MANUFACTURER_ID AND D.DISTRIBUTOR_ID = P.DISTRIBUTOR_ID" +
-                " AND P.PURCHASE_ID = " + id + " AND P.PURCHASE_ID = " + " C.PURCHASE_ID;";
+                " AND P.PURCHASE_ID = " + id + " AND DP.PURCHASE_ID != P.PURCHASE_ID" + " AND P.PURCHASE_ID = " + " C.PURCHASE_ID;";
 
         return db.query(sql, new RowMapper<Purchase>() {
             @Override
             public Purchase mapRow(ResultSet rs, int i) throws SQLException {
                 return new Purchase(rs.getLong("PURCHASE_ID"), rs.getString("MANUFACTURER_NAME"), rs.getString("PRODUCT_NAME"),
-                        rs.getString("LICENSE_TYPE") , rs.getString("DISTRIBUTOR_NAME"), rs.getString("FREE_TEXT"), getUpgradedFrom(rs.getLong("PURCHASE_ID")),
+                        rs.getString("LICENSE_TYPE"), rs.getString("DISTRIBUTOR_NAME"), rs.getString("FREE_TEXT"), getUpgradedFrom(rs.getLong("PURCHASE_ID")),
                         rs.getString("CREATED_BY"), rs.getDate("CREATED_DATE"));
             }
         }).get(0);
@@ -51,15 +72,15 @@ public class PurchaseDAO implements PurchaseDAOInterface {
 
     public List<Purchase> searchPurchaseByName(String name) {
         String sql = "SELECT P.PURCHASE_ID, P.PRODUCT_NAME, P.LICENSE_TYPE, P.FREE_TEXT, D.DISTRIBUTOR_NAME, M.MANUFACTURER_NAME" +
-                " FROM PURCHASE P, MANUFACTURER M, DISTRIBUTOR D" +
+                " FROM PURCHASE P, MANUFACTURER M, DISTRIBUTOR D, DELETED_PURCHASE DP" +
                 " WHERE M.MANUFACTURER_ID = P.MANUFACTURER_ID AND D.DISTRIBUTOR_ID = P.DISTRIBUTOR_ID" +
-                " AND P.PRODUCT_NAME LIKE '" + name + "%'" + " AND P.PURCHASE_ID = " + " C.PURCHASE_ID;";
+                " AND P.PRODUCT_NAME LIKE '" + name + "%'" + " AND DP.PURCHASE_ID != P.PURCHASE_ID" + " AND P.PURCHASE_ID = " + " C.PURCHASE_ID;";
 
         List<Purchase> p = db.query(sql, new RowMapper<Purchase>() {
             @Override
             public Purchase mapRow(ResultSet rs, int i) throws SQLException {
                 return new Purchase(rs.getLong("PURCHASE_ID"), rs.getString("MANUFACTURER_NAME"), rs.getString("PRODUCT_NAME"),
-                        rs.getString("LICENSE_TYPE") , rs.getString("DISTRIBUTOR_NAME"), rs.getString("FREE_TEXT"), getUpgradedFrom(rs.getLong("PURCHASE_ID")),
+                        rs.getString("LICENSE_TYPE"), rs.getString("DISTRIBUTOR_NAME"), rs.getString("FREE_TEXT"), getUpgradedFrom(rs.getLong("PURCHASE_ID")),
                         rs.getString("CREATED_BY"), rs.getDate("CREATED_DATE"));
             }
         });
@@ -68,15 +89,15 @@ public class PurchaseDAO implements PurchaseDAOInterface {
 
     public List<Purchase> searchPurchaseByDistributorName(String name) {
         String sql = "SELECT P.PURCHASE_ID, P.PRODUCT_NAME, P.LICENSE_TYPE, P.FREE_TEXT, D.DISTRIBUTOR_NAME, M.MANUFACTURER_NAME, U.ORIGINAL_PURCHASE_ID" +
-                " FROM PURCHASE P, MANUFACTURER M, DISTRIBUTOR D, UPGRADED_PURCHASE U" +
+                " FROM PURCHASE P, MANUFACTURER M, DISTRIBUTOR D, UPGRADED_PURCHASE U, DELETED_PURCHASE DP" +
                 " WHERE M.MANUFACTURER_ID = P.MANUFACTURER_ID AND D.DISTRIBUTOR_ID = P.DISTRIBUTOR_ID" +
-                " AND D.DISTRIBUTOR_NAME LIKE '" + name + "%'" + " AND P.PURCHASE_ID = " + " C.PURCHASE_ID;";
+                " AND D.DISTRIBUTOR_NAME LIKE '" + name + "%'" + " AND DP.PURCHASE_ID != P.PURCHASE_ID" + " AND P.PURCHASE_ID = " + " C.PURCHASE_ID;";
 
         List<Purchase> p = db.query(sql, new RowMapper<Purchase>() {
             @Override
             public Purchase mapRow(ResultSet rs, int i) throws SQLException {
                 return new Purchase(rs.getLong("PURCHASE_ID"), rs.getString("MANUFACTURER_NAME"), rs.getString("PRODUCT_NAME"),
-                        rs.getString("LICENSE_TYPE") , rs.getString("DISTRIBUTOR_NAME"), rs.getString("FREE_TEXT"), getUpgradedFrom(rs.getLong("PURCHASE_ID")),
+                        rs.getString("LICENSE_TYPE"), rs.getString("DISTRIBUTOR_NAME"), rs.getString("FREE_TEXT"), getUpgradedFrom(rs.getLong("PURCHASE_ID")),
                         rs.getString("CREATED_BY"), rs.getDate("CREATED_DATE"));
             }
         });
@@ -85,16 +106,15 @@ public class PurchaseDAO implements PurchaseDAOInterface {
 
     public List<Purchase> searchPurchaseByManufacturerName(String name) {
         String sql = "SELECT P.PURCHASE_ID, P.PRODUCT_NAME, P.LICENSE_TYPE, P.FREE_TEXT, D.DISTRIBUTOR_NAME, M.MANUFACTURER_NAME" +
-                " FROM PURCHASE P, MANUFACTURER M, DISTRIBUTOR D" +
+                " FROM PURCHASE P, MANUFACTURER M, DISTRIBUTOR D, DELETED_PURCHASE DP" +
                 " WHERE M.MANUFACTURER_ID = P.MANUFACTURER_ID AND D.DISTRIBUTOR_ID = P.DISTRIBUTOR_ID" +
-                " AND M.MANUFACTURER_NAME LIKE '" + name + "%'" + " AND P.PURCHASE_ID = " + " C.PURCHASE_ID;";
+                " AND M.MANUFACTURER_NAME LIKE '" + name + "%'" + " AND DP.PURCHASE_ID != P.PURCHASE_ID" + " AND P.PURCHASE_ID = " + " C.PURCHASE_ID;";
 
         List<Purchase> p = db.query(sql, new RowMapper<Purchase>() {
             @Override
             public Purchase mapRow(ResultSet rs, int i) throws SQLException {
-                //Long originalPurchaseID = getUpgradedFrom(rs.getLong("PURCHASE_ID"));
                 return new Purchase(rs.getLong("PURCHASE_ID"), rs.getString("MANUFACTURER_NAME"), rs.getString("PRODUCT_NAME"),
-                        rs.getString("LICENSE_TYPE") , rs.getString("DISTRIBUTOR_NAME"), rs.getString("FREE_TEXT"), getUpgradedFrom(rs.getLong("PURCHASE_ID")),
+                        rs.getString("LICENSE_TYPE"), rs.getString("DISTRIBUTOR_NAME"), rs.getString("FREE_TEXT"), getUpgradedFrom(rs.getLong("PURCHASE_ID")),
                         rs.getString("CREATED_BY"), rs.getDate("CREATED_DATE"));
             }
         });
@@ -103,7 +123,7 @@ public class PurchaseDAO implements PurchaseDAOInterface {
 
     public List<Purchase> searchPurchaseByType(String type) {
         String sql = "SELECT P.PURCHASE_ID, P.PRODUCT_NAME, P.LICENSE_TYPE, P.FREE_TEXT, D.DISTRIBUTOR_NAME, M.MANUFACTURER_NAME" +
-                " FROM PURCHASE P, MANUFACTURER M, DISTRIBUTOR D" +
+                " FROM PURCHASE P, MANUFACTURER M, DISTRIBUTOR D, DELETED_PURCHASE DP" +
                 " WHERE M.MANUFACTURER_ID = P.MANUFACTURER_ID AND D.DISTRIBUTOR_ID = P.DISTRIBUTOR_ID" +
                 " AND P.LICENSE_TYPE LIKE '" + type + "%'" + " AND P.PURCHASE_ID = " + " C.PURCHASE_ID;";
 
@@ -111,7 +131,7 @@ public class PurchaseDAO implements PurchaseDAOInterface {
             @Override
             public Purchase mapRow(ResultSet rs, int i) throws SQLException {
                 return new Purchase(rs.getLong("PURCHASE_ID"), rs.getString("MANUFACTURER_NAME"), rs.getString("PRODUCT_NAME"),
-                        rs.getString("LICENSE_TYPE") , rs.getString("DISTRIBUTOR_NAME"), rs.getString("FREE_TEXT"), getUpgradedFrom(rs.getLong("PURCHASE_ID")),
+                        rs.getString("LICENSE_TYPE"), rs.getString("DISTRIBUTOR_NAME"), rs.getString("FREE_TEXT"), getUpgradedFrom(rs.getLong("PURCHASE_ID")),
                         rs.getString("CREATED_BY"), rs.getDate("CREATED_DATE"));
             }
         });
@@ -119,19 +139,18 @@ public class PurchaseDAO implements PurchaseDAOInterface {
     }
 
 
-
-    private long getUpgradedFrom(long newPurchaseId){
+    private long getUpgradedFrom(long newPurchaseId) {
         long id;
         try {
             id = db.queryForLong("SELECT ORIGINAL_PURCHASE_ID FROM UPGRADED_PURCHASE WHERE NEW_PURCHASE_ID = " + newPurchaseId + ";");
-        } catch (IncorrectResultSizeDataAccessException e){
+        } catch (IncorrectResultSizeDataAccessException e) {
             return 0;
         }
         return id;
 
     }
 
-    public void setDataSource(DataSource dataSource){
+    public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
         db = new JdbcTemplate(dataSource);
     }
