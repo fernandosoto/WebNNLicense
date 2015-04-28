@@ -29,8 +29,32 @@ public class LicenseDAO implements LicenseDAOInterface {
     }
 
     @Override
+    public void deleteLicense(License l, String userName) {
+        String sql = "INSERT INTO DELETED_LICENSE(DELETED_BY, DELETED_DATE, LICENSE_KEY_ID) VALUES ('" + userName + "', "
+                + new Date(System.currentTimeMillis()) + ", " + l.getLicenseId() +  ");";
+        db.update(sql);
+    }
+
+    public List<License> searchDeletedLicenses(){
+        String sql = "SELECT L.*, DL.DELETED_BY, DL.DELETED_DATE " +
+                " FROM  LICENSE_KEY L, DELETED_LICENSE DL" +
+                " WHERE DL.LICENSE_KEY_ID = L.LICENSE_KEY_ID;";
+
+        List<License> l = db.query(sql, new RowMapper<License>() {
+            @Override
+            public License mapRow(ResultSet rs, int i) throws SQLException {
+                return new License(rs.getLong("LICENSE_ID"), rs.getString("LICENSE_USER"), rs.getString("LICENSE_KEY"),
+                        rs.getLong("L_PURCHASE_ID"), rs.getDate("EXPIRE_DATE"), rs.getDate("DELETED_DATE"),
+                        rs.getString("DELETED_BY"));
+            }
+        });
+        return l;
+    }
+
+    @Override
     public List<License> searchLicenseByUser(String name) {
-        String sql = "SELECT * FROM LICENSE WHERE LICENSE_USER LIKE '" + name + "%';";
+        String sql = "SELECT * FROM LICENSE WHERE LICENSE_USER LIKE '" + name + "%'"
+                + " AND L.LICENSE_KEY_ID != DL.LICENSE_KEY_ID;";
 
         List<License> l = db.query(sql, new RowMapper<License>() {
             @Override
@@ -45,7 +69,8 @@ public class LicenseDAO implements LicenseDAOInterface {
 
     @Override
     public List<License> searchLicenseByPurchase(Purchase p) {
-        String sql = "SELECT * FROM LICENSE WHERE L_PURCHASE_ID = " + p.getPurchaseId() + ";";
+        String sql = "SELECT * FROM LICENSE WHERE L_PURCHASE_ID = " + p.getPurchaseId()
+                + " AND L.LICENSE_KEY_ID != DL.LICENSE_KEY_ID;";
 
         List<License> l = db.query(sql, new RowMapper<License>() {
             @Override
@@ -60,7 +85,8 @@ public class LicenseDAO implements LicenseDAOInterface {
 
     @Override
     public License searchLicenseById(Long id) {
-        String sql = "SELECT * FROM LICENSE WHERE LICENSE_KEY_ID = " + id + ";";
+        String sql = "SELECT * FROM LICENSE WHERE LICENSE_KEY_ID = " + id
+                + " AND L.LICENSE_KEY_ID != DL.LICENSE_KEY_ID;";
 
         List<License> l = db.query(sql, new RowMapper<License>() {
             @Override
