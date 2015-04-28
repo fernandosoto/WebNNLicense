@@ -13,6 +13,8 @@ public interface LicenseDAOInterface {
     
     void addLicense(License l);
 
+    void deleteLicense(License l, String userName);
+
     List<License> searchLicenseByUser(String name);
 
     List<License> searchLicenseByPurchase(Purchase p);
