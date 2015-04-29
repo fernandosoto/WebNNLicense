@@ -15,7 +15,7 @@ public interface DistributorDAOInterface {
 
     Distributor searchDistributorById(long id);
 
-    Distributor searchDistributorByName(String name);
+    List<Distributor> searchDistributorByName(String name);
 
     void setDataSource(DataSource dataSource);
 }
