@@ -1,9 +1,7 @@
 package com.springapp.mvc;
 
 import Backend.*;
-import Backend.DAO.DistributorDAO;
-import Backend.DAO.ManufacturerDAO;
-import Backend.DAO.PurchaseDAO;
+import Backend.DAO.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -18,68 +16,48 @@ import java.util.List;
  */
 @Controller
 public class addController{
-    private PurchaseDAO db;
-    private ManufacturerDAO manufacturerDAO;
-    private DistributorDAO distributorDAO;
-
-    private RegisterForm rf = new RegisterForm();
+    private PurchaseDAOInterface db;
+    private LicenseDAOInterface licenseDao;
+    private ManufacturerDAOInterface manufacturerDAO;
+    private DistributorDAOInterface distributorDAO;
 
     List<Manufacturer> manufacturers = new ArrayList<Manufacturer>();
     List<Distributor> distributors = new ArrayList<Distributor>();
 
     @RequestMapping(value = "/addPurchase",method = RequestMethod.POST)
     public String printWelcome(@ModelAttribute RegisterForm regForm,ModelMap model) {
-        Long puchaseID;
+        Long purchaseID;
         List<License> licenses = new ArrayList<License>();
-
-        licenses = fromSerialKeyStringToLicenseObj(regForm);
-        try {
-            db.addPurchase(regForm.getPurchases(),"kalle");
-        } catch (Exception e){}
+        licenses = regForm.getSerialKeysWithSeparatedLicenses();
+        Purchase p= regForm.getPurchases();
+        System.out.println(p.getProductName());
+        purchaseID = db.addPurchase(p,"kalle");
+        for(License l: licenses){
+            l.setPurchaseId(purchaseID);
+            licenseDao.addLicense(l);
+        }
 
         return "add/add_inner";
     }
 
-    //Ändra tillbaka till private
-    public List<License> fromSerialKeyStringToLicenseObj(RegisterForm regForm){
-        List<License> licenses = new ArrayList<License>();
-
-        int year = Integer.parseInt(regForm.getDate().substring(0, 4));
-        int month = (Integer.parseInt(regForm.getDate().substring(5,7)) - 1); // months: 0(jan), 11(dec)
-        int day = Integer.parseInt(regForm.getDate().substring(8, 10));
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(year,month,day);
-        Date date = new Date(calendar.getTimeInMillis());
-
-        String[] splittedSerialKeys = regForm.getSerialKeys().split(regForm.getKeySeparator());
-        for(int i=0;i<splittedSerialKeys.length;++i){
-            licenses.add(new License(0,"Kalle", splittedSerialKeys[i],0, date));
-        }
-
-        return licenses;
-    }
-
-
     private void getManufacturersAndDistributors(){
+
         manufacturers =  manufacturerDAO.searchManufacturerByName("");
         distributors = distributorDAO.searchDistributorByName("");
     }
 
 
-
-
     @RequestMapping("/addPurchase")
     public String addInner(ModelMap model)
     {
-        model.addAttribute("manufacturers",manufacturers);
+        manufacturers.add(new Manufacturer(0,"Adobe","freeee"));
+        distributors.add(new Distributor(0,"webhallen","ffreee"));
+
+        model.addAttribute("manufacturers", manufacturers);
         model.addAttribute("distributors",distributors);
-        model.addAttribute("licenses",new License());
         model.addAttribute("registerForm",new RegisterForm());
         return "add/add_inner";
     }
-
-
 
     }
 

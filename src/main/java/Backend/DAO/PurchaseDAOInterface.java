@@ -9,7 +9,7 @@ import java.util.List;
  * Created by Isak on 2015-04-23.
  */
 public interface PurchaseDAOInterface {
-    void addPurchase(Purchase pur, String userName);
+    long addPurchase(Purchase pur, String userName, long distrId, long manuId);
 
     void deletePurchase(Purchase pur, String userName);
 

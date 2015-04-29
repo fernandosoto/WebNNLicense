@@ -36,14 +36,14 @@ public class ManufacturerDAO implements ManufacturerDAOInterface {
     }
 
     @Override
-    public List<Manufacturer> searchManufacturerByName(String name) {
+    public Manufacturer searchManufacturerByName(String name) {
         String sql = "SELECT * FROM MANUFACTURER WHERE MANUFACTURER.MANUFACTURER_NAME LIKE '" + name + "%';";
         return db.query(sql, new RowMapper<Manufacturer>() {
             @Override
             public Manufacturer mapRow(ResultSet rs, int i) throws SQLException {
                 return new Manufacturer(rs.getLong("MANUFACTURER_ID"), rs.getString("MANUFACTURER_NAME"), rs.getString("FREE_TEXT"));
             }
-        });
+        }).get(0);
     }
 
     public void setDataSource(DataSource dataSource){
