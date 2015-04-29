@@ -1,9 +1,7 @@
 package com.springapp.mvc;
 
 import Backend.*;
-import Backend.DAO.DistributorDAO;
-import Backend.DAO.ManufacturerDAO;
-import Backend.DAO.PurchaseDAO;
+import Backend.DAO.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -18,11 +16,9 @@ import java.util.List;
  */
 @Controller
 public class addController{
-    private PurchaseDAO db;
-    private ManufacturerDAO manufacturerDAO;
-    private DistributorDAO distributorDAO;
-
-    private RegisterForm rf = new RegisterForm();
+    private PurchaseDAOInterface db;
+    private ManufacturerDAOInterface manufacturerDAO;
+    private DistributorDAOInterface distributorDAO;
 
     List<Manufacturer> manufacturers = new ArrayList<Manufacturer>();
     List<Distributor> distributors = new ArrayList<Distributor>();
@@ -31,8 +27,9 @@ public class addController{
     public String printWelcome(@ModelAttribute RegisterForm regForm,ModelMap model) {
         Long puchaseID;
         List<License> licenses = new ArrayList<License>();
-
         licenses = fromSerialKeyStringToLicenseObj(regForm);
+        System.out.println(regForm.getPurchases().getProductName());
+
         try {
             db.addPurchase(regForm.getPurchases(),"kalle");
         } catch (Exception e){}
@@ -62,24 +59,23 @@ public class addController{
 
 
     private void getManufacturersAndDistributors(){
+
         manufacturers =  manufacturerDAO.searchManufacturerByName("");
         distributors = distributorDAO.searchDistributorByName("");
     }
 
 
-
-
     @RequestMapping("/addPurchase")
     public String addInner(ModelMap model)
     {
-        model.addAttribute("manufacturers",manufacturers);
+        //manufacturers.add(new Manufacturer(0,"Adobe","freeee"));
+       // distributors.add(new Distributor(0,"webhallen","ffreee"));
+
+        model.addAttribute("manufacturers", manufacturers);
         model.addAttribute("distributors",distributors);
-        model.addAttribute("licenses",new License());
         model.addAttribute("registerForm",new RegisterForm());
         return "add/add_inner";
     }
-
-
 
     }
 

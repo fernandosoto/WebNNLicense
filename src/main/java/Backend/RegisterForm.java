@@ -15,11 +15,33 @@ public class RegisterForm {
     private String date;
     private List<License> licenses = new ArrayList<License>();
     private String keySeparator;
-
+    private List<Manufacturer> manufacturers = new ArrayList<Manufacturer>();
+    private List<Distributor> distributors = new ArrayList<Distributor>();
     private Purchase purchases;
+    public String name;
+
+
+    public List<Manufacturer> getManufacturers() {
+        return manufacturers;
+    }
+
+    public void setManufacturers(List<Manufacturer> manufacturers) {
+        this.manufacturers = manufacturers;
+    }
+
+    public List<Distributor> getDistributors() {
+        return distributors;
+    }
+
+    public void setDistributors(List<Distributor> distributors) {
+        this.distributors = distributors;
+    }
 
 
     public RegisterForm(){
+
+       // manufacturers.add(new Manufacturer(0,"Adobe","freeee"));
+       // distributors.add(new Distributor(0,"webhallen","ffreee"));
         //Constructor
     }
 
