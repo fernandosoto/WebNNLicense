@@ -4,6 +4,8 @@ import Backend.Purchase;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,13 +24,17 @@ public class PurchaseDAO implements PurchaseDAOInterface {
     private JdbcTemplate db;
 
     @Transactional
-    public void addPurchase(Purchase pur, String userName) {
+    public long addPurchase(Purchase pur, String userName) {
+        final KeyHolder holder = new GeneratedKeyHolder();
+
         String sql = "INSERT INTO PURCHASE(MANUFACTURER_ID, PRODUCT_NAME, LICENSE_TYPE, DISTRIBUTOR_ID, FREE_TEXT) VALUES('"
                 + pur.getManufacturerName() + "', '" + pur.getProductName() + "', '"
                 + pur.getType() + "', '" + pur.getDistributorName() + "', '" + pur.getFreeText() + "');"
                 + "INSERT INTO CREATOR(CREATED_BY, CREATED_DATE, PURCHASE_ID) VALUES('" + userName + "', " + new Date(System.currentTimeMillis())
                 + ", " + pur.getPurchaseId() + ");";
-        db.update(sql);
+        db.update(sql, holder);
+
+        return holder.getKey().longValue();
     }
 
     @Override

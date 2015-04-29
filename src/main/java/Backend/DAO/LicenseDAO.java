@@ -28,6 +28,7 @@ public class LicenseDAO implements LicenseDAOInterface {
         db.update(sql);
     }
 
+    @Transactional
     @Override
     public void deleteLicense(License l, String userName) {
         String sql = "INSERT INTO DELETED_LICENSE(DELETED_BY, DELETED_DATE, LICENSE_KEY_ID) VALUES ('" + userName + "', "
