@@ -1,5 +1,7 @@
 package com.springapp.mvc;
 
+import Backend.Distributor;
+import Backend.Manufacturer;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,9 +33,22 @@ public class AppTests {
     }
 
     @Test
-    public void simple() throws Exception {
+    public void simpleAddWebTest() throws Exception {
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("hello"));
+                .andExpect(view().name("main/index"));
+
+        mockMvc.perform(get("/addPurchase"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("add/add_inner"));
     }
+
+    @Test
+    public void addTest() throws Exception{
+        
+        mockMvc.perform(get("/addPurchase"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("add/add_inner"))
+    }
+
 }

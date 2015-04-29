@@ -22,7 +22,7 @@ public class addController {
     public String printWelcome(@ModelAttribute Purchase purchase,ModelMap model) {
         System.out.println(purchase.getProductName());
         try {
-            db.addPurchase(purchase);
+            db.addPurchase(purchase,"Fernando");
         } catch (Exception e){}
 
         return "add/add_inner";

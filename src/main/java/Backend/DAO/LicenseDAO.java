@@ -29,6 +29,11 @@ public class LicenseDAO implements LicenseDAOInterface {
     }
 
     @Override
+    public void deleteLicense(License l, String userName) {
+
+    }
+
+    @Override
     public List<License> searchLicenseByUser(String name) {
         String sql = "SELECT * FROM LICENSE WHERE LICENSE_USER LIKE '" + name + "%';";
 
