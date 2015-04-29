@@ -3,6 +3,7 @@ package Backend;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -20,6 +21,27 @@ public class RegisterForm {
     private Purchase purchases;
     public String name;
 
+    public RegisterForm(){
+
+    }
+
+
+    public List<License> getSerialKeysWithSeparatedLicenses(){
+        List<License> licenses = new ArrayList<License>();
+        int year = Integer.parseInt(getDate().substring(0, 4));
+        int month = (Integer.parseInt(getDate().substring(5,7)) - 1); // months: 0(jan), 11(dec)
+        int day = Integer.parseInt(getDate().substring(8, 10));
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year,month,day);
+        Date date = new Date(calendar.getTimeInMillis());
+
+        String[] splittedSerialKeys = getSerialKeys().split(getKeySeparator());
+        for(int i=0;i<splittedSerialKeys.length;++i){
+            licenses.add(new License(0,"Kalle", splittedSerialKeys[i],0, date));
+        }
+        return licenses;
+    }
 
     public List<Manufacturer> getManufacturers() {
         return manufacturers;
@@ -37,13 +59,6 @@ public class RegisterForm {
         this.distributors = distributors;
     }
 
-
-    public RegisterForm(){
-
-       // manufacturers.add(new Manufacturer(0,"Adobe","freeee"));
-       // distributors.add(new Distributor(0,"webhallen","ffreee"));
-        //Constructor
-    }
 
     public String getSerialKeys() {
         return serialKeys;
