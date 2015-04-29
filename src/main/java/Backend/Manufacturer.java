@@ -1,12 +1,19 @@
 package Backend;
 
+import java.io.Serializable;
+
 /**
  * Created by Isak on 2015-04-22.
- */
-public class Manufacturer {
+*/
+public class Manufacturer implements Serializable {
     private long id;
     private String name;
     private String freeText;
+
+
+    public Manufacturer(){
+
+    }
 
     public Manufacturer(long id, String name, String freeText){
         this.id = id;
@@ -35,5 +42,6 @@ public class Manufacturer {
     }
 
 
+    private static final long serialVersionUID=245367867532234234L;
 
 }

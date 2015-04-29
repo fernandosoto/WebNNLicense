@@ -1,10 +1,15 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<br xmlns:th="http://www.thymeleaf.org">
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<title>Magnetic - Stunning Responsive HTML5/CSS3 Photography Template</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Nordnet - Search</title>
 	<meta charset="utf-8">
 	<meta name="author" content="pixelhint.com">
-	<meta name="description" content="Magnetic is a stunning responsive HTML5/CSS3 photography/portfolio website  template"/>
+	<meta name="description" content="Nordnet - Add License"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
 	<link rel="stylesheet" type="text/css" href="../../resources/NNLicenseTheme/Nordnet/css/reset.css">
 	<link rel="stylesheet" type="text/css" href="../../resources/NNLicenseTheme/Nordnet/css/main.css">
@@ -15,35 +20,27 @@
 
 	<header>
 		<div class="logo">
-			<a href="main/index.jsp"><img src="../../resources/NNLicenseTheme/Nordnet/img/logo.png" title="Magnetic" alt="Magnetic"/></a>
+			<a href="index"><img src="../../../resources/NNLicenseTheme/Nordnet/img/nordnetlogga.png" title="Nordnet" alt="Nordnet"/></a>
 		</div><!-- end logo -->
 
 		<div id="menu_icon"></div>
 		<nav>
 			<ul>
 				<li><a href="main/index.jsp">Home</a></li>
-				<li><a href="#">About</a></li>
-				<li><a href="#">The Team</a></li>
-				<li><a href="#">Journal</a></li>
-				<li><a href="contact.html">Contact Us</a></li>
+				<li><a href="#">...</a></li>
+				<li><a href="#">...</a></li>
+				<li><a href="#">...</a></li>
 			</ul>
 		</nav><!-- end navigation menu -->
 
-		<div class="footer clearfix">
-			<ul class="social clearfix">
-				<li><a href="#" class="fb" data-title="Facebook"></a></li>
-				<li><a href="#" class="google" data-title="Google +"></a></li>
-				<li><a href="#" class="behance" data-title="Behance"></a></li>
-				<!--<li><a href="#" class="twitter" data-title="Twitter"></a></li>
-				<li><a href="#" class="dribble" data-title="Dribble"></a></li>-->
-				<li><a href="#" class="rss" data-title="RSS"></a></li>
-			</ul><!-- end social -->
 
-			<div class="rights">
-				<p>Copyright © 2014 magnetic.</p>
-				<p>Template by <a href="">Pixelhint.com</a></p>
-			</div><!-- end rights -->
+		<div class="footer clearfix">
+
+			<!-- FOOTER KOD HÄR!! -->
+
 		</div ><!-- end footer -->
+
+
 	</header><!-- end header -->
 
 	<section class="main clearfix">
@@ -51,43 +48,53 @@
 		<section class="top">	
 			<div class="wrapper content_header clearfix">
 				<div class="work_nav">
-							
+
 					<ul class="btn clearfix">
 						<li><a href="#" class="previous" data-title="Previous"></a></li>
 						<li><a href="main/index.jsp" class="grid" data-title="Portfolio"></a></li>
 						<li><a href="#" class="next" data-title="Next"></a></li>
-					</ul>							
+					</ul>
 					
 				</div><!-- end work_nav -->
-				<h1 class="title">Sed do eiusmod tempor incididunt ut labore et dolore seed magna aliqua.</h1>
+				<h1 class="title">Search</h1>
 			</div>		
 		</section><!-- end top -->
 
 		<section class="wrapper">
 			<div class="content">
-				<p>Nunc pellentesque mauris ut magna pulvinar, quis fermentum tellus pulvinar. Curabitur ut fermentum quam. Nam tincidunt sagittis neque in elementum. Fusce convallis cursus porta. Curabitur dapibus pretium leo, at laoreet magna ullamcorper ac. Integer quam nulla, fringilla ac imperdiet at, consequat vel leo. Quisque non semper justo, eu aliquam velit. Pellentesque rhoncus, quam ac fringilla euismod, ligula diam congue orci, id cursus dui velit quis ligula.</p>
+				<form:form commandName="purchase" method="POST">
+					<div class="fieldset">
+					<fieldset>
+					<nav>
+						<ul>
+							<li><br>Product name: <form:input path="productName" type="text"/></li>
+							<li><br>Manufacturer Name:
+								<form:select path="manufacturerName" title="Select manufacturer">
+									<form:option value="NONE" label="--- Select ---"/>
+									<form:options items="${manufacturers}" itemValue="name" itemLabel="name"/>
+									</form:select>
+								<input type="button" value="Edit" />  <input type="button" value="Delete" />
+							</li>
+							<li><br>Distributor Name:
+								<form:select path="distributorName" title="Select distributor">
+									<form:option value="NONE" label="--- Select ---"/>
+									<form:options items="${distributors}" itemValue="name" itemLabel="name"/>
+								</form:select>
+								<input type="button" value="Edit" />  <input type="button" value="Delete" />
+							</li>
+							<li><br>Expire date: <input type="Date"></li>
+
+							<li><br>License type: <form:input path="type" type="text"/></li>
+							<li><br>Comments:<form:textarea path="freeText" rows="5" cols="30" /></li>
+							<li><br><input type="submit" value="Add" />  <input type="reset" value="Clear"/></li>
+						</ul>
+
+					</nav><!-- end navigation menu -->
+					</fieldset>
+					</div>
+				</form:form>
 
 
-				<h2>Nulla nec pellentesque tempus, ipsum arcu aliquam tortor.</h2>
-
-				<p>vel tempus libero diam vel arcu. Etiam id tincidunt tortor. Nam auctor consequat quam, vel mattis dui laoreet a. Nunc condimentum iaculis tortor, id eleifend nulla mattis lobortis. Pellentesque semper blandit odio, id tempor lorem imperdiet eu. Ut sagittis sagittis consectetur ,Maecenas eget risus eros. Nunc venenatis ante a rutrum cursus.</p>
-
-				<h2>Quisque non semper justo</h2>
-
-				<p>Commodo at blandit vitae, placerat in sem. Morbi ornare nec felis in euismod. Suspendisse vulputate orci ultrices enim facilisis, vel lobortis magna rhoncus. Integer mattis at elit vitae adipiscing. Cras imperdiet cursus nunc quis ullamcorper.</p>
-
-				<p>vel tempus libero diam vel arcu. Etiam id tincidunt tortor. Nam auctor consequat quam, vel mattis dui laoreet a. Nunc condimentum iaculis tortor, id eleifend nulla mattis lobortis. Pellentesque semper blandit odio, id tempor lorem imperdiet eu. Ut sagittis sagittis consectetur ,Maecenas eget risus eros. Nunc venenatis ante a rutrum cursus.</p>
-
-				
-				<p>Commodo at blandit vitae, placerat in sem. Morbi ornare nec felis in euismod. Suspendisse vulputate orci ultrices enim facilisis, vel lobortis magna rhoncus. Integer mattis at elit vitae adipiscing. Cras imperdiet cursus nunc quis ullamcorper.</p>
-
-
-				<h1>H1 : Quisque non semper justo</h1>
-				<h2>H2 : Quisque non semper justo</h2>
-				<h3>H3 : Quisque non semper justo</h3>
-				<h4>H4 : Quisque non semper justo</h4>
-				<h5>H5 : Quisque non semper justo</h5>
-				<h6>H6 : Quisque non semper justo</h6>
 			</div><!-- end content -->
 		</section>
 	</section><!-- end main -->
