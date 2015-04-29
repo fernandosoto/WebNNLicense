@@ -1,4 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <br xmlns:th="http://www.thymeleaf.org">
 <!DOCTYPE html>
 <html lang="en">
@@ -61,32 +63,38 @@
 
 		<section class="wrapper">
 			<div class="content">
-
-				<form:form commandName="purchase" method="POST">
-
+				<form:form commandName="registerForm" method="POST">
+					<div class="fieldset">
+					<fieldset>
 					<nav>
 						<ul>
-							<li><br>Product name: <form:input path="productName" type="text"/></li>
-							<li><br>Manufacturer:
-								<form:select path="manufacturerName" type="text" title="Select manufacturer">
-									<form:option value="None" label="--- Select ---"/>
+							<li><br>Product name: <form:input path="purchases.productName" type="text"/></li>
+							<li><br>Manufacturer Name:
+								<form:select path="purchases.manufacturerName" title="Select manufacturer">
+									<form:option value="NONE" label="--- Select ---"/>
+									<form:options items="${manufacturers}" itemValue="name" itemLabel="name"/>
+									</form:select>
+								<input type="button" value="Edit" />  <input type="button" value="Delete" />
+							</li>
+							<li><br>Distributor Name:
+								<form:select path="purchases.distributorName" title="Select distributor">
+									<form:option value="NONE" label="--- Select ---"/>
+									<form:options items="${distributors}" itemValue="name" itemLabel="name"/>
 								</form:select>
 								<input type="button" value="Edit" />  <input type="button" value="Delete" />
 							</li>
-							<li><br>Distributor:
-								<form:select path ="distributorName" type="text" title="Select distributor" >
-									<form:option value="None" label="--- Select ---"/>
-								</form:select>
-								<input type="button" value="Edit" />  <input type="button" value="Delete" />
-							</li>
-							<li><br>License type: <form:input path="type" type="text"/></li>
-							<li><br>Comments:<form:textarea path="freeText" rows="5" cols="30" /></li>
-							<li><br><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></li>
-
+							<li><br>Expire date: <form:input path="date" type="date" /></li>
+							<li><br>License key separator: <form:input path="keySeparator" type="text"/></li>
+							<li><br>License type: <form:input path="purchases.type" type="text"/></li>
+							<li><br>Serial keys: <form:textarea path="serialKeys" rows="5" cols="80" /></li>
+							<li><br>Comments: <form:textarea path="purchases.freeText" rows="5" cols="80" /></li>
+							<li><br><input type="submit" value="Add" />  <input type="reset" value="Clear"/></li>
 						</ul>
-					</nav><!-- end navigation menu -->
-				</form:form>
 
+					</nav><!-- end navigation menu -->
+					</fieldset>
+					</div>
+				</form:form>
 
 			</div><!-- end content -->
 		</section>

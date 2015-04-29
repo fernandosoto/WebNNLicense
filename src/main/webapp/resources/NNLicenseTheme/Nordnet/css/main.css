@@ -334,17 +334,14 @@ h5, h6          { font-weight: bolder }
     border-top: 1px solid #bfbbbb;
 }
 
-
-
-
 /*  Inner Page  */
 .top{
     width: 100%;
-    height: 350px;
+    height: 250px;
     overflow: hidden;
     display: block;
     position: relative;
-    background: url('../img/hero_image.jpg') no-repeat;
+    background: url('../img/bwLibraryPic.png') no-repeat;
     background-size: cover;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -420,6 +417,14 @@ h5, h6          { font-weight: bolder }
     margin-left: -46.36363636363637%;
 }
 
+/*registration form Layout*/
+fieldset{
+    width: 500px;
+    text-align: right;
+}
+
+
+/*Text on the inner page*/
 .content{
     color: #4b4848;
     font-family: "raleway-bold", arial;
@@ -427,6 +432,7 @@ h5, h6          { font-weight: bolder }
     font-weight: bold;
     line-height: 22px;
     padding: 60px 30px;
+
     background: #fff;
 
 
@@ -479,11 +485,6 @@ h5, h6          { font-weight: bolder }
     font-family: 'raleway-bold', arial;
     font-weight: bolder;
 }
-
-
-
-
-
 
 
 /*  Tooltip  */
