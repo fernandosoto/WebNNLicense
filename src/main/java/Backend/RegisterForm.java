@@ -16,9 +16,6 @@ public class RegisterForm {
     private List<License> licenses = new ArrayList<License>();
     private String keySeparator;
 
-    List<Manufacturer> manufacturers = new ArrayList<Manufacturer>();
-    List<Distributor> distributors = new ArrayList<Distributor>();
-
     private Purchase purchases;
 
 
