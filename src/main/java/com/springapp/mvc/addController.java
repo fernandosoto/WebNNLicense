@@ -17,6 +17,7 @@ import java.util.List;
 @Controller
 public class addController{
     private PurchaseDAOInterface db;
+    private LicenseDAOInterface licenseDao;
     private ManufacturerDAOInterface manufacturerDAO;
     private DistributorDAOInterface distributorDAO;
 
@@ -28,10 +29,13 @@ public class addController{
         Long purchaseID;
         List<License> licenses = new ArrayList<License>();
         licenses = regForm.getSerialKeysWithSeparatedLicenses();
-
-        try {
-            db.addPurchase(regForm.getPurchases(),"kalle");
-        } catch (Exception e){}
+        Purchase p= regForm.getPurchases();
+        System.out.println(p.getProductName());
+        purchaseID = db.addPurchase(p,"kalle");
+        for(License l: licenses){
+            l.setPurchaseId(purchaseID);
+            licenseDao.addLicense(l);
+        }
 
         return "add/add_inner";
     }
@@ -46,8 +50,8 @@ public class addController{
     @RequestMapping("/addPurchase")
     public String addInner(ModelMap model)
     {
-        //manufacturers.add(new Manufacturer(0,"Adobe","freeee"));
-       // distributors.add(new Distributor(0,"webhallen","ffreee"));
+        manufacturers.add(new Manufacturer(0,"Adobe","freeee"));
+        distributors.add(new Distributor(0,"webhallen","ffreee"));
 
         model.addAttribute("manufacturers", manufacturers);
         model.addAttribute("distributors",distributors);
