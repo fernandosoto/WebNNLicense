@@ -38,14 +38,14 @@ public class DistributorDAO implements DistributorDAOInterface {
     }
 
     @Override
-    public Distributor searchDistributorByName(String name) {
+    public List<Distributor> searchDistributorByName(String name) {
         String sql = "SELECT * FROM DISTRIBUTOR WHERE DISTRIBUTOR.DISTRIBUTOR_NAME LIKE '" + name + "%';";
         return db.query(sql, new RowMapper<Distributor>() {
             @Override
             public Distributor mapRow(ResultSet rs, int i) throws SQLException {
                 return new Distributor(rs.getLong("DISTRIBUTOR_ID"), rs.getString("DISTRIBUTOR_NAME"), rs.getString("FREE_TEXT"));
         }
-        }).get(0);
+        });
     }
 
     @Override

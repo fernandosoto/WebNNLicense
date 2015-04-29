@@ -14,7 +14,7 @@ public interface ManufacturerDAOInterface {
 
     public Manufacturer searchManufacturerById(long id);
 
-    public Manufacturer searchManufacturerByName(String name);
+    public List<Manufacturer> searchManufacturerByName(String name);
 
     public void setDataSource(DataSource dataSource);
 
