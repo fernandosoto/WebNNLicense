@@ -40,8 +40,8 @@ public class addController{
         return "add/add_inner";
     }
 
-
-    private  List<License> fromSerialKeyStringToLicenseObj(RegisterForm regForm){
+    //Ändra tillbaka till private
+    public List<License> fromSerialKeyStringToLicenseObj(RegisterForm regForm){
         List<License> licenses = new ArrayList<License>();
 
         int year = Integer.parseInt(regForm.getDate().substring(0, 4));
