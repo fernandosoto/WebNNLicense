@@ -24,12 +24,12 @@ public class PurchaseDAO implements PurchaseDAOInterface {
     private JdbcTemplate db;
 
     @Transactional
-    public long addPurchase(Purchase pur, String userName) {
+    public long addPurchase(Purchase pur, String userName, long distrId, long manuId) {
         final KeyHolder holder = new GeneratedKeyHolder();
 
         String sql = "INSERT INTO PURCHASE(MANUFACTURER_ID, PRODUCT_NAME, LICENSE_TYPE, DISTRIBUTOR_ID, FREE_TEXT) VALUES('"
-                + pur.getManufacturerName() + "', '" + pur.getProductName() + "', '"
-                + pur.getType() + "', '" + pur.getDistributorName() + "', '" + pur.getFreeText() + "');"
+                + manuId + "', '" + pur.getProductName() + "', '"
+                + pur.getType() + "', '" + distrId + "', '" + pur.getFreeText() + "');"
                 + "INSERT INTO CREATOR(CREATED_BY, CREATED_DATE, PURCHASE_ID) VALUES('" + userName + "', " + new Date(System.currentTimeMillis())
                 + ", " + pur.getPurchaseId() + ");";
         db.update(sql, holder);
