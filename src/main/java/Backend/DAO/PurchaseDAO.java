@@ -38,7 +38,7 @@ public class PurchaseDAO implements PurchaseDAOInterface {
         db.update(sql);
     }
 
-    public List<Purchase> searchDeletedPurchase(){
+    public List<Purchase> searchDeletedPurchases(){
         String sql = "SELECT P.PURCHASE_ID, P.PRODUCT_NAME, P.LICENSE_TYPE, DP.DELETED_DATE, DP.DELETED_BY, P.FREE_TEXT, D.DISTRIBUTOR_NAME, M.MANUFACTURER_NAME" +
                 " FROM PURCHASE P, MANUFACTURER M, DISTRIBUTOR D, DELETED_PURCHASE DP" +
                 " WHERE DP.PURCHASE_ID != P.PURCHASE_ID;";
