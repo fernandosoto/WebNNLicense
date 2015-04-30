@@ -2,6 +2,7 @@ package com.springapp.mvc;
 
 import Backend.*;
 import Backend.DAO.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,7 @@ import java.util.List;
  */
 @Controller
 public class addController{
+    @Autowired
     private PurchaseDAOInterface db;
     private LicenseDAOInterface licenseDao;
     private ManufacturerDAOInterface manufacturerDAO;
@@ -24,14 +26,15 @@ public class addController{
     List<Manufacturer> manufacturers = new ArrayList<Manufacturer>();
     List<Distributor> distributors = new ArrayList<Distributor>();
 
-    @RequestMapping(value = "/addPurchase",method = RequestMethod.POST)
+    @RequestMapping(value = "/addPurchase", method = RequestMethod.POST)
     public String printWelcome(@ModelAttribute RegisterForm regForm,ModelMap model) {
+        db = new PurchaseDAO();
         Long purchaseID;
         List<License> licenses = new ArrayList<License>();
         licenses = regForm.getSerialKeysWithSeparatedLicenses();
-        Purchase p= regForm.getPurchases();
+        Purchase p = regForm.getPurchases();
         System.out.println(p.getProductName());
-        purchaseID = db.addPurchase(p,"kalle");
+        purchaseID = db.addPurchase(p,"kalle",1,1);
         for(License l: licenses){
             l.setPurchaseId(purchaseID);
             licenseDao.addLicense(l);

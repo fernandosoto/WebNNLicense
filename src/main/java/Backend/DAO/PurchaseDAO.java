@@ -1,6 +1,7 @@
 package Backend.DAO;
 
 import Backend.Purchase;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -13,6 +14,7 @@ import javax.sql.DataSource;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 /**
@@ -21,19 +23,20 @@ import java.util.List;
 @Service
 public class PurchaseDAO implements PurchaseDAOInterface {
     private DataSource dataSource;
+    @Autowired
     private JdbcTemplate db;
 
     @Transactional
     public long addPurchase(Purchase pur, String userName, long distrId, long manuId) {
         final KeyHolder holder = new GeneratedKeyHolder();
-
+        long id;
         String sql = "INSERT INTO PURCHASE(MANUFACTURER_ID, PRODUCT_NAME, LICENSE_TYPE, DISTRIBUTOR_ID, FREE_TEXT) VALUES('"
                 + manuId + "', '" + pur.getProductName() + "', '"
                 + pur.getType() + "', '" + distrId + "', '" + pur.getFreeText() + "');"
                 + "INSERT INTO CREATOR(CREATED_BY, CREATED_DATE, PURCHASE_ID) VALUES('" + userName + "', " + new Date(System.currentTimeMillis())
                 + ", " + pur.getPurchaseId() + ");";
-        db.update(sql, holder);
-
+        id = db.update(sql);
+        System.out.println(id);
         return holder.getKey().longValue();
     }
 
@@ -157,7 +160,6 @@ public class PurchaseDAO implements PurchaseDAOInterface {
     }
 
     public void setDataSource(DataSource dataSource) {
-        this.dataSource = dataSource;
         db = new JdbcTemplate(dataSource);
     }
 }

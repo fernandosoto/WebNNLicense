@@ -17,9 +17,9 @@
           class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-        <property name="url" value="jdbc:mysql://localhost:3306/nnlicensereg" />
+        <property name="url" value="jdbc:mysql://localhost:3306/mydb" />
         <property name="username" value="root" />
-        <property name="password" value="1997tB00" />
+        <property name="password" value="kthnordnet" />
     </bean>
 
     <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
@@ -28,5 +28,13 @@
 
     <bean id="PurchaseDAO" class="Backend.DAO.PurchaseDAO">
         <property name="dataSource" ref="dataSource" />
+    </bean>
+
+    <bean id="ManufacturerDAO" class="Backend.DAO.ManufacturerDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean id="DistributorDAO" class="Backend.DAO.DistributorDAO">
+        <property name="dataSource" ref="dataSource"/>
     </bean>
 </beans>

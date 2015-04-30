@@ -51,8 +51,8 @@ public class AppTests {
     @Test
     public void addTest() throws Exception {
 
-        mockMvc.perform(post("/addPurchase").param("date","").param("serialKeys","")
-                .param("keySeparator",""))
+        mockMvc.perform(post("/addPurchase").param("date","2015-04-29").param("serialKeys","asdasd,asdasd,asdada")
+                .param("keySeparator",","))
                 .andExpect(status().isOk())
                 .andExpect(view().name("add/add_inner"));
     }
