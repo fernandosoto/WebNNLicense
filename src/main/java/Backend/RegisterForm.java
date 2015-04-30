@@ -25,7 +25,6 @@ public class RegisterForm {
 
     }
 
-
     public List<License> getSerialKeysWithSeparatedLicenses(){
         List<License> licenses = new ArrayList<License>();
         int year = Integer.parseInt(getDate().substring(0, 4));
@@ -42,6 +41,7 @@ public class RegisterForm {
         }
         return licenses;
     }
+
 
     public List<Manufacturer> getManufacturers() {
         return manufacturers;

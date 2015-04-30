@@ -37,7 +37,7 @@
 
 	<section class="main clearfix">
 		<div class="work">
-			<a href="../search/search_inner">
+			<a href="search_inner">
 				<img src="../../../resources/NNLicenseTheme/Nordnet/img/search.jpg" class="media" alt=""/>
 				<div class="caption">
 					<div class="work_title">

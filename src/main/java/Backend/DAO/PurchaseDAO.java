@@ -3,6 +3,7 @@ package Backend.DAO;
 import Backend.Purchase;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -10,9 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
-import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 
 /**
@@ -24,17 +23,48 @@ public class PurchaseDAO implements PurchaseDAOInterface {
     private JdbcTemplate db;
 
     @Transactional
-    public long addPurchase(Purchase pur, String userName, long distrId, long manuId) {
+    public long addPurchase(final Purchase pur, final String userName, final long distrId, final long manuId) {
         final KeyHolder holder = new GeneratedKeyHolder();
 
-        String sql = "INSERT INTO PURCHASE(MANUFACTURER_ID, PRODUCT_NAME, LICENSE_TYPE, DISTRIBUTOR_ID, FREE_TEXT) VALUES('"
-                + manuId + "', '" + pur.getProductName() + "', '"
-                + pur.getType() + "', '" + distrId + "', '" + pur.getFreeText() + "');"
-                + "INSERT INTO CREATOR(CREATED_BY, CREATED_DATE, PURCHASE_ID) VALUES('" + userName + "', " + new Date(System.currentTimeMillis())
-                + ", " + pur.getPurchaseId() + ");";
-        db.update(sql, holder);
+        //String sql = "INSERT INTO PURCHASE(MANUFACTURER_ID, PRODUCT_NAME, LICENSE_TYPE, DISTRIBUTOR_ID, FREE_TEXT) VALUES("
+        //        + manuId + ", '" + pur.getProductName() + "', '"
+        //        + pur.getType() + "', " + distrId + ", '" + pur.getFreeText() + "');";
 
-        return holder.getKey().longValue();
+        //db.update(sql);
+
+
+        db.update(new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                PreparedStatement ps = connection.prepareStatement("INSERT INTO PURCHASE(MANUFACTURER_ID, PRODUCT_NAME, LICENSE_TYPE, DISTRIBUTOR_ID, FREE_TEXT) VALUES(?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+                ps.setLong(1, manuId);
+                ps.setString(2, pur.getProductName());
+                ps.setString(3, pur.getType());
+                ps.setLong(4, distrId);
+                ps.setString(5, pur.getFreeText());
+                               //+ manuId + ", '" + pur.getProductName() + "', '"
+                                //+ pur.getType() + "', " + distrId + ", '" + pur.getFreeText() + "');";)
+                return ps;
+            }
+        }, holder);
+
+        //String sql2 = "INSERT INTO CREATOR(CREATED_BY, CREATED_DATE, C_PURCHASE_ID) VALUES('" + userName + "', " + new Date(System.currentTimeMillis())
+        //        + ", " + 1 +");";
+
+        //db.update(sql2);
+        db.update(new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                PreparedStatement ps = connection.prepareStatement("INSERT INTO CREATOR(CREATED_BY, CREATED_DATE, C_PURCHASE_ID) VALUES(?, ?, ?)");
+                ps.setString(1, userName);
+                ps.setDate(2, new Date(System.currentTimeMillis()));
+                ps.setLong(3, holder.getKey().longValue());
+                return ps;
+            }
+        });
+
+        System.out.println(System.currentTimeMillis());
+        return holder.getKey().longValue();// holder.getKey().longValue();
     }
 
     @Override
@@ -115,6 +145,7 @@ public class PurchaseDAO implements PurchaseDAOInterface {
                 " FROM PURCHASE P, MANUFACTURER M, DISTRIBUTOR D, DELETED_PURCHASE DP" +
                 " WHERE M.MANUFACTURER_ID = P.MANUFACTURER_ID AND D.DISTRIBUTOR_ID = P.DISTRIBUTOR_ID" +
                 " AND M.MANUFACTURER_NAME LIKE '" + name + "%'" + " AND DP.PURCHASE_ID != P.PURCHASE_ID" + " AND P.PURCHASE_ID = " + " C.PURCHASE_ID;";
+
 
         List<Purchase> p = db.query(sql, new RowMapper<Purchase>() {
             @Override

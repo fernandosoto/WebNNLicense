@@ -29,4 +29,16 @@
     <bean id="PurchaseDAO" class="Backend.DAO.PurchaseDAO">
         <property name="dataSource" ref="dataSource" />
     </bean>
+
+    <bean id="ManufacturerDAO" class="Backend.DAO.ManufacturerDAO">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+    <bean id="DistributorDAO" class="Backend.DAO.DistributorDAO">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+    <bean id="LicenseDAO" class="Backend.DAO.LicenseDAO">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
 </beans>
