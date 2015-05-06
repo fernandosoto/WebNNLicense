@@ -44,6 +44,7 @@ public class deleteController {
     @RequestMapping(value = "/delete_index", method = RequestMethod.GET)
     public String deleteIndex(ModelMap model)
     {
+
         delForm.setRadioButtonAlternatives("Purchase");
         delForm.setRadioButtonAlternatives("License");
 

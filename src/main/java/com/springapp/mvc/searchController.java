@@ -3,6 +3,7 @@ package com.springapp.mvc;
 import Backend.DAO.LicenseDAO;
 import Backend.DAO.PurchaseDAO;
 import Backend.Purchase;
+import Backend.SearchForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -23,24 +24,22 @@ public class searchController
     private PurchaseDAO pdao;
     private LicenseDAO ldao;
 
-    @RequestMapping(value = "/searchPurchaseName")
+    @RequestMapping(value = "/search_inner",method = RequestMethod.GET)
     public String searchPurchaseByName(ModelMap model)
     {
-        model.addAttribute("msg","Search by Product Name!");
-        model.addAttribute("message","Product Name");
-        model.addAttribute("var","productName");
-        model.addAttribute("purchase", new Purchase());
-        
-        return "searchPurchase";
+        model.addAttribute("searchForm", new SearchForm());
+        return "search/search_inner";
     }
 
-    @RequestMapping(value = "/searchPurchaseName",method = RequestMethod.POST)
-    public String showPurchase(@ModelAttribute Purchase purchase, ModelMap model)
+    @RequestMapping(value = "/search_inner",method = RequestMethod.POST)
+    public String showPurchase(@ModelAttribute SearchForm searchForm, ModelMap model)
     {
-        List<Purchase> p = pdao.searchPurchaseByName(purchase.getProductName());
+        List<Purchase> p = pdao.searchPurchaseByName(searchForm.getPurchase().getProductName());
         model.addAttribute("purchases",p);
-        return "showPurchase";
+        return "search/search_results";
     }
+
+
 
     @RequestMapping(value = "/searchPurchaseDistributor")
     public String searchPurchaseByDistributor(ModelMap model)

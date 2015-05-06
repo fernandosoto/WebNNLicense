@@ -64,14 +64,18 @@
 			<div class="content">
 				<form:form commandName="searchForm" method="POST">
 					<div class="fieldset">
-					<fieldset>
-					<nav>
-						<ul>
-							<li><br>Product name: <form:input path="searchCriteriaProductName" type="text"/></li>
-							<li><br><input type="submit" value="Search" />  <input type="reset" value="Clear"/></li>
-						</ul>
-					</nav><!-- end navigation menu -->
-					</fieldset>
+						<fieldset>
+							<nav>
+								<ul>
+
+									<li><br>Search results:
+										<form:select path="purchase.productName" title="results" multiple="true">
+											<form:option value="NONE" label="--- Select ---"/>
+											<form:options items="${purchases}" itemValue="productName" itemLabel="productName"/>
+										</form:select>
+								</ul>
+							</nav><!-- end navigation menu -->
+						</fieldset>
 					</div>
 				</form:form>
 
