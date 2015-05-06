@@ -39,10 +39,19 @@ public class LicenseDAO implements LicenseDAOInterface {
 
     @Transactional
     @Override
-    public void deleteLicense(License l, String userName) {
-        String sql = "INSERT INTO DELETED_LICENSE(DELETED_BY, DELETED_DATE, LICENSE_KEY_ID) VALUES ('" + userName + "', "
-                + new Date(System.currentTimeMillis()) + ", " + l.getLicenseId() +  ");";
-        db.update(sql);
+    public void deleteLicense(final License l, final String userName) {
+//        String sql = "INSERT INTO DELETED_LICENSE(DELETED_BY, DELETED_DATE, LICENSE_KEY_ID) VALUES ('" + userName + "', "
+//                + new Date(System.currentTimeMillis()) + ", " + l.getLicenseId() +  ");";
+        db.update(new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                PreparedStatement ps = connection.prepareStatement("INSERT INTO DELETED_LICENSE(DELETED_BY, DELETED_DATE, LICENSE_KEY_ID) VALUES (?, ?, ?)");
+                ps.setString(1, userName);
+                ps.setDate(2, new Date(System.currentTimeMillis()));
+                ps.setLong(3, l.getLicenseId());
+                return ps;
+            }
+        });
     }
 
     public List<License> searchDeletedLicenses(){
