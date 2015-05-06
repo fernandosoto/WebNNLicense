@@ -69,16 +69,16 @@
 						<ul>
 							<li><br>Product name: <form:input path="purchases.productName" type="text"/></li>
 							<li><br>Manufacturer Name:
-								<form:select path="purchases.manufacturerName" title="Select manufacturer">
+								<form:select path="manufacturer.id" title="Select manufacturer">
 									<form:option value="NONE" label="--- Select ---"/>
-									<form:options items="${manufacturers}" itemValue="name" itemLabel="name"/>
+									<form:options items="${manufacturers}" itemValue="id" itemLabel="name"/>
 									</form:select>
 								<input type="button" value="Edit" />  <input type="button" value="Delete" />
 							</li>
 							<li><br>Distributor Name:
-								<form:select path="purchases.distributorName" title="Select distributor">
+								<form:select path="distributor.id" title="Select distributor">
 									<form:option value="NONE" label="--- Select ---"/>
-									<form:options items="${distributors}" itemValue="name" itemLabel="name"/>
+									<form:options items="${distributors}" itemValue="id" itemLabel="name"/>
 								</form:select>
 								<input type="button" value="Edit" />  <input type="button" value="Delete" />
 							</li>

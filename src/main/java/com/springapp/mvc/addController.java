@@ -36,38 +36,27 @@ public class addController{
 
         licenses = regForm.getSerialKeysWithSeparatedLicenses();
         Purchase p= regForm.getPurchases();
-        System.out.println(p.getProductName());
+        purchaseID = db.addPurchase(p,"kalle",regForm.getManufacturer().getId(),regForm.getDistributor().getId());
 
-        purchaseID = db.addPurchase(p,"kalle",1,1);
-
-        for(License l: licenses){
-            l.setPurchaseId(purchaseID);
-            licenseDao.addLicense(l);
+        for(License L: licenses){
+            L.setPurchaseId(purchaseID);
+            System.out.println(L.getSerialKey());
+            licenseDao.addLicense(L);
         }
-
         return "add/add_inner";
     }
 
     private void getManufacturersAndDistributors(){
-
         manufacturers =  manufacturerDAO.searchManufacturerByName("");
         distributors = distributorDAO.searchDistributorByName("");
-
     }
-
 
     @RequestMapping("/addPurchase")
     public String addInner(ModelMap model)
     {
-       // manufacturers.add(new Manufacturer(0,"Adobe","freeee"));
-        //distributors.add(new Distributor(0,"webhallen","ffreee"));
-
         getManufacturersAndDistributors();
-        //System.out.println(manufacturers.get(0).getId());
-        //System.out.println(db.searchPurchaseByManufacturerName("gdfgfdfgfdddfgdf"));
-
         model.addAttribute("manufacturers", manufacturers);
-        model.addAttribute("distributors",distributors);
+        model.addAttribute("distributors", distributors);
         model.addAttribute("registerForm",new RegisterForm());
         return "add/add_inner";
     }

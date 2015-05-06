@@ -23,7 +23,7 @@ import java.util.List;
 public class searchController
 {
     @Autowired
-    private PurchaseDAOInterface pdao;
+    private PurchaseDAO pdao;
     @Autowired
     private LicenseDAOInterface ldao;
 
