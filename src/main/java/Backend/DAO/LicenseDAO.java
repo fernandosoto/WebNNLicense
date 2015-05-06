@@ -39,18 +39,35 @@ public class LicenseDAO implements LicenseDAOInterface {
 
     @Transactional
     @Override
-    public void deleteLicense(License l, String userName) {
-        String sql = "INSERT INTO DELETED_LICENSE(DELETED_BY, DELETED_DATE, LICENSE_KEY_ID) VALUES ('" + userName + "', "
-                + new Date(System.currentTimeMillis()) + ", " + l.getLicenseId() +  ");";
-        db.update(sql);
+    public void deleteLicense(final License l, final String userName) {
+//        String sql = "INSERT INTO DELETED_LICENSE(DELETED_BY, DELETED_DATE, LICENSE_KEY_ID) VALUES ('" + userName + "', "
+//                + new Date(System.currentTimeMillis()) + ", " + l.getLicenseId() +  ");";
+        db.update(new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                PreparedStatement ps = connection.prepareStatement("INSERT INTO DELETED_LICENSE(DELETED_BY, DELETED_DATE, LICENSE_KEY_ID) VALUES (?, ?, ?)");
+                ps.setString(1, userName);
+                ps.setDate(2, new Date(System.currentTimeMillis()));
+                ps.setLong(3, l.getLicenseId());
+                return ps;
+            }
+        });
     }
 
     public List<License> searchDeletedLicenses(){
-        String sql = "SELECT L.*, DL.DELETED_BY, DL.DELETED_DATE " +
-                " FROM  LICENSE_KEY L, DELETED_LICENSE DL" +
-                " WHERE DL.LICENSE_KEY_ID = L.LICENSE_KEY_ID;";
+//        String sql = "SELECT L.*, DL.DELETED_BY, DL.DELETED_DATE " +
+//                " FROM  LICENSE_KEY L, DELETED_LICENSE DL" +
+//                " WHERE DL.LICENSE_KEY_ID = L.LICENSE_KEY_ID;";
 
-        List<License> l = db.query(sql, new RowMapper<License>() {
+        List<License> l = db.query(new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                PreparedStatement ps = connection.prepareStatement("SELECT L.*, DL.DELETED_BY, DL.DELETED_DATE " +
+                        " FROM  LICENSE_KEY L, DELETED_LICENSE DL" +
+                        " WHERE DL.LICENSE_KEY_ID = L.LICENSE_KEY_ID");
+                return ps;
+            }
+        }, new RowMapper<License>() {
             @Override
             public License mapRow(ResultSet rs, int i) throws SQLException {
                 return new License(rs.getLong("LICENSE_ID"), rs.getString("LICENSE_USER"), rs.getString("LICENSE_KEY"),
@@ -62,11 +79,19 @@ public class LicenseDAO implements LicenseDAOInterface {
     }
 
     @Override
-    public List<License> searchLicenseByUser(String name) {
-        String sql = "SELECT * FROM LICENSE WHERE LICENSE_USER LIKE '" + name + "%'"
-                + " AND L.LICENSE_KEY_ID != DL.LICENSE_KEY_ID;";
+    public List<License> searchLicenseByUser(final String name) {
+//        String sql = "SELECT * FROM LICENSE WHERE LICENSE_USER LIKE '" + name + "%'"
+//                + " AND L.LICENSE_KEY_ID != DL.LICENSE_KEY_ID;";
 
-        List<License> l = db.query(sql, new RowMapper<License>() {
+        List<License> l = db.query(new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                PreparedStatement ps = connection.prepareStatement("SELECT * FROM LICENSE WHERE LICENSE_USER LIKE ?" +
+                        " AND L.LICENSE_KEY_ID != DL.LICENSE_KEY_ID");
+                ps.setString(1, name+"%");
+                return ps;
+            }
+        }, new RowMapper<License>() {
             @Override
             public License mapRow(ResultSet rs, int i) throws SQLException {
                 return new License(rs.getLong("LICENSE_ID"), rs.getString("LICENSE_USER"), rs.getString("LICENSE_KEY"),
@@ -78,11 +103,19 @@ public class LicenseDAO implements LicenseDAOInterface {
     }
 
     @Override
-    public List<License> searchLicenseByPurchase(Purchase p) {
-        String sql = "SELECT * FROM LICENSE WHERE L_PURCHASE_ID = " + p.getPurchaseId()
-                + " AND L.LICENSE_KEY_ID != DL.LICENSE_KEY_ID;";
+    public List<License> searchLicenseByPurchase(final Purchase p) {
+//        String sql = "SELECT * FROM LICENSE WHERE L_PURCHASE_ID = " + p.getPurchaseId()
+//                + " AND L.LICENSE_KEY_ID != DL.LICENSE_KEY_ID;";
 
-        List<License> l = db.query(sql, new RowMapper<License>() {
+        List<License> l = db.query(new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                PreparedStatement ps = connection.prepareStatement("SELECT * FROM LICENSE WHERE L_PURCHASE_ID = ?"
+                        + " AND L.LICENSE_KEY_ID != DL.LICENSE_KEY_ID");
+                ps.setLong(1, p.getPurchaseId());
+                return ps;
+            }
+        }, new RowMapper<License>() {
             @Override
             public License mapRow(ResultSet rs, int i) throws SQLException {
                 return new License(rs.getLong("LICENSE_ID"), rs.getString("LICENSE_USER"), rs.getString("LICENSE_KEY"),
@@ -94,11 +127,19 @@ public class LicenseDAO implements LicenseDAOInterface {
     }
 
     @Override
-    public License searchLicenseById(Long id) {
-        String sql = "SELECT * FROM LICENSE WHERE LICENSE_KEY_ID = " + id
-                + " AND L.LICENSE_KEY_ID != DL.LICENSE_KEY_ID;";
+    public License searchLicenseById(final Long id) {
+//        String sql = "SELECT * FROM LICENSE WHERE LICENSE_KEY_ID = " + id
+//                + " AND L.LICENSE_KEY_ID != DL.LICENSE_KEY_ID;";
 
-        List<License> l = db.query(sql, new RowMapper<License>() {
+        List<License> l = db.query(new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                PreparedStatement ps = connection.prepareStatement("SELECT * FROM LICENSE WHERE LICENSE_KEY_ID = ?"
+                + " AND L.LICENSE_KEY_ID != DL.LICENSE_KEY_ID");
+                ps.setLong(1, id);
+                return ps;
+            }
+        }, new RowMapper<License>() {
             @Override
             public License mapRow(ResultSet rs, int i) throws SQLException {
                 return new License(rs.getLong("LICENSE_ID"), rs.getString("LICENSE_USER"), rs.getString("LICENSE_KEY"),
