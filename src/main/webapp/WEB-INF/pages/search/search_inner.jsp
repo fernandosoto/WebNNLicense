@@ -62,7 +62,7 @@
 
 		<section class="wrapper">
 			<div class="content">
-				<form:form commandName="purchase" method="POST">
+				<form:form commandName="searchForm" method="POST">
 					<div class="fieldset">
 					<fieldset>
 					<nav>
