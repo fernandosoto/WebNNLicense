@@ -521,8 +521,10 @@ fieldset{
 
 
 
-
-
+/* Vet ej om det funkar, undersök! Ska göra så att unordered-lists slipper punkter osv (ej punktlista)*/
+ul {
+    list-style:none;
+}
 
 
 /*  Responsive code  */

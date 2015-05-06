@@ -92,11 +92,11 @@
 		</div>
 
 		<div class="work">
-			<a href="inner">
+			<a href="delete_index">
 				<img src="../../../resources/NNLicenseTheme/Nordnet/img/deleteLicense.jpg" class="media" alt=""/>
 				<div class="caption">
 					<div class="work_title">
-						<h1>Delete License</h1>
+						<h1>Delete purchase/license</h1>
 					</div>
 				</div>
 			</a>
