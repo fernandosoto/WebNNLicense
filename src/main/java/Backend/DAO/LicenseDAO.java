@@ -3,13 +3,12 @@ package Backend.DAO;
 import Backend.License;
 import Backend.Purchase;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Date;
+import java.sql.*;
 import java.util.List;
 
 /**
@@ -21,11 +20,21 @@ public class LicenseDAO implements LicenseDAOInterface {
 
     @Override
     @Transactional
-    public void addLicense(License l) {
-        String sql = "INSERT INTO LICENSE_KEY(LICENSE_USER, SERIAL_KEY, PURCHASE_ID, EXPIRE_DATE) VALUES '" +
-                l.getUser() +"', '" + l.getSerialKey() +"', '" + l.getPurchaseId() + "', '" + l.getExpireDate() +
-                "';";
-        db.update(sql);
+    public void addLicense(final License l) {
+        //String sql = "INSERT INTO LICENSE_KEY(LICENSE_USER, SERIAL_KEY, PURCHASE_ID, EXPIRE_DATE) VALUES '" +
+        //        l.getUser() +"', '" + l.getSerialKey() +"', '" + l.getPurchaseId() + "', '" + l.getExpireDate() +
+        //        "';";
+        //db.update(sql);
+        db.update(new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                PreparedStatement ps = connection.prepareStatement("INSERT INTO LICENSE_KEY(LICENSE_USER, SERIAL_KEY, PURCHASE_ID, EXPIRE_DATE) VALUES(NULL, ?, ?, ?)");
+                ps.setString(1, l.getSerialKey());
+                ps.setLong(2, l.getPurchaseId());
+                ps.setDate(3, l.getExpireDate());
+                return ps;
+            }
+        });
     }
 
     @Transactional

@@ -19,22 +19,27 @@ import java.util.List;
 public class addController{
     @Autowired
     private PurchaseDAOInterface db;
+    @Autowired
     private LicenseDAOInterface licenseDao;
+    @Autowired
     private ManufacturerDAOInterface manufacturerDAO;
+    @Autowired
     private DistributorDAOInterface distributorDAO;
 
-    List<Manufacturer> manufacturers = new ArrayList<Manufacturer>();
-    List<Distributor> distributors = new ArrayList<Distributor>();
+    private List<Manufacturer> manufacturers = new ArrayList<Manufacturer>();
+    private List<Distributor> distributors = new ArrayList<Distributor>();
 
-    @RequestMapping(value = "/addPurchase", method = RequestMethod.POST)
+    @RequestMapping(value = "/addPurchase",method = RequestMethod.POST)
     public String printWelcome(@ModelAttribute RegisterForm regForm,ModelMap model) {
-        db = new PurchaseDAO();
         Long purchaseID;
         List<License> licenses = new ArrayList<License>();
+
         licenses = regForm.getSerialKeysWithSeparatedLicenses();
-        Purchase p = regForm.getPurchases();
+        Purchase p= regForm.getPurchases();
         System.out.println(p.getProductName());
+
         purchaseID = db.addPurchase(p,"kalle",1,1);
+
         for(License l: licenses){
             l.setPurchaseId(purchaseID);
             licenseDao.addLicense(l);
@@ -47,14 +52,19 @@ public class addController{
 
         manufacturers =  manufacturerDAO.searchManufacturerByName("");
         distributors = distributorDAO.searchDistributorByName("");
+
     }
 
 
     @RequestMapping("/addPurchase")
     public String addInner(ModelMap model)
     {
-        manufacturers.add(new Manufacturer(0,"Adobe","freeee"));
-        distributors.add(new Distributor(0,"webhallen","ffreee"));
+       // manufacturers.add(new Manufacturer(0,"Adobe","freeee"));
+        //distributors.add(new Distributor(0,"webhallen","ffreee"));
+
+        getManufacturersAndDistributors();
+        //System.out.println(manufacturers.get(0).getId());
+        //System.out.println(db.searchPurchaseByManufacturerName("gdfgfdfgfdddfgdf"));
 
         model.addAttribute("manufacturers", manufacturers);
         model.addAttribute("distributors",distributors);
