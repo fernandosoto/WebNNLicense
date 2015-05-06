@@ -1,7 +1,9 @@
 package com.springapp.mvc;
 
 import Backend.DAO.LicenseDAO;
+import Backend.DAO.LicenseDAOInterface;
 import Backend.DAO.PurchaseDAO;
+import Backend.DAO.PurchaseDAOInterface;
 import Backend.Purchase;
 import Backend.SearchForm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +23,9 @@ import java.util.List;
 public class searchController
 {
     @Autowired
-    private PurchaseDAO pdao;
-    private LicenseDAO ldao;
+    private PurchaseDAOInterface pdao;
+    @Autowired
+    private LicenseDAOInterface ldao;
 
     @RequestMapping(value = "/search_inner",method = RequestMethod.GET)
     public String searchPurchaseByName(ModelMap model)

@@ -134,9 +134,9 @@ public class PurchaseDAO implements PurchaseDAOInterface {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
                 PreparedStatement ps = connection.prepareStatement("SELECT P.PURCHASE_ID, P.PRODUCT_NAME, P.LICENSE_TYPE, P.FREE_TEXT, D.DISTRIBUTOR_NAME, M.MANUFACTURER_NAME" +
-                        " FROM PURCHASE P, MANUFACTURER M, DISTRIBUTOR D, DELETED_PURCHASE DP" +
+                        " FROM PURCHASE P, MANUFACTURER M, DISTRIBUTOR D, DELETED_PURCHASE DP, CREATOR C" +
                         " WHERE M.MANUFACTURER_ID = P.MANUFACTURER_ID AND D.DISTRIBUTOR_ID = P.DISTRIBUTOR_ID" +
-                        " AND P.PRODUCT_NAME LIKE " + "?" + "%'"  + " AND DP.PURCHASE_ID != P.PURCHASE_ID" + " AND P.PURCHASE_ID = " + " C.PURCHASE_ID;");
+                        " AND P.PRODUCT_NAME LIKE " + "?"  + " AND DP.D_PURCHASE_ID != P.PURCHASE_ID" + " AND P.PURCHASE_ID = " + " C.C_PURCHASE_ID;");
                 ps.setString(1, name);
                 return ps;
             }
