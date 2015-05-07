@@ -21,7 +21,7 @@
 		<div id="menu_icon"></div>
 		<nav>
 			<ul>
-				<li><a href="index" class="selected">Main</a></li>
+				<li><a href="/" class="selected">Main</a></li>
 				<li><a href="#">...</a></li>
 				<li><a href="#">...</a></li>
 				<li><a href="#">...</a></li>

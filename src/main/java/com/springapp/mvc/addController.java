@@ -32,15 +32,15 @@ public class addController{
     @RequestMapping(value = "/addPurchase",method = RequestMethod.POST)
     public String printWelcome(@ModelAttribute RegisterForm regForm,ModelMap model) {
         Long purchaseID;
-        List<License> licenses = new ArrayList<License>();
+        List<License> licenses;
 
         licenses = regForm.getSerialKeysWithSeparatedLicenses();
         Purchase p= regForm.getPurchases();
         purchaseID = db.addPurchase(p,"kalle",regForm.getManufacturer().getId(),regForm.getDistributor().getId());
 
+
         for(License L: licenses){
             L.setPurchaseId(purchaseID);
-            System.out.println(L.getSerialKey());
             licenseDao.addLicense(L);
         }
         return "add/add_inner";

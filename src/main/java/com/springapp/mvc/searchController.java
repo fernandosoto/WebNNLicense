@@ -27,6 +27,9 @@ public class searchController
     @Autowired
     private LicenseDAOInterface ldao;
 
+
+
+
     @RequestMapping(value = "/search_inner",method = RequestMethod.GET)
     public String searchPurchaseByName(ModelMap model)
     {
@@ -41,6 +44,10 @@ public class searchController
         model.addAttribute("purchases",p);
         return "search/search_results";
     }
+
+
+
+
 
 
 

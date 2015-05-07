@@ -37,14 +37,13 @@ public class deleteController {
 
 
         //pDAO.deletePurchase(p, "Kalle");
-        return "delete/delete_index";
+        return "delete/delete_inner";
     }
 
 
     @RequestMapping(value = "/delete_index", method = RequestMethod.GET)
     public String deleteIndex(ModelMap model)
     {
-
         delForm.setRadioButtonAlternatives("Purchase");
         delForm.setRadioButtonAlternatives("License");
 
@@ -52,6 +51,9 @@ public class deleteController {
         model.addAttribute("deleteForm", delForm);
         return "delete/delete_index";
     }
+
+
+
 
 
     // -------------------------------- Delete_inner -----------------------------

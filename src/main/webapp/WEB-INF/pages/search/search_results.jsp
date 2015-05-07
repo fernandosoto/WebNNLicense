@@ -6,7 +6,7 @@
 
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>Nordnet - Search</title>
+	<title>Nordnet - Search results</title>
 	<meta charset="utf-8">
 	<meta name="author" content="pixelhint.com">
 	<meta name="description" content="Nordnet - Add License"/>
@@ -26,7 +26,7 @@
 		<div id="menu_icon"></div>
 		<nav>
 			<ul>
-				<li><a href="main/index.jsp">Home</a></li>
+				<li><a href="/">Main</a></li>
 				<li><a href="#">...</a></li>
 				<li><a href="#">...</a></li>
 				<li><a href="#">...</a></li>
@@ -56,7 +56,7 @@
 					</ul>
 					
 				</div><!-- end work_nav -->
-				<h1 class="title">Search</h1>
+				<h1 class="title">Search result</h1>
 			</div>		
 		</section><!-- end top -->
 
@@ -66,13 +66,13 @@
 					<div class="fieldset">
 						<fieldset>
 							<nav>
-								<ul>
-
+								<ul style="list-style: none;">
 									<li><br>Search results:
-										<form:select path="purchase.productName" title="results" multiple="true">
-											<form:option value="NONE" label="--- Select ---"/>
+										<form:select path="purchase.productName" title="results" size="8" style="width: 300px;">
+											<form:option value="NONE" label="--- Select ---" />
 											<form:options items="${purchases}" itemValue="productName" itemLabel="productName"/>
 										</form:select>
+								<li><br><input type="BUTTON" value="Details" /> <a href="/search_inner" ><input type="button" value="New search"/></a></li>
 								</ul>
 							</nav><!-- end navigation menu -->
 						</fieldset>

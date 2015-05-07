@@ -27,7 +27,7 @@
   <div id="menu_icon"></div>
   <nav>
     <ul>
-      <li><a href="main/index.jsp">Home</a></li>
+      <li><a href=</a></li>
       <li><a href="#">...</a></li>
       <li><a href="#">...</a></li>
       <li><a href="#">...</a></li>
