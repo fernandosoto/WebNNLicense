@@ -3,7 +3,7 @@ package com.springapp.mvc;
 import Backend.DAO.DistributorDAOInterface;
 import Backend.DAO.ManufacturerDAOInterface;
 import Backend.DAO.PurchaseDAOInterface;
-import Backend.DeleteForm;
+import Backend.DeletedForm;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,14 +17,14 @@ public class deleteController {
     private PurchaseDAOInterface pDAO;
     private ManufacturerDAOInterface mDAO;
     private DistributorDAOInterface dDAO;
-    private DeleteForm delForm = new DeleteForm();
+    private DeletedForm delForm = new DeletedForm();
 
 
     // ------------------------ Delete_index -------------------------
 
 
     @RequestMapping(value = "/delete_index",method = RequestMethod.POST)
-    public String deleteIndex(@ModelAttribute DeleteForm delForm, ModelMap model) {
+    public String deleteIndex(@ModelAttribute DeletedForm delForm, ModelMap model) {
 
 
         //pDAO.deletePurchase(p, "Kalle");
@@ -51,7 +51,7 @@ public class deleteController {
 
 
     @RequestMapping(value = "/delete_inner",method = RequestMethod.POST)
-    public String deleteInner(@ModelAttribute DeleteForm delForm, ModelMap model) {
+    public String deleteInner(@ModelAttribute DeletedForm delForm, ModelMap model) {
 
         return "delete/delete_inner";
     }
