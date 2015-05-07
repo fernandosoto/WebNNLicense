@@ -37,7 +37,7 @@ public class deleteController {
 
 
         //pDAO.deletePurchase(p, "Kalle");
-        return "delete/delete_index";
+        return "delete/delete_inner";
     }
 
 
@@ -51,6 +51,9 @@ public class deleteController {
         model.addAttribute("deleteForm", delForm);
         return "delete/delete_index";
     }
+
+
+
 
 
     // -------------------------------- Delete_inner -----------------------------

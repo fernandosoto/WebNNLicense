@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import Backend.Distributor;
 
 /**
  * Created by Thomas on 2015-04-28.
@@ -16,13 +17,27 @@ public class RegisterForm {
     private String date;
     private List<License> licenses = new ArrayList<License>();
     private String keySeparator;
-    private List<Manufacturer> manufacturers = new ArrayList<Manufacturer>();
-    private List<Distributor> distributors = new ArrayList<Distributor>();
+
+    private Manufacturer manufacturer;
+    private Distributor distributor;
     private Purchase purchases;
     public String name;
 
-    public RegisterForm(){
 
+    public Distributor getDistributor() {
+        return distributor;
+    }
+
+    public void setDistributor(Distributor distributor) {
+        this.distributor = distributor;
+    }
+
+    public Manufacturer getManufacturer() {
+        return manufacturer;
+    }
+
+    public void setManufacturer(Manufacturer manufacturer) {
+        this.manufacturer = manufacturer;
     }
 
     public List<License> getSerialKeysWithSeparatedLicenses(){
@@ -42,22 +57,6 @@ public class RegisterForm {
         return licenses;
     }
 
-
-    public List<Manufacturer> getManufacturers() {
-        return manufacturers;
-    }
-
-    public void setManufacturers(List<Manufacturer> manufacturers) {
-        this.manufacturers = manufacturers;
-    }
-
-    public List<Distributor> getDistributors() {
-        return distributors;
-    }
-
-    public void setDistributors(List<Distributor> distributors) {
-        this.distributors = distributors;
-    }
 
 
     public String getSerialKeys() {

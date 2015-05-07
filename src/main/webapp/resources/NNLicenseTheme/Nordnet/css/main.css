@@ -266,7 +266,7 @@ h5, h6          { font-weight: bolder }
 /*  Main  */
 .main{
     width: 100%;
-    height: 100%;
+    height: auto;
     padding-left: 300px;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -279,7 +279,7 @@ h5, h6          { font-weight: bolder }
 
 
 
-/*  Home/portfolio  */
+/*  Index buttons/icons  */
 .main .work{
     display: block;
     width: 33.33333333333333%;
@@ -299,7 +299,7 @@ h5, h6          { font-weight: bolder }
     display: block;
     width: 100%;
     height: 100%;
-    top: 0; 
+    top: 0;
     left: 0;
     background: #ffffff;
     opacity: 0;
@@ -334,7 +334,9 @@ h5, h6          { font-weight: bolder }
     border-top: 1px solid #bfbbbb;
 }
 
-/*  Inner Page  */
+/*                              Inner Page                                 */
+
+/* upper half of page, image */
 .top{
     width: 100%;
     height: 250px;
@@ -389,6 +391,8 @@ h5, h6          { font-weight: bolder }
     background-position: -82px 0;
 }
 
+
+/* head title of inner page*/
 .top .title{
     display: block;
     width: 100%;color: #4b4848;
@@ -424,7 +428,7 @@ fieldset{
 }
 
 
-/*Text on the inner page*/
+/*Text, color on the inner page*/
 .content{
     color: #4b4848;
     font-family: "raleway-bold", arial;
@@ -434,13 +438,13 @@ fieldset{
     padding: 60px 30px;
 
     background: #fff;
-
-
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     -ms-box-sizing: border-box;
     box-sizing: border-box;
 }
+
+
 
 .content p{
     color: #4b4848;
@@ -465,7 +469,7 @@ fieldset{
 
 }
 
-
+/*                                Inget nedan används för tillfället. (6/5)                           */
 
 /*  Contact page map  */
 #map .map_adresse{
@@ -521,12 +525,6 @@ fieldset{
 
 
 
-/* Vet ej om det funkar, undersök! Ska göra så att unordered-lists slipper punkter osv (ej punktlista)*/
-ul {
-    list-style:none;
-}
-
-
 /*  Responsive code  */
 @media (max-width:1100px){
 
@@ -548,7 +546,7 @@ ul {
     header .close_menu{
         float: right;
         margin: 30px 30px 0 0;
-    }    
+    }
     header nav{
         width: 100%;
         position: absolute;
@@ -574,6 +572,8 @@ ul {
         border-top: 1px solid #f7f5f5;
         background: #fff;
     }
+
+
     header nav ul li a:active{
         background: #f7f5f5;
     }

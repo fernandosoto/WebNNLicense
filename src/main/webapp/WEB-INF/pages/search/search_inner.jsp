@@ -26,7 +26,7 @@
 		<div id="menu_icon"></div>
 		<nav>
 			<ul>
-				<li><a href="main/index.jsp">Home</a></li>
+				<li><a href="/">Main</a></li>
 				<li><a href="#">...</a></li>
 				<li><a href="#">...</a></li>
 				<li><a href="#">...</a></li>
@@ -67,32 +67,14 @@
 					<fieldset>
 					<nav>
 						<ul>
-							<li><br>Product name: <form:input path="productName" type="text"/></li>
-							<li><br>Manufacturer Name:
-								<form:select path="manufacturerName" title="Select manufacturer">
-									<form:option value="NONE" label="--- Select ---"/>
-									<form:options items="${manufacturers}" itemValue="name" itemLabel="name"/>
-									</form:select>
-								<input type="button" value="Edit" />  <input type="button" value="Delete" />
-							</li>
-							<li><br>Distributor Name:
-								<form:select path="distributorName" title="Select distributor">
-									<form:option value="NONE" label="--- Select ---"/>
-									<form:options items="${distributors}" itemValue="name" itemLabel="name"/>
-								</form:select>
-								<input type="button" value="Edit" />  <input type="button" value="Delete" />
-							</li>
-							<li><br>Expire date: <input type="Date"></li>
-
-							<li><br>License type: <form:input path="type" type="text"/></li>
-							<li><br>Comments:<form:textarea path="freeText" rows="5" cols="30" /></li>
-							<li><br><input type="submit" value="Add" />  <input type="reset" value="Clear"/></li>
+							<li><br>Product name: <form:input path="purchase.productName" type="text"/></li>
+							<li><br><input type="submit" value="Search" />  <input type="reset" value="Clear"/></li>
 						</ul>
-
 					</nav><!-- end navigation menu -->
 					</fieldset>
 					</div>
 				</form:form>
+
 
 
 			</div><!-- end content -->
