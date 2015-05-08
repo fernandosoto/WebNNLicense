@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -68,8 +67,8 @@ public class searchController
     @RequestMapping(value = "/search_details",method = RequestMethod.GET)
     public String searchDetails(ModelMap model)
     {
-        List<License> licenses = ldao.searchLicenseByPurchase(searchForm.getPurchase());
-
+        List<License> dbLicenses = ldao.searchLicenseByPurchase(searchForm.getPurchase());
+        List<String> licenses = searchForm.LicenseDetailToString(dbLicenses);
         model.addAttribute("licenses", licenses);
         model.addAttribute("searchForm", searchForm);
         return "search/search_details";

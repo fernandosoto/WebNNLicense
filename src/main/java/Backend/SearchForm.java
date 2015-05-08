@@ -9,6 +9,14 @@ import java.util.List;
 public class SearchForm {
     private Purchase purchase;
 
+    public List<String> LicenseDetailToString(List<License> licenses){
+        List<String> licenseDetails = new ArrayList<String>();
+        for(License l : licenses){
+            licenseDetails.add(l.getSerialKey() +", User: " + l.getUser() + ", Expire date: "+ l.getExpireDate());
+        }
+        return licenseDetails;
+    }
+
     public Purchase getPurchase() {
         return purchase;
     }
@@ -16,5 +24,7 @@ public class SearchForm {
     public void setPurchase(Purchase purchase) {
         this.purchase = purchase;
     }
+
+
 
 }

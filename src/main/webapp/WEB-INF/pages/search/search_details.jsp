@@ -67,11 +67,19 @@
 					<fieldset>
 					<nav>
 						<ul>
+							<div align="left">
 							<li><br>Product name: <form:input path="purchase.productName" value="${purchase.productName}" readonly="true" cssStyle="border: hidden"/></li>
-							<li><br><form:select path="" title="Licenses" size="8" style="width: 300px; background-color:#f6f6f6;" multiple="true">
-								<form:option value="NONE" label="-- Available licenses --" disabled="true"/>
-								<form:options items="${licenses}" itemValue="licenseId" itemLabel="serialKey" title="Available licenses"/>
+							<li><br>Manufacturer: <form:input path="purchase.manufacturerName" value="${purchase.manufacturerName}" readonly="true" cssStyle="border: hidden"/></li>
+							<li><br>Distributor: <form:input path="purchase.distributorName" value="${purchase.distributorName}" readonly="true" cssStyle="border: hidden"/></li>
+							<li><br>Created by: <form:input path="purchase.createdBy" value="${purchase.createdBy}" readonly="true" cssStyle="border: hidden"/></li>
+							<li><br>Created date: <form:input path="purchase.createdDate" value="${purchase.createdDate}" readonly="true" cssStyle="border: hidden"/></li>
+							</div>
+							<li><br>Serial Keys:<br><form:select path="" title="Licenses" size="6" style="width: 400px; background-color:#f6f6f6;" multiple="true">
+								<form:options items="${licenses}" title="Available licenses"/>
 							</form:select></li>
+							<li><br><input type="button"  onClick="window.print()"  value="Print details"/></li>
+
+
 						</ul>
 					</nav><!-- end navigation menu -->
 					</fieldset>
