@@ -28,10 +28,11 @@ public class LicenseDAO implements LicenseDAOInterface {
         db.update(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                PreparedStatement ps = connection.prepareStatement("INSERT INTO LICENSE_KEY(LICENSE_USER, SERIAL_KEY, PURCHASE_ID, EXPIRE_DATE) VALUES(NULL, ?, ?, ?)");
-                ps.setString(1, l.getSerialKey());
-                ps.setLong(2, l.getPurchaseId());
-                ps.setDate(3, l.getExpireDate());
+                PreparedStatement ps = connection.prepareStatement("INSERT INTO LICENSE_KEY(LICENSE_USER, SERIAL_KEY, PURCHASE_ID, EXPIRE_DATE) VALUES(?, ?, ?, ?)");
+                ps.setString(1, null);
+                ps.setString(2, l.getSerialKey());
+                ps.setLong(3, l.getPurchaseId());
+                ps.setDate(4, l.getExpireDate());
                 return ps;
             }
         });
