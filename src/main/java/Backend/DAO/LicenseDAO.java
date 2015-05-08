@@ -113,7 +113,7 @@ public class LicenseDAO implements LicenseDAOInterface {
                 PreparedStatement ps = connection.prepareStatement("SELECT * " +
                         "FROM LICENSE_KEY " +
                         "WHERE PURCHASE_ID = ?" +
-                        "AND LICENSE_KEY_ID NOT IN (SELECT DL.D_LICENSE_KEY_ID from DELETED_LICENSE DL)");
+                        "AND LICENSE_KEY_ID NOT IN (SELECT D_LICENSE_KEY_ID from DELETED_LICENSE )");
                 ps.setLong(1, p.getPurchaseId());
                 return ps;
             }
