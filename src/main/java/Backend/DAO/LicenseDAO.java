@@ -86,7 +86,7 @@ public class LicenseDAO implements LicenseDAOInterface {
         List<License> l = db.query(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                PreparedStatement ps = connection.prepareStatement("SELECT * FROM LICENSE WHERE LICENSE_USER LIKE ?" +
+                PreparedStatement ps = connection.prepareStatement("SELECT * FROM LICENSE L WHERE LICENSE_USER LIKE ?" +
                         " AND L.LICENSE_KEY_ID != DL.LICENSE_KEY_ID");
                 ps.setString(1, name+"%");
                 return ps;
@@ -110,8 +110,10 @@ public class LicenseDAO implements LicenseDAOInterface {
         List<License> l = db.query(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                PreparedStatement ps = connection.prepareStatement("SELECT * FROM LICENSE WHERE L_PURCHASE_ID = ?"
-                        + " AND L.LICENSE_KEY_ID != DL.LICENSE_KEY_ID");
+                PreparedStatement ps = connection.prepareStatement("SELECT * " +
+                        "FROM LICENSE_KEY " +
+                        "WHERE PURCHASE_ID = ?" +
+                        "AND LICENSE_KEY_ID NOT IN (SELECT DL.D_LICENSE_KEY_ID from DELETED_LICENSE DL)");
                 ps.setLong(1, p.getPurchaseId());
                 return ps;
             }
