@@ -4,6 +4,7 @@ import Backend.DAO.LicenseDAO;
 import Backend.DAO.LicenseDAOInterface;
 import Backend.DAO.PurchaseDAO;
 import Backend.DAO.PurchaseDAOInterface;
+import Backend.License;
 import Backend.Purchase;
 import Backend.SearchForm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,84 +28,52 @@ public class searchController
     private PurchaseDAO pdao;
     @Autowired
     private LicenseDAOInterface ldao;
-
-
+    private SearchForm searchForm = new SearchForm();
 
 
     @RequestMapping(value = "/search_inner",method = RequestMethod.GET)
     public String searchPurchaseByName(ModelMap model)
     {
-        model.addAttribute("searchForm", new SearchForm());
+        model.addAttribute("searchForm", searchForm);
         return "search/search_inner";
     }
 
     @RequestMapping(value = "/search_inner",method = RequestMethod.POST)
     public String showPurchase(@ModelAttribute SearchForm searchForm, ModelMap model)
     {
+        this.searchForm.getPurchase().setProductName(searchForm.getPurchase().getProductName()); // Sätter namnet från webben
+        return "redirect:/search_results";
+    }
+
+    @RequestMapping(value = "/search_results",method = RequestMethod.GET)
+    public String searchResults(ModelMap model)
+    {
         List<Purchase> p = pdao.searchPurchaseByName(searchForm.getPurchase().getProductName());
-        model.addAttribute("purchases",p);
+        model.addAttribute("purchases", p);
+        model.addAttribute("searchForm", searchForm);
         return "search/search_results";
     }
 
 
-
-
-
-
-
-    @RequestMapping(value = "/searchPurchaseDistributor")
-    public String searchPurchaseByDistributor(ModelMap model)
+    @RequestMapping(value = "/search_results",method = RequestMethod.POST)
+    public String searchDetails(@ModelAttribute SearchForm searchForm, ModelMap model)
     {
-        model.addAttribute("msg","Search by Distributor Name!");
-        model.addAttribute("message","Distributor Name");
-        model.addAttribute("var","distributorName");
-        model.addAttribute("purchase",new Purchase());
-        return "searchPurchase";
+        Purchase purchase = pdao.searchPurchaseById(searchForm.getPurchase().getPurchaseId());
+        System.out.println(purchase.getPurchaseId());
+      //  System.out.println(this.searchForm.getPurchase().getPurchaseId());
+        this.searchForm.setPurchase(purchase);
+
+       // this.searchForm.getPurchase().setPurchaseId(searchForm.getPurchase().getPurchaseId());
+        return "redirect:/search_details";
     }
 
-    @RequestMapping(value = "/searchPurchaseDistributor",method = RequestMethod.POST)
-    public String showPurchaseByDistributor(@ModelAttribute Purchase purchase, ModelMap model)
+
+    @RequestMapping(value = "/search_details",method = RequestMethod.GET)
+    public String searchDetails(ModelMap model)
     {
-        List<Purchase> p = pdao.searchPurchaseByDistributorName(purchase.getDistributorName());
-        model.addAttribute("purchases",p);
-        return "showPurchase";
+        List<License> licenses = ldao.searchLicenseByPurchase(searchForm.getPurchase());
+        model.addAttribute("licenses", licenses);
+        model.addAttribute("searchForm", searchForm);
+        return "search/search_details";
     }
-
-    @RequestMapping(value = "/searchPurchaseManufacturer")
-    public String searchPurchaseByManufacturer(ModelMap model)
-    {
-        model.addAttribute("msg","Search by Manufacturer!");
-        model.addAttribute("message","Manufacturer Name");
-        model.addAttribute("var","manufacturerName");
-        model.addAttribute("purchase",new Purchase());
-        return "searchPurchase";
-    }
-
-    @RequestMapping(value = "/searchPurchaseManufacturer",method = RequestMethod.POST)
-    public String showPurchaseByManufacturer(@ModelAttribute Purchase purchase, ModelMap model)
-    {
-        List<Purchase> p = pdao.searchPurchaseByManufacturerName(purchase.getManufacturerName());
-        model.addAttribute("purchases",p);
-        return "showPurchase";
-    }
-
-    @RequestMapping(value = "/searchPurchaseType")
-    public String searchPurchaseByType(ModelMap model)
-    {
-        model.addAttribute("msg","Search by Type!");
-        model.addAttribute("message","Type");
-        model.addAttribute("var","type");
-        model.addAttribute("purchase",new Purchase());
-        return "searchPurchase";
-    }
-
-    @RequestMapping(value = "/searchPurchaseType",method = RequestMethod.POST)
-    public String showPurchaseByType(@ModelAttribute Purchase purchase, ModelMap model)
-    {
-        List<Purchase> p = pdao.searchPurchaseByManufacturerName(purchase.getManufacturerName());
-        model.addAttribute("purchases",p);
-
-        return "showPurchase";
-    }
-
 }

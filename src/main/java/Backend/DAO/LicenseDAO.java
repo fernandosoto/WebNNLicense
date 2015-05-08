@@ -113,15 +113,15 @@ public class LicenseDAO implements LicenseDAOInterface {
                 PreparedStatement ps = connection.prepareStatement("SELECT * " +
                         "FROM LICENSE_KEY " +
                         "WHERE PURCHASE_ID = ?" +
-                        "AND LICENSE_KEY_ID NOT IN (SELECT D_LICENSE_KEY_ID from DELETED_LICENSE )");
+                        " AND LICENSE_KEY_ID NOT IN (SELECT D_LICENSE_KEY_ID from DELETED_LICENSE )");
                 ps.setLong(1, p.getPurchaseId());
                 return ps;
             }
         }, new RowMapper<License>() {
             @Override
             public License mapRow(ResultSet rs, int i) throws SQLException {
-                return new License(rs.getLong("LICENSE_ID"), rs.getString("LICENSE_USER"), rs.getString("LICENSE_KEY"),
-                        rs.getLong("L_PURCHASE_ID"), rs.getDate("EXPIRE_DATE"));
+                return new License(rs.getLong("LICENSE_KEY_ID"), rs.getString("LICENSE_USER"), rs.getString("SERIAL_KEY"),
+                        rs.getLong("PURCHASE_ID"), rs.getDate("EXPIRE_DATE"));
             }
         });
 

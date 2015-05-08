@@ -68,7 +68,7 @@
 					<nav>
 						<ul>
 							<li><br>Product name: <form:input path="purchase.productName" type="text"/></li>
-							<li><br><input type="submit" value="Search" />  <input type="reset" value="Clear"/></li>
+							<li><br><a href="search_results"><input type="submit" value="Search" /></a>  <input type="reset" value="Clear"/></li>
 						</ul>
 					</nav><!-- end navigation menu -->
 					</fieldset>

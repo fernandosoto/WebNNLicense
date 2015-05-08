@@ -67,12 +67,13 @@
 						<fieldset>
 							<nav>
 								<ul style="list-style: none;">
-									<li><br>Search results:
-										<form:select path="purchase.productName" title="results" size="8" style="width: 300px;">
-											<form:option value="NONE" label="--- Select ---" />
-											<form:options items="${purchases}" itemValue="productName" itemLabel="productName"/>
+									<li><br>Search results:</li>
+									<li>
+										<form:select path="purchase.purchaseId" title="results" size="8" style="width: 300px;">
+											<form:option value="NONE" label="--- Select purchase ---" disabled="true"/>
+											<form:options items="${purchases}" itemValue="purchaseId" itemLabel="productName"/>
 										</form:select>
-								<li><br><input type="BUTTON" value="Details" /> <a href="/search_inner" ><input type="button" value="New search"/></a></li>
+								<li><br><input type="submit" value="Details"/> <a href="/search_inner" ><input type="button" value="New search"></a> </li>
 								</ul>
 							</nav><!-- end navigation menu -->
 						</fieldset>
