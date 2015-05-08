@@ -105,12 +105,14 @@ public class PurchaseDAO implements PurchaseDAOInterface {
 //                " AND P.PURCHASE_ID = " + id + " AND DP.PURCHASE_ID != P.PURCHASE_ID" + " AND P.PURCHASE_ID = " + " C.PURCHASE_ID;";
 
         return db.query(new PreparedStatementCreator() {
-            @Override
+                @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                PreparedStatement ps = connection.prepareStatement("SELECT P.PURCHASE_ID, P.PRODUCT_NAME, P.LICENSE_TYPE, P.FREE_TEXT, D.DISTRIBUTOR_NAME, M.MANUFACTURER_NAME, CR.CREATED_BY, CR.CREATED_DATE" +
-                        " FROM PURCHASE P, MANUFACTURER M, DISTRIBUTOR D, CREATOR CR, DELETED_PURCHASE DP" +
-                        " WHERE M.MANUFACTURER_ID = P.MANUFACTURER_ID AND D.DISTRIBUTOR_ID = P.DISTRIBUTOR_ID" +
-                        " AND P.PURCHASE_ID = " + "?" + " AND DP.PURCHASE_ID != P.PURCHASE_ID" + " AND P.PURCHASE_ID = " + " CR.PURCHASE_ID");
+                PreparedStatement ps = connection.prepareStatement("SELECT P.PURCHASE_ID, P.PRODUCT_NAME, P.LICENSE_TYPE, P.FREE_TEXT, D.DISTRIBUTOR_NAME, M.MANUFACTURER_NAME, CR.CREATED_BY,CR.CREATED_DATE " +
+                        "FROM PURCHASE P, MANUFACTURER M, DISTRIBUTOR D,CREATOR CR " +
+                        "WHERE M.MANUFACTURER_ID = P.MANUFACTURER_ID AND D.DISTRIBUTOR_ID = P.DISTRIBUTOR_ID " +
+                        "AND P.PURCHASE_ID = ? " +
+                        "AND CR.C_PURCHASE_ID = P.PURCHASE_ID " +
+                        "AND P.PURCHASE_ID NOT IN (SELECT DP.D_PURCHASE_ID from DELETED_PURCHASE DP)");
                 ps.setLong(1, id);
                 return ps;
             }
