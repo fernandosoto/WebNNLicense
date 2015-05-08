@@ -51,8 +51,6 @@ public class PurchaseDAO implements PurchaseDAOInterface {
                 return ps;
             }
         });
-
-        System.out.println(System.currentTimeMillis());
         return holder.getKey().longValue();// holder.getKey().longValue();
     }
 

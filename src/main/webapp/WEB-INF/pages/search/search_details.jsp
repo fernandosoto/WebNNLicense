@@ -70,7 +70,7 @@
 							<li><br>Product name: <form:input path="purchase.productName" value="${purchase.productName}" readonly="true" cssStyle="border: hidden"/></li>
 							<li><br><form:select path="" title="Licenses" size="8" style="width: 300px; background-color:#f6f6f6;" multiple="true">
 								<form:option value="NONE" label="-- Available licenses --" disabled="true"/>
-								<form:options items="${licenses}" title="Available licenses"/>
+								<form:options items="${licenses}" itemValue="licenseId" itemLabel="serialKey" title="Available licenses"/>
 							</form:select></li>
 						</ul>
 					</nav><!-- end navigation menu -->

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -59,11 +60,7 @@ public class searchController
     public String searchDetails(@ModelAttribute SearchForm searchForm, ModelMap model)
     {
         Purchase purchase = pdao.searchPurchaseById(searchForm.getPurchase().getPurchaseId());
-        System.out.println(purchase.getPurchaseId());
-      //  System.out.println(this.searchForm.getPurchase().getPurchaseId());
         this.searchForm.setPurchase(purchase);
-
-       // this.searchForm.getPurchase().setPurchaseId(searchForm.getPurchase().getPurchaseId());
         return "redirect:/search_details";
     }
 
@@ -72,6 +69,7 @@ public class searchController
     public String searchDetails(ModelMap model)
     {
         List<License> licenses = ldao.searchLicenseByPurchase(searchForm.getPurchase());
+
         model.addAttribute("licenses", licenses);
         model.addAttribute("searchForm", searchForm);
         return "search/search_details";
