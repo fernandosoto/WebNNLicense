@@ -5,7 +5,7 @@
 
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>Nordnet - Modify</title>
+	<title>Nordnet - Modify license keys</title>
 	<meta charset="utf-8">
 	<meta name="author" content="pixelhint.com">
 	<meta name="description" content="Nordnet - Add License"/>
@@ -55,7 +55,7 @@
 					</ul>
 					
 				</div><!-- end work_nav -->
-				<h1 class="title">Modify</h1>
+				<h1 class="title">Modify purchase</h1>
 			</div>		
 		</section><!-- end top -->
 
@@ -66,10 +66,7 @@
 
 					<nav>
 						<ul>
-							<li><form:radiobutton path="radioButtonSelect" name="group1" value="modify_assign_remove"/> Assign/Remove user to license<br><br></li>
-							<li><form:radiobutton path="radioButtonSelect" name="group1" value="modify_purchase"/> Modify purchase<br><br></li>
-							<li><form:radiobutton path="radioButtonSelect" name="group1" value="modify_licenseKeys"/> Modify license<br><br></li>
-							<li><br><a href="/modify_licenseKeys"><input type="submit" value="Ok" /></a></li>
+							<li>Purchase</li>
 						</ul>
 					</nav><!-- end navigation menu -->
 				</form:form>

@@ -68,7 +68,7 @@
 					<nav>
 						<ul>
 							<div align="left">
-							<li><br>Product name: <form:input path="purchase.productName" value="${purchase.productName}" readonly="true" cssStyle="border: hidden"/></li>
+							<li>Product name: <form:input path="purchase.productName" value="${purchase.productName}" readonly="true" cssStyle="border: hidden"/></li>
 							<li><br>Manufacturer: <form:input path="purchase.manufacturerName" value="${purchase.manufacturerName}" readonly="true" cssStyle="border: hidden"/></li>
 							<li><br>Distributor: <form:input path="purchase.distributorName" value="${purchase.distributorName}" readonly="true" cssStyle="border: hidden"/></li>
 							<li><br>Created by: <form:input path="purchase.createdBy" value="${purchase.createdBy}" readonly="true" cssStyle="border: hidden"/></li>
@@ -78,8 +78,6 @@
 								<form:options items="${licenses}" title="Available licenses"/>
 							</form:select></li>
 							<li><br><input type="button"  onClick="window.print()"  value="Print details"/></li>
-
-
 						</ul>
 					</nav><!-- end navigation menu -->
 					</fieldset>
