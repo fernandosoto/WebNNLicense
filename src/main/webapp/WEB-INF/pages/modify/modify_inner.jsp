@@ -55,45 +55,24 @@
 					</ul>
 					
 				</div><!-- end work_nav -->
-				<h1 class="title">Modify License</h1>
+				<h1 class="title">Modify</h1>
 			</div>		
 		</section><!-- end top -->
 
 		<section class="wrapper">
 			<div class="content">
 
-				<form:form commandName="purchase" method="POST">
+				<form:form commandName="modifyForm" method="POST">
 
 					<nav>
 						<ul>
-							<li><br>Product name: <form:input path="productName" type="text"/></li>
-							<li><br>Manufacturer:
-								<form:select path="manufacturerName" type="text" title="Select manufacturer">
-									<form:option value="None" label="--- Select ---"/>
-								</form:select>
-								<input type="button" value="Edit" />  <input type="button" value="Delete" />
-							</li>
-							<li><br>Distributor:
-								<form:select path ="distributorName" type="text" title="Select distributor" >
-									<form:option value="None" label="--- Select ---"/>
-								</form:select>
-								<input type="button" value="Edit" />  <input type="button" value="Delete" />
-							</li>
-							<li><br>License type: <form:input path="type" type="text"/></li>
-							<li><br>Comments:<form:textarea path="freeText" rows="5" cols="30" /></li>
-							<li><br><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></li>
-
+							<li><form:radiobutton path="radioButtonSelect" name="group1" value="modify_assign_remove"/> Assign/Remove user to license<br><br></li>
+							<li><form:radiobutton path="radioButtonSelect" name="group1" value="modify_purchase"/> Modify purchase<br><br></li>
+							<li><form:radiobutton path="radioButtonSelect" name="group1" value="modify_licenseKeys"/> Modify license<br><br></li>
+							<li><br><a href="/modify_licenseKeys"><input type="submit" value="Ok" /></a></li>
 						</ul>
 					</nav><!-- end navigation menu -->
 				</form:form>
-
-
-				Test:
-				<form:form method="POST" commandname="manufacturer">
-					<form:select path="manufacturer" items="${manufacturerMap}">
-					</form:select></ul>
-				</form:form>
-
 
 			</div><!-- end content -->
 		</section>

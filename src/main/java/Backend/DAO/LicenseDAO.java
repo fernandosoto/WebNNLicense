@@ -28,10 +28,11 @@ public class LicenseDAO implements LicenseDAOInterface {
         db.update(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                PreparedStatement ps = connection.prepareStatement("INSERT INTO LICENSE_KEY(LICENSE_USER, SERIAL_KEY, PURCHASE_ID, EXPIRE_DATE) VALUES(NULL, ?, ?, ?)");
-                ps.setString(1, l.getSerialKey());
-                ps.setLong(2, l.getPurchaseId());
-                ps.setDate(3, l.getExpireDate());
+                PreparedStatement ps = connection.prepareStatement("INSERT INTO LICENSE_KEY(LICENSE_USER, SERIAL_KEY, PURCHASE_ID, EXPIRE_DATE) VALUES(?, ?, ?, ?)");
+                ps.setString(1, null);
+                ps.setString(2, l.getSerialKey());
+                ps.setLong(3, l.getPurchaseId());
+                ps.setDate(4, l.getExpireDate());
                 return ps;
             }
         });
@@ -86,7 +87,7 @@ public class LicenseDAO implements LicenseDAOInterface {
         List<License> l = db.query(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                PreparedStatement ps = connection.prepareStatement("SELECT * FROM LICENSE WHERE LICENSE_USER LIKE ?" +
+                PreparedStatement ps = connection.prepareStatement("SELECT * FROM LICENSE L WHERE LICENSE_USER LIKE ?" +
                         " AND L.LICENSE_KEY_ID != DL.LICENSE_KEY_ID");
                 ps.setString(1, name+"%");
                 return ps;
@@ -110,16 +111,18 @@ public class LicenseDAO implements LicenseDAOInterface {
         List<License> l = db.query(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                PreparedStatement ps = connection.prepareStatement("SELECT * FROM LICENSE WHERE L_PURCHASE_ID = ?"
-                        + " AND L.LICENSE_KEY_ID != DL.LICENSE_KEY_ID");
+                PreparedStatement ps = connection.prepareStatement("SELECT * " +
+                        "FROM LICENSE_KEY " +
+                        "WHERE PURCHASE_ID = ?" +
+                        " AND LICENSE_KEY_ID NOT IN (SELECT D_LICENSE_KEY_ID from DELETED_LICENSE )");
                 ps.setLong(1, p.getPurchaseId());
                 return ps;
             }
         }, new RowMapper<License>() {
             @Override
             public License mapRow(ResultSet rs, int i) throws SQLException {
-                return new License(rs.getLong("LICENSE_ID"), rs.getString("LICENSE_USER"), rs.getString("LICENSE_KEY"),
-                        rs.getLong("L_PURCHASE_ID"), rs.getDate("EXPIRE_DATE"));
+                return new License(rs.getLong("LICENSE_KEY_ID"), rs.getString("LICENSE_USER"), rs.getString("SERIAL_KEY"),
+                        rs.getLong("PURCHASE_ID"), rs.getDate("EXPIRE_DATE"));
             }
         });
 

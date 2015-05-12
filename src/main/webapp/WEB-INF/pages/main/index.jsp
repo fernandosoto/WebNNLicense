@@ -41,7 +41,7 @@
 				<img src="../../../resources/NNLicenseTheme/Nordnet/img/search.jpg" class="media" alt=""/>
 				<div class="caption">
 					<div class="work_title">
-						<h1>Search License</h1>
+						<h1>Search product</h1>
 					</div>
 				</div>
 			</a>
@@ -52,7 +52,7 @@
 				<img src="../../../resources/NNLicenseTheme/Nordnet/img/addLicense.jpg" class="media" alt=""/>
 				<div class="caption">
 					<div class="work_title">
-						<h1>Add License</h1>
+						<h1>Add purchase</h1>
 					</div>
 				</div>
 			</a>
