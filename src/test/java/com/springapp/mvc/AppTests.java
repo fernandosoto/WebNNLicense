@@ -1,11 +1,18 @@
 package com.springapp.mvc;
 
+import Backend.DAO.ManufacturerDAO;
+import Backend.DAO.ManufacturerDAOInterface;
 import Backend.Distributor;
 import Backend.Manufacturer;
 import Backend.RegisterForm;
+import com.sun.org.apache.xpath.internal.SourceTree;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import static org.mockito.Mockito.*;
+
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -14,6 +21,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -26,6 +35,9 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 @ContextConfiguration("file:src/main/webapp/WEB-INF/mvc-dispatcher-servlet.xml")
 public class AppTests {
     private MockMvc mockMvc;
+
+    @Mock
+    private ManufacturerDAO manufacturerDAO;
 
     @SuppressWarnings("SpringJavaAutowiringInspection")
     @Autowired
@@ -48,13 +60,34 @@ public class AppTests {
                 .andExpect(view().name("add/add_inner"));
     }
 
-    @Test
-    public void addTest() throws Exception {
 
-        mockMvc.perform(post("/addPurchase").param("date","2015-04-29").param("serialKeys","asdasd,asdasd,asdada")
-                .param("keySeparator",","))
+    @Test
+    public void manufacturerTest()throws Exception{
+        mockMvc.perform(get("/addManufacturer"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("add/add_inner"));
+                .andExpect(view().name("add/manufacturer_inner"));
     }
 
+    @Test
+    public void manufacturerPostTest()throws Exception{
+        Manufacturer m = new Manufacturer(1,"Microsoft","Niklas säljer bra grejer!");
+        mockMvc.perform(post("/addManufacturer")
+                .param("id",Long.toString(m.getId()))
+                .param("name",m.getName())
+                .param("freeText",m.getFreeText()))
+                .andExpect(status().isOk())
+                .andExpect(view().name(""));
+    }
+
+    @Test
+    public void manufacturerDAOTest()throws Exception{
+        manufacturerDAO = new ManufacturerDAO();
+        List<Manufacturer> mList = new ArrayList<Manufacturer>();
+        mList.add(new Manufacturer(1,"Microsoft","Niklas säljer bra grejer!"));
+        Mockito.when(manufacturerDAO.searchManufacturerByName("")).thenReturn(mList);
+
+        List<Manufacturer> test = manufacturerDAO.searchManufacturerByName("Microsoft");
+        assert(test.get(0).getName().equals(mList.get(0).getName()));
+
+    }
 }
