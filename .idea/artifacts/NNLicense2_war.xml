@@ -1,5 +1,5 @@
 <component name="ArtifactManager">
-  <artifact type="war" build-on-make="true" name="NNLicense2:war">
+  <artifact type="war" name="NNLicense2:war">
     <output-path>$PROJECT_DIR$/target</output-path>
     <root id="archive" name="NNLicense2.war">
       <element id="artifact" artifact-name="NNLicense2:war exploded" />

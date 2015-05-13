@@ -5,7 +5,7 @@
 
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>Nordnet - Modify Assign/Remove</title>
+	<title>Nordnet - Modify - Search</title>
 	<meta charset="utf-8">
 	<meta name="author" content="pixelhint.com">
 	<meta name="description" content="Nordnet - Add License"/>
@@ -55,7 +55,7 @@
 					</ul>
 					
 				</div><!-- end work_nav -->
-				<h1 class="title">Assign/Remove user from license keys</h1>
+				<h1 class="title">Modify - Search</h1>
 			</div>		
 		</section><!-- end top -->
 
@@ -67,19 +67,8 @@
 						<fieldset>
 							<nav>
 								<ul>
-									<div align="left">
-										<li>Product name: <form:input path="purchase.productName" value="${purchase.productName}" readonly="true" cssStyle="border: hidden"/></li>
-										<li><br>Manufacturer: <form:input path="purchase.manufacturerName" value="${purchase.manufacturerName}" readonly="true" cssStyle="border: hidden"/></li>
-										<li><br>Distributor: <form:input path="purchase.distributorName" value="${purchase.distributorName}" readonly="true" cssStyle="border: hidden"/></li>
-										<li><br>Created by: <form:input path="purchase.createdBy" value="${purchase.createdBy}" readonly="true" cssStyle="border: hidden"/></li>
-										<li><br>Created date: <form:input path="date" value="${date}" readonly="true" cssStyle="border: hidden"/></li>
-
-									<li><br>Serial Keys:<br><br>
-										<form:radiobuttons items="${licenses}" path="license.licenseId" itemValue="licenseId" itemLabel="label"  element="li" checked="checked"></form:radiobuttons>
-									</li>
-									<li><br>Assign user: <form:input path="license.user" value=""/></li>
-									<li><br><input type="submit" value="Update license" /></li>
-									</div>
+									<li><br>Product name: <form:input path="purchase.productName" type="text"/></li>
+									<li><br><a href="modify_results"><input type="submit" value="Search" /></a>  <input type="reset" value="Clear"/></li>
 								</ul>
 							</nav><!-- end navigation menu -->
 						</fieldset>

@@ -12,7 +12,7 @@ public class SearchForm {
     public List<String> LicenseDetailToString(List<License> licenses){
         List<String> licenseDetails = new ArrayList<String>();
         for(License l : licenses){
-            licenseDetails.add(l.getSerialKey() +", User: " + l.getUser() + ", Expire date: "+ l.getExpireDate());
+            licenseDetails.add(l.getSerialKey() +" User: " + l.getUser() + " Expire date: "+ l.getExpireDate());
         }
         return licenseDetails;
     }

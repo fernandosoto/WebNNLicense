@@ -66,10 +66,10 @@
 
 					<nav>
 						<ul>
-							<li><form:radiobutton path="radioButtonSelect" name="group1" value="modify_assign_remove"/> Assign/Remove user to license<br><br></li>
+							<li><form:radiobutton path="radioButtonSelect" name="group1" value="modify_assign_remove" checked="checked"/> Assign/Remove user to license<br><br></li>
 							<li><form:radiobutton path="radioButtonSelect" name="group1" value="modify_purchase"/> Modify purchase<br><br></li>
 							<li><form:radiobutton path="radioButtonSelect" name="group1" value="modify_licenseKeys"/> Modify license<br><br></li>
-							<li><br><a href="/modify_licenseKeys"><input type="submit" value="Ok" /></a></li>
+							<li><br><input type="submit" value="Ok" /></li>
 						</ul>
 					</nav><!-- end navigation menu -->
 				</form:form>

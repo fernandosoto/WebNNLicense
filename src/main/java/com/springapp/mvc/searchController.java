@@ -56,7 +56,7 @@ public class searchController
 
 
     @RequestMapping(value = "/search_results",method = RequestMethod.POST)
-    public String searchDetails(@ModelAttribute SearchForm searchForm, ModelMap model)
+    public String searchResults(@ModelAttribute SearchForm searchForm, ModelMap model)
     {
         Purchase purchase = pdao.searchPurchaseById(searchForm.getPurchase().getPurchaseId());
         this.searchForm.setPurchase(purchase);

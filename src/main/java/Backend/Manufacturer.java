@@ -14,7 +14,6 @@ public class Manufacturer implements Serializable {
     public Manufacturer(){
 
     }
-
     public Manufacturer(long id, String name, String freeText){
         this.id = id;
         this.name = name;
@@ -40,7 +39,6 @@ public class Manufacturer implements Serializable {
     public void setName(String name){
         this.name = name;
     }
-
 
     private static final long serialVersionUID=245367867532234234L;
 
