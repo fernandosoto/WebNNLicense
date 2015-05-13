@@ -74,10 +74,12 @@
 										<li><br>Created by: <form:input path="purchase.createdBy" value="${purchase.createdBy}" readonly="true" cssStyle="border: hidden"/></li>
 										<li><br>Created date: <form:input path="date" value="${date}" readonly="true" cssStyle="border: hidden"/></li>
 
-									<li><br>Serial Keys:<br><br>
-										<form:radiobuttons items="${licenses}" path="license.licenseId" itemValue="licenseId" itemLabel="label"  element="li" checked="checked" style="width: 20px;"></form:radiobuttons>
+									<li><br>Licenses:<br><br>
+										<div style="width: 650px">
+										<form:radiobuttons items="${licenses}" path="license.licenseId" itemValue="licenseId" itemLabel="label"  element="li" checked="checked" ></form:radiobuttons>
+										</div>
 									</li>
-									<li><br>Assign user: <form:input path="license.user" value=""/></li>
+									<li><br>Assign user: <form:input path="license.user" value="" maxlength="30"/><br><div style="color:crimson; font-size: 8pt">(Leave blank to remove user)</div></></li>
 									<li><br><input type="submit" value="Update license" /></li>
 									</div>
 								</ul>

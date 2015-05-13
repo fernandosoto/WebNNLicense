@@ -67,11 +67,11 @@
 					<fieldset>
 						<nav>
 							<ul>
-								<div align="left">
-									<li>Product name: <form:input path="purchase.productName" value="${purchase.productName}" readonly="true" cssStyle="border: hidden"/></li>
-									<li>Serial key: <form:input path="license.serialKey" value="${license.serialKey}" /></li>
-									<li><br>Expire date: <form:input path="expireDate" value="${expireDate}" /></li>
-									<li><br>User: <form:input path="license.user" value="${license.user}"/></li>
+								<div align="right">
+									<li>Product name: <form:input path="purchase.productName" value="${purchase.productName}" readonly="true" cssStyle="border: hidden"/><br><br></li>
+									<li>Serial key: <form:input path="license.serialKey" value="${license.serialKey}" maxlength="100" /></li>
+									<li><br>Expire date: <form:input path="expireDate" value="${expireDate}" maxlength="10" /></li>
+									<li><br>User: <form:input path="license.user" value="${license.user}" maxlength="30"/></li>
 
 								</div>
 								<li><br><input type="submit"  value="Modify"/></li>
