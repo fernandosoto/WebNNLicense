@@ -24,8 +24,6 @@ public class DistributorDAO implements DistributorDAOInterface {
     @Override
     @Transactional
     public void addDistributor(final Distributor d) {
-//        String sql = "INSERT INTO DISTRIBUTOR(DISTRIBUTOR_NAME , FREE_TEXT) VALUES('" + d.getName() +"', '" + d.getFreeText()
-//                + "');";
         db.update(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
@@ -39,7 +37,6 @@ public class DistributorDAO implements DistributorDAOInterface {
 
     @Override
     public Distributor searchDistributorById(final long id) {
-//        String sql = "SELECT * FROM DISTRIBUTOR WHERE DISTRIBUTOR.DISTRIBUTOR_ID = " + id + ";";
         return db.query(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
@@ -57,7 +54,6 @@ public class DistributorDAO implements DistributorDAOInterface {
 
     @Override
     public List<Distributor> searchDistributorByName(final String name) {
-//        String sql = "SELECT * FROM DISTRIBUTOR WHERE DISTRIBUTOR.DISTRIBUTOR_NAME LIKE '" + name + "%';";
         return db.query(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
