@@ -23,5 +23,7 @@ public interface PurchaseDAOInterface {
 
     List<Purchase> searchPurchaseByType(String type);
 
+    void editPurchase(Purchase pur, String userName, long manufacturerId, long distributorId);
+
     void setDataSource(DataSource dataSource);
 }

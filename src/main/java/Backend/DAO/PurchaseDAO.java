@@ -200,7 +200,27 @@ public class PurchaseDAO implements PurchaseDAOInterface {
         });
         return p;
     }
+    @Override
+    public void editPurchase(final Purchase pur, final String userName, final long manufacturerId, final long distributorId){
+        final Purchase oldPur = searchPurchaseById(pur.getPurchaseId());
 
+        db.update(new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                PreparedStatement ps = connection.prepareStatement("UPDATE PURCHASE SET PRODUCT_NAME = ?"+
+                        ", LICENSE_TYPE = ? ,MANUFACTURER_ID = ?,DISTRIBUTOR_ID = ?, FREE_TEXT = ? " +
+                        " WHERE PURCHASE_ID = ?");
+                ps.setString(1, pur.getProductName());
+                ps.setString(2, pur.getType());
+                ps.setLong(3, manufacturerId);
+                ps.setLong(4, distributorId);
+                ps.setString(5, pur.getFreeText());
+                ps.setLong(6, oldPur.getPurchaseId());
+                return ps;
+            }
+        });
+
+    }
 
     private long getUpgradedFrom(long newPurchaseId) {
         long id;
