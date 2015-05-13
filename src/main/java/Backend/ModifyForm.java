@@ -2,6 +2,7 @@ package Backend;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -14,6 +15,7 @@ public class ModifyForm {
     private List<LicenseKey> licenseKeys=new ArrayList<LicenseKey>();
     private License license;
     private String date;
+    private String expireDate;
 
     public class LicenseKey extends License{
         private String label;
@@ -33,6 +35,10 @@ public class ModifyForm {
         }
     }
 
+
+    public String getExpireDate() {return expireDate;}
+
+    public void setExpireDate(String expireDate) {this.expireDate = expireDate;}
 
     public License getLicense() {
         return license;
@@ -97,4 +103,14 @@ public class ModifyForm {
         return null;
     }
 
+    public Date getDateFromString(String strDate){
+        int year = Integer.parseInt(strDate.substring(0, 4));
+        int month = (Integer.parseInt(strDate.substring(5,7)) - 1); // months: 0(jan), 11(dec)
+        int day = Integer.parseInt(strDate.substring(8, 10));
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year,month,day);
+        Date date = new Date(calendar.getTimeInMillis());
+        return date;
+    }
 }

@@ -69,16 +69,11 @@
 							<ul>
 								<div align="left">
 									<li>Product name: <form:input path="purchase.productName" value="${purchase.productName}" readonly="true" cssStyle="border: hidden"/></li>
-									<li><br>Manufacturer: <form:input path="purchase.manufacturerName" value="${purchase.manufacturerName}" readonly="true" cssStyle="border: hidden"/></li>
-									<li><br>Distributor: <form:input path="purchase.distributorName" value="${purchase.distributorName}" readonly="true" cssStyle="border: hidden"/></li>
-									<li><br>Created by: <form:input path="purchase.createdBy" value="${purchase.createdBy}" readonly="true" cssStyle="border: hidden"/></li>
-									<li><br>Created date: <form:input path="date" value="${date}" readonly="true" cssStyle="border: hidden"/></li>
+									<li>Serial key: <form:input path="license.serialKey" value="${license.serialKey}" /></li>
+									<li><br>Expire date: <form:input path="expireDate" value="${expireDate}" /></li>
+									<li><br>User: <form:input path="license.user" value="${license.user}"/></li>
+
 								</div>
-								<li><br>Serial Keys:<br><form:select  path="license.licenseId" multiple="false" size="8" style="width: 550px;">
-									<form:option value="NONE" label="--- Select license ---" disabled="true"/>
-									<form:options items="${licenses}" itemValue="licenseId" itemLabel="label"/>
-									</form:select>
-								</li>
 								<li><br><input type="submit"  value="Modify"/></li>
 							</ul>
 						</nav><!-- end navigation menu -->

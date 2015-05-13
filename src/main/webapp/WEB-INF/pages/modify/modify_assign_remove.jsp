@@ -75,7 +75,7 @@
 										<li><br>Created date: <form:input path="date" value="${date}" readonly="true" cssStyle="border: hidden"/></li>
 
 									<li><br>Serial Keys:<br><br>
-										<form:radiobuttons items="${licenses}" path="license.licenseId" itemValue="licenseId" itemLabel="label"  element="li" checked="checked"></form:radiobuttons>
+										<form:radiobuttons items="${licenses}" path="license.licenseId" itemValue="licenseId" itemLabel="label"  element="li" checked="checked" style="width: 20px;"></form:radiobuttons>
 									</li>
 									<li><br>Assign user: <form:input path="license.user" value=""/></li>
 									<li><br><input type="submit" value="Update license" /></li>

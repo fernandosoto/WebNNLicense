@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,9 +81,8 @@ public class modifyController {
     @RequestMapping(value = "/modify_assign_remove",method = RequestMethod.GET)
     public String modifyAssignRemove(ModelMap model)
     {
-
         List<License> dbLicenses = ldao.searchLicenseByPurchase(modifyForm.getPurchase());
-        model.addAttribute("licenses",  modifyForm.getLicenseKeyList(dbLicenses));
+        model.addAttribute("licenses", modifyForm.getLicenseKeyList(dbLicenses));
         model.addAttribute("modifyForm", modifyForm);
         return "modify/modify_assign_remove";
     }
@@ -90,12 +90,57 @@ public class modifyController {
     @RequestMapping(value = "/modify_assign_remove",method = RequestMethod.POST)
     public String modifyAssignRemove(@ModelAttribute ModifyForm modifyForm,ModelMap model)
     {
-
         this.modifyForm.setLicense(this.modifyForm.getLicenseFromId(modifyForm.getLicense().getLicenseId()));
         this.modifyForm.getLicense().setUser(modifyForm.getLicense().getUser());
-        ldao.editLicense(this.modifyForm.getLicense(), "Ussama");
+        ldao.editLicense(this.modifyForm.getLicense(), "user");
         this.modifyForm.clearLicenseKeys();
         return "redirect:/modify_assign_remove";
+    }
+
+
+
+
+
+
+    @RequestMapping(value = "/modify_licenseKeys",method = RequestMethod.GET)
+    public String modifyDetails(ModelMap model)
+    {
+        List<License> dbLicenses = ldao.searchLicenseByPurchase(modifyForm.getPurchase());
+        model.addAttribute("licenses", modifyForm.getLicenseKeyList(dbLicenses));
+        model.addAttribute("modifyForm", modifyForm);
+        return "modify/modify_licenseKeys";
+    }
+
+    @RequestMapping(value = "/modify_licenseKeys",method = RequestMethod.POST)
+    public String modifyLicenseKeys(@ModelAttribute ModifyForm modifyForm,ModelMap model)
+    {
+        this.modifyForm.setLicense(this.modifyForm.getLicenseFromId(modifyForm.getLicense().getLicenseId()));
+        return "redirect:/modify_licenseKeyDetails";
+    }
+
+
+    @RequestMapping(value = "/modify_licenseKeyDetails",method = RequestMethod.GET)
+    public String modifyLicenseDetails(ModelMap model)
+    {
+        this.modifyForm.setExpireDate(this.modifyForm.getLicense().getExpireDate().toString());
+        model.addAttribute("modifyForm",modifyForm);
+        return "modify/modify_licenseKeyDetails";
+    }
+
+
+    @RequestMapping(value = "/modify_licenseKeyDetails",method = RequestMethod.POST)
+    public String modifyLicenseDetails(@ModelAttribute ModifyForm modifyForm,ModelMap model)
+    {
+
+        Date date = this.modifyForm.getDateFromString(modifyForm.getExpireDate());
+        this.modifyForm.getLicense().setExpireDate(date);
+
+        this.modifyForm.getLicense().setUser(modifyForm.getLicense().getUser());
+        this.modifyForm.getLicense().setSerialKey(modifyForm.getLicense().getSerialKey());
+
+        ldao.editLicense(this.modifyForm.getLicense(), "Hodor");
+        this.modifyForm.clearLicenseKeys();
+        return "redirect:/modify_licenseKeys";
     }
 
 
@@ -120,20 +165,9 @@ public class modifyController {
         return "redirect:/modify_";         // vart ska vi?
     }
 
-    @RequestMapping(value = "/modify_licenseKeys",method = RequestMethod.GET)
-    public String modifyDetails(ModelMap model)
-    {
-        List<License> dbLicenses = ldao.searchLicenseByPurchase(modifyForm.getPurchase());
-        List<String> licenses = modifyForm.LicenseDetailToString(dbLicenses);
-        model.addAttribute("licenses", licenses);
-        model.addAttribute("modifyForm", modifyForm);
-        return "modify/modify_licenseKeys";
-    }
 
-    @RequestMapping(value = "/modify_licenseKeys",method = RequestMethod.POST)
-    public String modifyLicenseKeys(@ModelAttribute ModifyForm modifyForm,ModelMap model)
-    {
-        //this.modifyForm = modifyForm;
-        return "redirect:/modify_";         // vart ska vi?
-    }
+
+
+
+
 }
