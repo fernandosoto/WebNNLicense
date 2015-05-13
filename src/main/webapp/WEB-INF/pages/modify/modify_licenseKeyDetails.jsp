@@ -56,7 +56,7 @@
 				</ul>
 
 			</div><!-- end work_nav -->
-			<h1 class="title">Modify - </h1>
+			<h1 class="title">Modify - license - details</h1>
 		</div>
 	</section><!-- end top -->
 

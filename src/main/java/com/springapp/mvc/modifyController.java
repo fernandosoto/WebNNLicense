@@ -32,6 +32,7 @@ public class modifyController {
     @RequestMapping(value = "/modify_inner",method = RequestMethod.GET)
     public String modifyIndex(ModelMap model)
     {
+        this.modifyForm.clearLicenseKeys();
         model.addAttribute("modifyForm", modifyForm);
         return "modify/modify_inner";
     }
@@ -47,6 +48,7 @@ public class modifyController {
     @RequestMapping(value = "/modify_search",method = RequestMethod.GET)
     public String modifySearch(ModelMap model)
     {
+        this.modifyForm.clearLicenseKeys();
         model.addAttribute("modifyForm", modifyForm);
         return "modify/modify_search";
     }
@@ -62,6 +64,7 @@ public class modifyController {
     @RequestMapping(value = "/modify_results",method = RequestMethod.GET)
     public String modifyResults(ModelMap model)
     {
+        this.modifyForm.clearLicenseKeys();
         List<Purchase> p = pdao.searchPurchaseByName(modifyForm.getPurchase().getProductName());
         model.addAttribute("purchases", p);
         model.addAttribute("modifyForm", modifyForm);
@@ -81,6 +84,7 @@ public class modifyController {
     @RequestMapping(value = "/modify_assign_remove",method = RequestMethod.GET)
     public String modifyAssignRemove(ModelMap model)
     {
+        this.modifyForm.clearLicenseKeys();
         List<License> dbLicenses = ldao.searchLicenseByPurchase(modifyForm.getPurchase());
         model.addAttribute("licenses", modifyForm.getLicenseKeyList(dbLicenses));
         model.addAttribute("modifyForm", modifyForm);
@@ -122,6 +126,7 @@ public class modifyController {
     @RequestMapping(value = "/modify_licenseKeyDetails",method = RequestMethod.GET)
     public String modifyLicenseDetails(ModelMap model)
     {
+
         this.modifyForm.setExpireDate(this.modifyForm.getLicense().getExpireDate().toString());
         model.addAttribute("modifyForm",modifyForm);
         return "modify/modify_licenseKeyDetails";
@@ -162,7 +167,7 @@ public class modifyController {
     public String modifyPurchase(@ModelAttribute ModifyForm modifyForm,ModelMap model)
     {
         this.modifyForm = modifyForm;
-        return "redirect:/modify_";         // vart ska vi?
+        return "redirect:/modify_";
     }
 
 
