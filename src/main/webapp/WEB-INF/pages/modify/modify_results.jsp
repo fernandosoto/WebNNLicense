@@ -1,11 +1,12 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <br xmlns:th="http://www.thymeleaf.org">
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>Nordnet - Modify</title>
+	<title>Nordnet - Search results</title>
 	<meta charset="utf-8">
 	<meta name="author" content="pixelhint.com">
 	<meta name="description" content="Nordnet - Add License"/>
@@ -55,24 +56,30 @@
 					</ul>
 					
 				</div><!-- end work_nav -->
-				<h1 class="title">Modify</h1>
+				<h1 class="title">Modify - Search result</h1>
 			</div>		
 		</section><!-- end top -->
 
 		<section class="wrapper">
 			<div class="content">
-
 				<form:form commandName="modifyForm" method="POST">
-
-					<nav>
-						<ul>
-							<li><form:radiobutton path="radioButtonSelect" name="group1" value="modify_assign_remove" checked="checked"/> Assign/Remove user to license<br><br></li>
-							<li><form:radiobutton path="radioButtonSelect" name="group1" value="modify_purchase"/> Modify purchase<br><br></li>
-							<li><form:radiobutton path="radioButtonSelect" name="group1" value="modify_licenseKeys"/> Modify license<br><br></li>
-							<li><br><input type="submit" value="Ok" /></li>
-						</ul>
-					</nav><!-- end navigation menu -->
+					<div class="fieldset">
+						<fieldset>
+							<nav>
+								<ul style="list-style: none;">
+									<li><br>Search results:</li>
+									<li>
+										<form:select path="purchase.purchaseId" title="results" size="8" style="width: 300px;">
+											<form:option value="NONE" label="--- Select purchase ---" disabled="true"/>
+											<form:options items="${purchases}" itemValue="purchaseId" itemLabel="productName"/>
+										</form:select>
+								<li><br><input type="submit" value="Modify"/> <input type="button" value="New search (Ur funktion)"> </li>
+								</ul>
+							</nav><!-- end navigation menu -->
+						</fieldset>
+					</div>
 				</form:form>
+
 
 			</div><!-- end content -->
 		</section>
