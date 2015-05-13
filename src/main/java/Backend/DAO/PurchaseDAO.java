@@ -35,8 +35,6 @@ public class PurchaseDAO implements PurchaseDAOInterface {
                 ps.setString(3, pur.getType());
                 ps.setLong(4, distrId);
                 ps.setString(5, pur.getFreeText());
-                               //+ manuId + ", '" + pur.getProductName() + "', '"
-                                //+ pur.getType() + "', " + distrId + ", '" + pur.getFreeText() + "');";)
                 return ps;
             }
         }, holder);
@@ -51,7 +49,7 @@ public class PurchaseDAO implements PurchaseDAOInterface {
                 return ps;
             }
         });
-        return holder.getKey().longValue();// holder.getKey().longValue();
+        return holder.getKey().longValue();
     }
 
     @Override

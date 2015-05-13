@@ -21,10 +21,6 @@ public class LicenseDAO implements LicenseDAOInterface {
     @Override
     @Transactional
     public void addLicense(final License l) {
-        //String sql = "INSERT INTO LICENSE_KEY(LICENSE_USER, SERIAL_KEY, PURCHASE_ID, EXPIRE_DATE) VALUES '" +
-        //        l.getUser() +"', '" + l.getSerialKey() +"', '" + l.getPurchaseId() + "', '" + l.getExpireDate() +
-        //        "';";
-        //db.update(sql);
         db.update(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
@@ -41,8 +37,6 @@ public class LicenseDAO implements LicenseDAOInterface {
     @Transactional
     @Override
     public void deleteLicense(final License l, final String userName) {
-//        String sql = "INSERT INTO DELETED_LICENSE(DELETED_BY, DELETED_DATE, LICENSE_KEY_ID) VALUES ('" + userName + "', "
-//                + new Date(System.currentTimeMillis()) + ", " + l.getLicenseId() +  ");";
         db.update(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
@@ -56,10 +50,6 @@ public class LicenseDAO implements LicenseDAOInterface {
     }
 
     public List<License> searchDeletedLicenses(){
-//        String sql = "SELECT L.*, DL.DELETED_BY, DL.DELETED_DATE " +
-//                " FROM  LICENSE_KEY L, DELETED_LICENSE DL" +
-//                " WHERE DL.LICENSE_KEY_ID = L.LICENSE_KEY_ID;";
-
         List<License> l = db.query(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
@@ -81,9 +71,6 @@ public class LicenseDAO implements LicenseDAOInterface {
 
     @Override
     public List<License> searchLicenseByUser(final String name) {
-//        String sql = "SELECT * FROM LICENSE WHERE LICENSE_USER LIKE '" + name + "%'"
-//                + " AND L.LICENSE_KEY_ID != DL.LICENSE_KEY_ID;";
-
         List<License> l = db.query(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
@@ -131,9 +118,6 @@ public class LicenseDAO implements LicenseDAOInterface {
 
     @Override
     public License searchLicenseById(final Long id) {
-//        String sql = "SELECT * FROM LICENSE WHERE LICENSE_KEY_ID = " + id
-//                + " AND L.LICENSE_KEY_ID != DL.LICENSE_KEY_ID;";
-
         List<License> l = db.query(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
@@ -170,11 +154,6 @@ public class LicenseDAO implements LicenseDAOInterface {
             sb.append("Expire Date Changed: \"" + oldLic.getExpireDate().toString() + "\" to \"" + lic.getExpireDate().toString() + "\" |");
         }
         final String s = sb.toString();
-
-//        String sql = "INSERT INTO MODIFY(MODIFIED_BY, MODIFIED_DATE, LICENSE_KEY_ID, FREE_TEXT) VALUES('" + userName + "', "
-//                + new Date(System.currentTimeMillis()) + ", " + lic.getLicenseId() + ", '" + sb.toString() + "');"
-//                + "UPDATE LICENSE_KEY SET LICENSE_USER = " + lic.getUser() + ", SERIAL_KEY = " + lic.getSerialKey()
-//                + "EXPIRE_DATE = " + lic.getExpireDate() + " WHERE LICENSE_KEY_ID = " + oldLic.getLicenseId() + ";";
         db.update(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
