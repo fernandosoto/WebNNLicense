@@ -18,4 +18,6 @@ public interface ManufacturerDAOInterface {
 
     public void setDataSource(DataSource dataSource);
 
+    public void editManufacturer(Manufacturer manuf);
+
 }

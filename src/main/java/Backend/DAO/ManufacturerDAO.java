@@ -31,6 +31,7 @@ public class ManufacturerDAO implements ManufacturerDAOInterface {
 
     public final static String SQL_SEARCH_BY_MANUFACTURER_ID = "SELECT * FROM MANUFACTURER WHERE MANUFACTURER.MANUFACTURER_ID = ?";
     public final static String SQL_SEARCH_BY_MANUFACTURER_NAME = "SELECT * FROM MANUFACTURER WHERE MANUFACTURER.MANUFACTURER_NAME LIKE ?";
+    public static final String SQL_UPDATE_MANUFACTURER = "UPDATE MANUFACTURER SET MANUFACTURER_NAME = ?, FREE_TEXT = ? WHERE MANUFACTURER_ID = ?";
 
     @Override
     @Transactional
@@ -84,6 +85,22 @@ public class ManufacturerDAO implements ManufacturerDAOInterface {
         });*/
         name += "%";
         return db.query(SQL_SEARCH_BY_MANUFACTURER_NAME, mRowMapper, name);
+    }
+
+    @Override
+    public void editManufacturer(final Manufacturer manuf){
+        final Manufacturer oldManuf = searchManufacturerById(manuf.getId());
+
+        db.update(new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                PreparedStatement ps = connection.prepareStatement(SQL_UPDATE_MANUFACTURER);
+                ps.setString(1, manuf.getName());
+                ps.setString(2, manuf.getFreeText());
+                ps.setLong(3, oldManuf.getId());
+                return ps;
+            }
+        });
     }
 
     public void setDataSource(DataSource dataSource){

@@ -18,4 +18,6 @@ public interface DistributorDAOInterface {
     List<Distributor> searchDistributorByName(String name);
 
     void setDataSource(DataSource dataSource);
+
+    void editDistributor(Distributor distr);
 }
