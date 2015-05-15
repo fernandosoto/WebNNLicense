@@ -74,6 +74,7 @@
 									<li><br>Created by: <form:input path="purchase.createdBy" value="${purchase.createdBy}" readonly="true" cssStyle="border: hidden"/></li>
 									<li><br>Created date: <form:input path="date" value="${date}" readonly="true" cssStyle="border: hidden"/></li>
 								</div>
+								<li><br>Comments:<br><form:textarea path="purchase.freeText" value="${purchase.freeText}" readonly="true" title="Comments" size="6" style="width: 550px; height: 100px; background-color:#f6f6f6;"/></li>
 								<li><br>Serial Keys:<br><form:select  path="license.licenseId" multiple="false" size="8" style="width: 550px;">
 									<form:option value="NONE" label="--- Select license ---" disabled="true"/>
 									<form:options items="${licenses}" itemValue="licenseId" itemLabel="label"/>

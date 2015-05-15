@@ -36,11 +36,10 @@ public class addController{
 
         licenses = regForm.getSerialKeysWithSeparatedLicenses();
         Purchase p= regForm.getPurchases();
-        purchaseID = db.addPurchase(p,"John Doe",regForm.getManufacturer().getId(),regForm.getDistributor().getId());
+        purchaseID = db.addPurchase(p,"John Doe",regForm.getDistributor().getId(),regForm.getManufacturer().getId());
 
         for(License L: licenses){
             L.setPurchaseId(purchaseID);
-            System.out.println(L.getSerialKey());
             licenseDao.addLicense(L);
         }
         return "add/add_inner";

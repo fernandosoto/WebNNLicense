@@ -1,10 +1,7 @@
 package com.springapp.mvc;
 
-import Backend.DAO.LicenseDAOInterface;
-import Backend.DAO.PurchaseDAO;
-import Backend.License;
-import Backend.ModifyForm;
-import Backend.Purchase;
+import Backend.*;
+import Backend.DAO.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -24,10 +21,16 @@ import java.util.List;
 public class modifyController {
 
     @Autowired
-    private PurchaseDAO pdao;
+    private ManufacturerDAOInterface manufacturerDAO;
+    @Autowired
+    private DistributorDAOInterface distributorDAO;
+    @Autowired
+    private PurchaseDAOInterface pdao;
     @Autowired
     private LicenseDAOInterface ldao;
     private ModifyForm modifyForm = new ModifyForm();
+    private List<Manufacturer> manufacturers = new ArrayList<Manufacturer>();
+    private List<Distributor> distributors = new ArrayList<Distributor>();
 
     @RequestMapping(value = "/modify_inner",method = RequestMethod.GET)
     public String modifyIndex(ModelMap model)
@@ -128,7 +131,7 @@ public class modifyController {
     {
 
         this.modifyForm.setExpireDate(this.modifyForm.getLicense().getExpireDate().toString());
-        model.addAttribute("modifyForm",modifyForm);
+        model.addAttribute("modifyForm", modifyForm);
         return "modify/modify_licenseKeyDetails";
     }
 
@@ -159,6 +162,9 @@ public class modifyController {
     @RequestMapping(value = "/modify_purchase",method = RequestMethod.GET)
     public String modifyPurchase(ModelMap model)
     {
+        getManufacturersAndDistributors();
+        model.addAttribute("manufacturers", manufacturers);
+        model.addAttribute("distributors", distributors);
         model.addAttribute("modifyForm", modifyForm);
         return "modify/modify_purchase";
     }
@@ -166,10 +172,30 @@ public class modifyController {
     @RequestMapping(value = "/modify_purchase",method = RequestMethod.POST)
     public String modifyPurchase(@ModelAttribute ModifyForm modifyForm,ModelMap model)
     {
-        this.modifyForm = modifyForm;
-        return "redirect:/modify_";
+
+
+        this.modifyForm.getPurchase().setProductName(modifyForm.getPurchase().getProductName());
+        this.modifyForm.getPurchase().setFreeText(modifyForm.getPurchase().getFreeText());
+        this.modifyForm.getPurchase().setType(modifyForm.getPurchase().getType());
+        pdao.editPurchase(this.modifyForm.getPurchase(), "John Doe", modifyForm.getManufacturer().getId(), modifyForm.getDistributor().getId());
+
+        if(modifyForm.getNewSerialKeys().length()!=0) {
+            List<License> licenses;
+            licenses = modifyForm.getSerialKeysWithSeparatedLicenses();
+
+            for (License L : licenses) {
+                L.setPurchaseId(this.modifyForm.getPurchase().getPurchaseId());
+                ldao.addLicense(L);
+            }
+        }
+
+        return "redirect:/modify_search";
     }
 
+    private void getManufacturersAndDistributors(){
+        manufacturers =  manufacturerDAO.searchManufacturerByName("");
+        distributors = distributorDAO.searchDistributorByName("");
+    }
 
 
 
