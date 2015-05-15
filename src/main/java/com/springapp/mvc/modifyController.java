@@ -173,6 +173,7 @@ public class modifyController {
     public String modifyPurchase(@ModelAttribute ModifyForm modifyForm,ModelMap model)
     {
 
+        System.out.println(modifyForm.getManufacturer().getId());
 
         this.modifyForm.getPurchase().setProductName(modifyForm.getPurchase().getProductName());
         this.modifyForm.getPurchase().setFreeText(modifyForm.getPurchase().getFreeText());
