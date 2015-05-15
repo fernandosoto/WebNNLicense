@@ -35,7 +35,7 @@ public class PurchaseDAO implements PurchaseDAOInterface {
     public static String SQL_SEARCH_BY_PRODUCT_NAME = "SELECT P.PURCHASE_ID, P.PRODUCT_NAME, P.LICENSE_TYPE, P.FREE_TEXT, D.DISTRIBUTOR_NAME, M.MANUFACTURER_NAME, CR.CREATED_BY,CR.CREATED_DATE " +
             "FROM PURCHASE P, MANUFACTURER M, DISTRIBUTOR D,CREATOR CR " +
             "WHERE M.MANUFACTURER_ID = P.MANUFACTURER_ID AND D.DISTRIBUTOR_ID = P.DISTRIBUTOR_ID " +
-            "AND P.PRODUCT_NAME LIKE ? " +
+            "AND P.PRODUCT_NAME LIKE ?" + "% " +
             "AND CR.C_PURCHASE_ID = P.PURCHASE_ID " +
             "AND P.PURCHASE_ID NOT IN (SELECT DP.D_PURCHASE_ID from DELETED_PURCHASE DP)";
 
@@ -44,7 +44,6 @@ public class PurchaseDAO implements PurchaseDAOInterface {
             "WHERE M.MANUFACTURER_ID = P.MANUFACTURER_ID AND D.DISTRIBUTOR_ID = P.DISTRIBUTOR_ID " +
             "AND CR.C_PURCHASE_ID = P.PURCHASE_ID " +
             "AND P.PURCHASE_ID NOT IN (SELECT DP.D_PURCHASE_ID from DELETED_PURCHASE DP)";
-    private JdbcTemplate jdbcTemplate;
 
     @Transactional
     public long addPurchase(final Purchase pur, final String userName, final long distrId, final long manuId) throws Exception {
@@ -270,10 +269,25 @@ public class PurchaseDAO implements PurchaseDAOInterface {
     }
 
     @Override
-    public void editPurchase(Purchase pur, String userName, long manufacturerId, long distributorId) {
+    public void editPurchase(final Purchase pur, final String userName, final long manufacturerId, final long distributorId) {
+        final Purchase oldPur = searchPurchaseById(pur.getPurchaseId());
 
+        db.update(new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                PreparedStatement ps = connection.prepareStatement("UPDATE PURCHASE SET PRODUCT_NAME = ?" +
+                        ", LICENSE_TYPE = ? ,MANUFACTURER_ID = ?,DISTRIBUTOR_ID = ?, FREE_TEXT = ? " +
+                        " WHERE PURCHASE_ID = ?");
+                ps.setString(1, pur.getProductName());
+                ps.setString(2, pur.getType());
+                ps.setLong(3, manufacturerId);
+                ps.setLong(4, distributorId);
+                ps.setString(5, pur.getFreeText());
+                ps.setLong(6, oldPur.getPurchaseId());
+                return ps;
+            }
+        });
     }
-
 
     public long getUpgradedFrom(long newPurchaseId) {
         long id;
@@ -284,14 +298,6 @@ public class PurchaseDAO implements PurchaseDAOInterface {
         }
         return id;
 
-    }
-
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
-
-    public JdbcTemplate getJdbcTemplate() {
-        return jdbcTemplate;
     }
 
     /*public void setDataSource(DataSource dataSource) {

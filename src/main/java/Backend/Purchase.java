@@ -55,20 +55,6 @@ public class Purchase
     }
 
     public Purchase(long purchaseId, String manufacturerName, String productName, String type, String distributorName,
-                    String freeText, String createdBy, Date createdDate) {
-        this.purchaseId = purchaseId;
-        this.manufacturerName = manufacturerName;
-        this.productName = productName;
-        this.type = type;
-        this.distributorName = distributorName;
-        this.freeText = freeText;
-        this.createdBy = createdBy;
-        this.createdDate = createdDate;
-        deletedDate = null;
-        deletedBy = null;
-
-    }
-    public Purchase(long purchaseId, String manufacturerName, String productName, String type, String distributorName,
                     String freeText, long upgradeFrom, String createdBy, Date createdDate) {
         this.purchaseId = purchaseId;
         this.manufacturerName = manufacturerName;
