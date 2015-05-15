@@ -46,7 +46,7 @@ public class searchController
     }
 
     @RequestMapping(value = "/search_results",method = RequestMethod.GET)
-    public String searchResults(ModelMap model)
+    public String searchResults(ModelMap model)throws Exception
     {
         List<Purchase> p = pdao.searchPurchaseByName(searchForm.getPurchase().getProductName());
         model.addAttribute("purchases", p);

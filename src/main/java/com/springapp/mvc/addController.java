@@ -30,7 +30,7 @@ public class addController{
     private List<Distributor> distributors = new ArrayList<Distributor>();
 
     @RequestMapping(value = "/addPurchase",method = RequestMethod.POST)
-    public String printWelcome(@ModelAttribute RegisterForm regForm,ModelMap model) {
+    public String printWelcome(@ModelAttribute RegisterForm regForm,ModelMap model)throws Exception {
         Long purchaseID;
         List<License> licenses;
 
