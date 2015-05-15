@@ -20,8 +20,8 @@ import static org.mockito.Mockito.when;
  * Created by Fernando on 2015-05-13.
  */
 public class PurchaseRowMapperTest {
-    public final static Long date = System.currentTimeMillis();
-    public final static Long TEST_PURCHASE_ID = (long) 1;
+    public final static long date = System.currentTimeMillis();
+    public final static long TEST_PURCHASE_ID = 1;
     public final static String TEST_MANUFACTURER_NAME = "Microsoft";
     public final static String TEST_PRODUCT_NAME = "XP";
     public final static String TEST_LICENSE_TYPE = "OS";
@@ -52,7 +52,6 @@ public class PurchaseRowMapperTest {
     public void testMapRow() throws SQLException {
         Assert.assertEquals(testPurchase, purchaseRowMapper.mapRow(resultSet, 1));
     }
-
 
 
     private void initExpectations() throws SQLException {
