@@ -105,7 +105,7 @@ public class PurchaseDAOTest {
         List<Purchase> expected = new ArrayList<Purchase>();
         expected.add(p1);
         System.out.println(expected.get(0).getProductName());
-        when(jdbcTemplate.query(pdao.SQL_SEARCH_BY_PRODUCT_NAME, purchaseRowMapper, expected.get(0).getProductName())).thenReturn(expected);
+        when(jdbcTemplate.query(pdao.SQL_SEARCH_BY_PRODUCT_NAME, purchaseRowMapper, expected.get(0).getProductName()+"%")).thenReturn(expected);
         //when(db.query(anyString(),(RowMapper<Purchase>) anyObject(), anyString())).thenReturn(expected);
         //when(jdbcTemplate.query(pdao.SQL_SEARCH_ALL_PRODUCT,purchaseRowMapper)).thenReturn(expected);
         //assertEquals(expected, pdao.searchAllPurchases());
@@ -114,7 +114,7 @@ public class PurchaseDAOTest {
 
     @Test(expected = DataAccessException.class)
     public void searchNameDAOAccessExceptionTest()throws Exception{
-        when(jdbcTemplate.query(pdao.SQL_SEARCH_BY_PRODUCT_NAME,purchaseRowMapper,p1.getProductName())).thenThrow(mock(DataAccessException.class));
+        when(jdbcTemplate.query(pdao.SQL_SEARCH_BY_PRODUCT_NAME,purchaseRowMapper,p1.getProductName()+"%")).thenThrow(mock(DataAccessException.class));
 
         pdao.searchPurchaseByName(p1.getProductName());
     }

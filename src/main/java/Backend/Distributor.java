@@ -42,4 +42,18 @@ public class Distributor {
     public void setName(String name) {
         this.name = name;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Distributor that = (Distributor) o;
+
+        if (id != that.id) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        return !(freeText != null ? !freeText.equals(that.freeText) : that.freeText != null);
+
+    }
+
 }

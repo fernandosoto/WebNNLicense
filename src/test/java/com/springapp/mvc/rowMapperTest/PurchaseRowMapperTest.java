@@ -1,4 +1,4 @@
-package com.springapp.mvc;
+package com.springapp.mvc.rowMapperTest;
 
 import Backend.Purchase;
 import Backend.rowMapper.PurchaseRowMapper;
