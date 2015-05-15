@@ -30,8 +30,6 @@ public class PurchaseDAO implements PurchaseDAOInterface {
     PurchaseRowMapper purchaseRowMapper;
 
 
-
-
     public static String SQL_SEARCH_BY_PRODUCT_NAME = "SELECT P.PURCHASE_ID, P.PRODUCT_NAME, P.LICENSE_TYPE, P.FREE_TEXT, D.DISTRIBUTOR_NAME, M.MANUFACTURER_NAME, CR.CREATED_BY,CR.CREATED_DATE " +
             "FROM PURCHASE P, MANUFACTURER M, DISTRIBUTOR D,CREATOR CR " +
             "WHERE M.MANUFACTURER_ID = P.MANUFACTURER_ID AND D.DISTRIBUTOR_ID = P.DISTRIBUTOR_ID " +
@@ -300,8 +298,8 @@ public class PurchaseDAO implements PurchaseDAOInterface {
 
     }
 
-    /*public void setDataSource(DataSource dataSource) {
+    public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
         db = new JdbcTemplate(dataSource);
-    }*/
+    }
 }

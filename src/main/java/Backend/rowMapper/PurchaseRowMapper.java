@@ -26,6 +26,8 @@ public class PurchaseRowMapper implements RowMapper{
     public final static String CREATED_BY = "CREATED_BY";
     public final static String CREATED_DATE = "CREATED_DATE";
 
+
+
     public Purchase mapRow(ResultSet rs, int i) throws SQLException {
         Purchase purchase = new Purchase(rs.getLong(PURCHASE_ID),
                 rs.getString(MANUFACTURER_NAME),

@@ -65,7 +65,7 @@ public class modifyController {
 
 
     @RequestMapping(value = "/modify_results",method = RequestMethod.GET)
-    public String modifyResults(ModelMap model)
+    public String modifyResults(ModelMap model)throws Exception
     {
         this.modifyForm.clearLicenseKeys();
         List<Purchase> p = pdao.searchPurchaseByName(modifyForm.getPurchase().getProductName());

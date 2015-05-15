@@ -72,6 +72,7 @@ public class PurchaseDAOTest {
         MockitoAnnotations.initMocks(this);
         this.mockMvc = webAppContextSetup(this.wac).build();
         p1 = new Purchase();
+        p1.setPurchaseId(1);
         p1.setProductName("XP");
         p1.setCreatedDate(new Date(System.currentTimeMillis()));
         p1.setDistributorName("Komplett");
@@ -124,6 +125,14 @@ public class PurchaseDAOTest {
 
         pdao.searchPurchaseByName(null);
     }
+
+   /* @Test
+    public void searchByIdTest(){
+        when(jdbcTemplate.queryForObject(pdao.SQL_SEARCH_BY_ID,purchaseRowMapper,1)).thenReturn(p1);
+
+        assertEquals(p1,pdao.searchPurchaseById(1));
+
+    }*/
 
 
 

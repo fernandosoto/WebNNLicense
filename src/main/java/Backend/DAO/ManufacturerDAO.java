@@ -30,7 +30,7 @@ public class ManufacturerDAO implements ManufacturerDAOInterface {
     ManufacturerRowMapper mRowMapper;
 
     public final static String SQL_SEARCH_BY_MANUFACTURER_ID = "SELECT * FROM MANUFACTURER WHERE MANUFACTURER.MANUFACTURER_ID = ?";
-    public final static String SQL_SEARCH_BY_MANUFACTURER_NAME = "SELECT * FROM MANUFACTURER WHERE MANUFACTURER.MANUFACTURER_NAME LIKE ?" + "%";
+    public final static String SQL_SEARCH_BY_MANUFACTURER_NAME = "SELECT * FROM MANUFACTURER WHERE MANUFACTURER.MANUFACTURER_NAME LIKE ?";
 
     @Override
     @Transactional
@@ -67,7 +67,7 @@ public class ManufacturerDAO implements ManufacturerDAOInterface {
     }
 
     @Override
-    public List<Manufacturer> searchManufacturerByName(final String name) {
+    public List<Manufacturer> searchManufacturerByName(String name) {
         /*String sql = "SELECT * FROM MANUFACTURER WHERE MANUFACTURER.MANUFACTURER_NAME LIKE '" + name + "%';";
         return db.query(new PreparedStatementCreator() {
             @Override
@@ -82,7 +82,7 @@ public class ManufacturerDAO implements ManufacturerDAOInterface {
                 return new Manufacturer(rs.getLong("MANUFACTURER_ID"), rs.getString("MANUFACTURER_NAME"), rs.getString("FREE_TEXT"));
             }
         });*/
-
+        name += "%";
         return db.query(SQL_SEARCH_BY_MANUFACTURER_NAME, mRowMapper, name);
     }
 
