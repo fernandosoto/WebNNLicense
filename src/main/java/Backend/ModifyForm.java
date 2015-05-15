@@ -2,6 +2,7 @@ package Backend;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -14,6 +15,47 @@ public class ModifyForm {
     private List<LicenseKey> licenseKeys=new ArrayList<LicenseKey>();
     private License license;
     private String date;
+    private String expireDate;
+    private Manufacturer manufacturer;
+    private String newSerialKeys;
+
+    public String getNewSerialKeys() {
+        return newSerialKeys;
+    }
+
+    public void setNewSerialKeys(String newSerialKeys) {
+        this.newSerialKeys = newSerialKeys;
+    }
+
+
+
+    public String getKeySeparator() {
+        return keySeparator;
+    }
+
+    public void setKeySeparator(String keySeparator) {
+        this.keySeparator = keySeparator;
+    }
+
+    private String keySeparator;
+
+    public Distributor getDistributor() {
+        return distributor;
+    }
+
+    public void setDistributor(Distributor distributor) {
+        this.distributor = distributor;
+    }
+
+    public Manufacturer getManufacturer() {
+        return manufacturer;
+    }
+
+    public void setManufacturer(Manufacturer manufacturer) {
+        this.manufacturer = manufacturer;
+    }
+
+    private Distributor distributor;
 
     public class LicenseKey extends License{
         private String label;
@@ -33,6 +75,10 @@ public class ModifyForm {
         }
     }
 
+
+    public String getExpireDate() {return expireDate;}
+
+    public void setExpireDate(String expireDate) {this.expireDate = expireDate;}
 
     public License getLicense() {
         return license;
@@ -97,4 +143,38 @@ public class ModifyForm {
         return null;
     }
 
+    public Date getDateFromString(String strDate){
+        int year = Integer.parseInt(strDate.substring(0, 4));
+        int month = (Integer.parseInt(strDate.substring(5,7)) - 1); // months: 0(jan), 11(dec)
+        int day = Integer.parseInt(strDate.substring(8, 10));
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year,month,day);
+        Date date = new Date(calendar.getTimeInMillis());
+        return date;
+    }
+
+    public List<License> getSerialKeysWithSeparatedLicenses(){
+
+        List<License> licenses = new ArrayList<License>();
+        int year = Integer.parseInt(getExpireDate().substring(0, 4));
+        int month = (Integer.parseInt(getExpireDate().substring(5, 7)) - 1); // months: 0(jan), 11(dec)
+        int day = Integer.parseInt(getExpireDate().substring(8, 10));
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year,month,day);
+        Date date = new Date(calendar.getTimeInMillis());
+
+        if(keySeparator.equals(".")){
+            keySeparator="\\.";
+        }
+
+        String[] splitSerialKeys = getNewSerialKeys().split(keySeparator);
+
+
+        for(int i=0;i<splitSerialKeys.length;++i){
+            licenses.add(new License(0,"Kalle", splitSerialKeys[i],0, date));
+        }
+        return licenses;
+    }
 }

@@ -1,10 +1,7 @@
 package com.springapp.mvc;
 
-import Backend.DAO.LicenseDAOInterface;
-import Backend.DAO.PurchaseDAO;
-import Backend.License;
-import Backend.ModifyForm;
-import Backend.Purchase;
+import Backend.*;
+import Backend.DAO.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -12,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,14 +21,21 @@ import java.util.List;
 public class modifyController {
 
     @Autowired
-    private PurchaseDAO pdao;
+    private ManufacturerDAOInterface manufacturerDAO;
+    @Autowired
+    private DistributorDAOInterface distributorDAO;
+    @Autowired
+    private PurchaseDAOInterface pdao;
     @Autowired
     private LicenseDAOInterface ldao;
     private ModifyForm modifyForm = new ModifyForm();
+    private List<Manufacturer> manufacturers = new ArrayList<Manufacturer>();
+    private List<Distributor> distributors = new ArrayList<Distributor>();
 
     @RequestMapping(value = "/modify_inner",method = RequestMethod.GET)
     public String modifyIndex(ModelMap model)
     {
+        this.modifyForm.clearLicenseKeys();
         model.addAttribute("modifyForm", modifyForm);
         return "modify/modify_inner";
     }
@@ -46,6 +51,7 @@ public class modifyController {
     @RequestMapping(value = "/modify_search",method = RequestMethod.GET)
     public String modifySearch(ModelMap model)
     {
+        this.modifyForm.clearLicenseKeys();
         model.addAttribute("modifyForm", modifyForm);
         return "modify/modify_search";
     }
@@ -61,6 +67,7 @@ public class modifyController {
     @RequestMapping(value = "/modify_results",method = RequestMethod.GET)
     public String modifyResults(ModelMap model)
     {
+        this.modifyForm.clearLicenseKeys();
         List<Purchase> p = pdao.searchPurchaseByName(modifyForm.getPurchase().getProductName());
         model.addAttribute("purchases", p);
         model.addAttribute("modifyForm", modifyForm);
@@ -80,9 +87,9 @@ public class modifyController {
     @RequestMapping(value = "/modify_assign_remove",method = RequestMethod.GET)
     public String modifyAssignRemove(ModelMap model)
     {
-
+        this.modifyForm.clearLicenseKeys();
         List<License> dbLicenses = ldao.searchLicenseByPurchase(modifyForm.getPurchase());
-        model.addAttribute("licenses",  modifyForm.getLicenseKeyList(dbLicenses));
+        model.addAttribute("licenses", modifyForm.getLicenseKeyList(dbLicenses));
         model.addAttribute("modifyForm", modifyForm);
         return "modify/modify_assign_remove";
     }
@@ -90,12 +97,58 @@ public class modifyController {
     @RequestMapping(value = "/modify_assign_remove",method = RequestMethod.POST)
     public String modifyAssignRemove(@ModelAttribute ModifyForm modifyForm,ModelMap model)
     {
-
         this.modifyForm.setLicense(this.modifyForm.getLicenseFromId(modifyForm.getLicense().getLicenseId()));
         this.modifyForm.getLicense().setUser(modifyForm.getLicense().getUser());
-        ldao.editLicense(this.modifyForm.getLicense(), "Ussama");
+        ldao.editLicense(this.modifyForm.getLicense(), "user");
         this.modifyForm.clearLicenseKeys();
         return "redirect:/modify_assign_remove";
+    }
+
+
+
+
+
+
+    @RequestMapping(value = "/modify_licenseKeys",method = RequestMethod.GET)
+    public String modifyDetails(ModelMap model)
+    {
+        List<License> dbLicenses = ldao.searchLicenseByPurchase(modifyForm.getPurchase());
+        model.addAttribute("licenses", modifyForm.getLicenseKeyList(dbLicenses));
+        model.addAttribute("modifyForm", modifyForm);
+        return "modify/modify_licenseKeys";
+    }
+
+    @RequestMapping(value = "/modify_licenseKeys",method = RequestMethod.POST)
+    public String modifyLicenseKeys(@ModelAttribute ModifyForm modifyForm,ModelMap model)
+    {
+        this.modifyForm.setLicense(this.modifyForm.getLicenseFromId(modifyForm.getLicense().getLicenseId()));
+        return "redirect:/modify_licenseKeyDetails";
+    }
+
+
+    @RequestMapping(value = "/modify_licenseKeyDetails",method = RequestMethod.GET)
+    public String modifyLicenseDetails(ModelMap model)
+    {
+
+        this.modifyForm.setExpireDate(this.modifyForm.getLicense().getExpireDate().toString());
+        model.addAttribute("modifyForm", modifyForm);
+        return "modify/modify_licenseKeyDetails";
+    }
+
+
+    @RequestMapping(value = "/modify_licenseKeyDetails",method = RequestMethod.POST)
+    public String modifyLicenseDetails(@ModelAttribute ModifyForm modifyForm,ModelMap model)
+    {
+
+        Date date = this.modifyForm.getDateFromString(modifyForm.getExpireDate());
+        this.modifyForm.getLicense().setExpireDate(date);
+
+        this.modifyForm.getLicense().setUser(modifyForm.getLicense().getUser());
+        this.modifyForm.getLicense().setSerialKey(modifyForm.getLicense().getSerialKey());
+
+        ldao.editLicense(this.modifyForm.getLicense(), "Hodor");
+        this.modifyForm.clearLicenseKeys();
+        return "redirect:/modify_licenseKeys";
     }
 
 
@@ -109,6 +162,9 @@ public class modifyController {
     @RequestMapping(value = "/modify_purchase",method = RequestMethod.GET)
     public String modifyPurchase(ModelMap model)
     {
+        getManufacturersAndDistributors();
+        model.addAttribute("manufacturers", manufacturers);
+        model.addAttribute("distributors", distributors);
         model.addAttribute("modifyForm", modifyForm);
         return "modify/modify_purchase";
     }
@@ -116,24 +172,33 @@ public class modifyController {
     @RequestMapping(value = "/modify_purchase",method = RequestMethod.POST)
     public String modifyPurchase(@ModelAttribute ModifyForm modifyForm,ModelMap model)
     {
-        this.modifyForm = modifyForm;
-        return "redirect:/modify_";         // vart ska vi?
+
+
+        this.modifyForm.getPurchase().setProductName(modifyForm.getPurchase().getProductName());
+        this.modifyForm.getPurchase().setFreeText(modifyForm.getPurchase().getFreeText());
+        this.modifyForm.getPurchase().setType(modifyForm.getPurchase().getType());
+        pdao.editPurchase(this.modifyForm.getPurchase(), "John Doe", modifyForm.getManufacturer().getId(), modifyForm.getDistributor().getId());
+
+        if(modifyForm.getNewSerialKeys().length()!=0) {
+            List<License> licenses;
+            licenses = modifyForm.getSerialKeysWithSeparatedLicenses();
+
+            for (License L : licenses) {
+                L.setPurchaseId(this.modifyForm.getPurchase().getPurchaseId());
+                ldao.addLicense(L);
+            }
+        }
+
+        return "redirect:/modify_search";
     }
 
-    @RequestMapping(value = "/modify_licenseKeys",method = RequestMethod.GET)
-    public String modifyDetails(ModelMap model)
-    {
-        List<License> dbLicenses = ldao.searchLicenseByPurchase(modifyForm.getPurchase());
-        List<String> licenses = modifyForm.LicenseDetailToString(dbLicenses);
-        model.addAttribute("licenses", licenses);
-        model.addAttribute("modifyForm", modifyForm);
-        return "modify/modify_licenseKeys";
+    private void getManufacturersAndDistributors(){
+        manufacturers =  manufacturerDAO.searchManufacturerByName("");
+        distributors = distributorDAO.searchDistributorByName("");
     }
 
-    @RequestMapping(value = "/modify_licenseKeys",method = RequestMethod.POST)
-    public String modifyLicenseKeys(@ModelAttribute ModifyForm modifyForm,ModelMap model)
-    {
-        //this.modifyForm = modifyForm;
-        return "redirect:/modify_";         // vart ska vi?
-    }
+
+
+
+
 }

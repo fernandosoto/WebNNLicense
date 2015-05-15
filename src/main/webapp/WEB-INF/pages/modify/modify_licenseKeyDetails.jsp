@@ -56,7 +56,7 @@
 				</ul>
 
 			</div><!-- end work_nav -->
-			<h1 class="title">Modify - license - Results</h1>
+			<h1 class="title">Modify - license - details</h1>
 		</div>
 	</section><!-- end top -->
 
@@ -67,19 +67,13 @@
 					<fieldset>
 						<nav>
 							<ul>
-								<div align="left">
-									<li>Product name: <form:input path="purchase.productName" value="${purchase.productName}" readonly="true" cssStyle="border: hidden"/></li>
-									<li><br>Manufacturer: <form:input path="purchase.manufacturerName" value="${purchase.manufacturerName}" readonly="true" cssStyle="border: hidden"/></li>
-									<li><br>Distributor: <form:input path="purchase.distributorName" value="${purchase.distributorName}" readonly="true" cssStyle="border: hidden"/></li>
-									<li><br>Created by: <form:input path="purchase.createdBy" value="${purchase.createdBy}" readonly="true" cssStyle="border: hidden"/></li>
-									<li><br>Created date: <form:input path="date" value="${date}" readonly="true" cssStyle="border: hidden"/></li>
+								<div align="right">
+									<li>Product name: <form:input path="purchase.productName" value="${purchase.productName}" readonly="true" cssStyle="border: hidden"/><br><br></li>
+									<li>Serial key: <form:input path="license.serialKey" value="${license.serialKey}" maxlength="100" /></li>
+									<li><br>Expire date: <form:input path="expireDate"  type="date" value="${expireDate}" maxlength="10" /></li>
+									<li><br>User: <form:input path="license.user" value="${license.user}" maxlength="30"/></li>
+
 								</div>
-								<li><br>Comments:<br><form:textarea path="purchase.freeText" value="${purchase.freeText}" readonly="true" title="Comments" size="6" style="width: 550px; height: 100px; background-color:#f6f6f6;"/></li>
-								<li><br>Serial Keys:<br><form:select  path="license.licenseId" multiple="false" size="8" style="width: 550px;">
-									<form:option value="NONE" label="--- Select license ---" disabled="true"/>
-									<form:options items="${licenses}" itemValue="licenseId" itemLabel="label"/>
-									</form:select>
-								</li>
 								<li><br><input type="submit"  value="Modify"/></li>
 							</ul>
 						</nav><!-- end navigation menu -->

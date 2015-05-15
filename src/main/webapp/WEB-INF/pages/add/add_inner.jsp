@@ -67,7 +67,7 @@
 					<fieldset>
 					<nav>
 						<ul>
-							<li><br>Product name: <form:input path="purchases.productName" type="text"/></li>
+							<li><br>Product name: <form:input path="purchases.productName" type="text" maxlength="50"/></li>
 							<li><br>Manufacturer Name:
 								<form:select path="manufacturer.id" title="Select manufacturer">
 									<form:option value="NONE" label="--- Select ---"/>
@@ -84,9 +84,9 @@
 							</li>
 							<li><br>Expire date: <form:input path="date" type="date" /></li>
 							<li><br>License key separator: <form:input path="keySeparator" type="text"/></li>
-							<li><br>License type: <form:input path="purchases.type" type="text"/></li>
+							<li><br>License type: <form:input path="purchases.type" type="text" maxlength="50"/></li>
 							<li><br>Serial keys: <form:textarea path="serialKeys" rows="5" cols="80"/></li>
-							<li><br>Comments: <form:textarea path="purchases.freeText" rows="5" cols="80"/></li>
+							<li><br>Comments: <form:textarea path="purchases.freeText" rows="5" cols="80" maxlength="300"/></li>
 							<li><br><input type="submit" value="Add" />  <input type="reset" value="Clear"/></li>
 						</ul>
 
