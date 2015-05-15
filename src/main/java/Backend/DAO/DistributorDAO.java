@@ -21,13 +21,18 @@ public class DistributorDAO implements DistributorDAOInterface {
     private DataSource dataSource;
     private JdbcTemplate db;
 
+    public static final String SQL_ADD_DISTRIBUTOR = "INSERT INTO DISTRIBUTOR(DISTRIBUTOR_NAME , FREE_TEXT) VALUES(?, ?)";
+    public static final String SQL_SEARCH_DISTRIBUTOR_BY_ID = "SELECT * FROM DISTRIBUTOR WHERE DISTRIBUTOR.DISTRIBUTOR_ID = ?";
+    public static final String SQL_SEARCH_DISTRIBUTOR_BY_NAME = "SELECT * FROM DISTRIBUTOR WHERE DISTRIBUTOR.DISTRIBUTOR_NAME LIKE ?";
+    public static final String SQL_UPDATE_DISTRIBUTOR = "UPDATE DISTRIBUTOR SET DISTRIBUTOR_NAME = ?, FREE_TEXT = ? WHERE DISTRIBUTOR_ID = ?";
+
     @Override
     @Transactional
     public void addDistributor(final Distributor d) {
         db.update(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                PreparedStatement ps = connection.prepareStatement("INSERT INTO DISTRIBUTOR(DISTRIBUTOR_NAME , FREE_TEXT) VALUES(?, ?)");
+                PreparedStatement ps = connection.prepareStatement(SQL_ADD_DISTRIBUTOR);
                 ps.setString(1, d.getName());
                 ps.setString(2, d.getFreeText());
                 return ps;
@@ -40,7 +45,7 @@ public class DistributorDAO implements DistributorDAOInterface {
         return db.query(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                PreparedStatement ps = connection.prepareStatement("SELECT * FROM DISTRIBUTOR WHERE DISTRIBUTOR.DISTRIBUTOR_ID = ?");
+                PreparedStatement ps = connection.prepareStatement(SQL_SEARCH_DISTRIBUTOR_BY_ID);
                 ps.setLong(1, id);
                 return ps;
             }
@@ -57,14 +62,30 @@ public class DistributorDAO implements DistributorDAOInterface {
         return db.query(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                PreparedStatement ps = connection.prepareStatement("SELECT * FROM DISTRIBUTOR WHERE DISTRIBUTOR.DISTRIBUTOR_NAME LIKE ?");
-                ps.setString(1, name+"%");
+                PreparedStatement ps = connection.prepareStatement(SQL_SEARCH_DISTRIBUTOR_BY_NAME);
+                ps.setString(1, name + "%");
                 return ps;
             }
         }, new RowMapper<Distributor>() {
             @Override
             public Distributor mapRow(ResultSet rs, int i) throws SQLException {
                 return new Distributor(rs.getLong("DISTRIBUTOR_ID"), rs.getString("DISTRIBUTOR_NAME"), rs.getString("FREE_TEXT"));
+            }
+        });
+    }
+
+    @Override
+    public void editDistributor(final Distributor distr){
+        final Distributor oldDistr = searchDistributorById(distr.getId());
+
+        db.update(new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                PreparedStatement ps = connection.prepareStatement(SQL_UPDATE_DISTRIBUTOR);
+                ps.setString(1, distr.getName());
+                ps.setString(2, distr.getFreeText());
+                ps.setLong(3, oldDistr.getId());
+                return ps;
             }
         });
     }

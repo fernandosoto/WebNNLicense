@@ -40,8 +40,9 @@ public class Purchase
         this.deletedBy = deletedBy;
     }
 
-    public Purchase(long purchaseId, String manufacturerName, String productName, String type, String distributorName,
-                    String freeText, String createdBy, Date createdDate) {
+    public Purchase(long purchaseId, String manufacturerName, String productName, String type,
+                    String distributorName, String freeText, String createdBy,
+                    Date createdDate) {
         this.purchaseId = purchaseId;
         this.manufacturerName = manufacturerName;
         this.productName = productName;
@@ -50,10 +51,9 @@ public class Purchase
         this.freeText = freeText;
         this.createdBy = createdBy;
         this.createdDate = createdDate;
-        deletedDate = null;
-        deletedBy = null;
 
     }
+
     public Purchase(long purchaseId, String manufacturerName, String productName, String type, String distributorName,
                     String freeText, long upgradeFrom, String createdBy, Date createdDate) {
         this.purchaseId = purchaseId;
@@ -137,4 +137,31 @@ public class Purchase
     public long getUpgradeFrom() { return upgradeFrom; }
 
     public void setUpgradeFrom(long upgradeFrom) { this.upgradeFrom = upgradeFrom; }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Purchase purchase = (Purchase) o;
+
+        if (purchaseId != purchase.purchaseId) return false;
+        if (upgradeFrom != purchase.upgradeFrom) return false;
+        if (manufacturerName != null ? !manufacturerName.equals(purchase.manufacturerName) : purchase.manufacturerName != null)
+            return false;
+        if (productName != null ? !productName.equals(purchase.productName) : purchase.productName != null)
+            return false;
+        if (type != null ? !type.equals(purchase.type) : purchase.type != null) return false;
+        if (distributorName != null ? !distributorName.equals(purchase.distributorName) : purchase.distributorName != null)
+            return false;
+        if (freeText != null ? !freeText.equals(purchase.freeText) : purchase.freeText != null) return false;
+        if (createdBy != null ? !createdBy.equals(purchase.createdBy) : purchase.createdBy != null) return false;
+        if (createdDate != null ? !createdDate.equals(purchase.createdDate) : purchase.createdDate != null)
+            return false;
+        if (deletedDate != null ? !deletedDate.equals(purchase.deletedDate) : purchase.deletedDate != null)
+            return false;
+        return !(deletedBy != null ? !deletedBy.equals(purchase.deletedBy) : purchase.deletedBy != null);
+
+    }
+
 }

@@ -1,9 +1,12 @@
 package Backend.DAO;
 
 import Backend.Manufacturer;
+import Backend.rowMapper.ManufacturerRowMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
@@ -16,14 +19,24 @@ import java.util.List;
 /**
  * Created by Isak on 2015-04-24.
  */
+@Service
 public class ManufacturerDAO implements ManufacturerDAOInterface {
     private DataSource dataSource;
-    private JdbcTemplate db;
+
+    @Autowired
+    public JdbcTemplate db;
+
+    @Autowired
+    ManufacturerRowMapper mRowMapper;
+
+    public final static String SQL_SEARCH_BY_MANUFACTURER_ID = "SELECT * FROM MANUFACTURER WHERE MANUFACTURER.MANUFACTURER_ID = ?";
+    public final static String SQL_SEARCH_BY_MANUFACTURER_NAME = "SELECT * FROM MANUFACTURER WHERE MANUFACTURER.MANUFACTURER_NAME LIKE ?";
+    public static final String SQL_UPDATE_MANUFACTURER = "UPDATE MANUFACTURER SET MANUFACTURER_NAME = ?, FREE_TEXT = ? WHERE MANUFACTURER_ID = ?";
 
     @Override
     @Transactional
     public void addManufacturer(final Manufacturer m) {
-//        String sql = "INSERT INTO MANUFACTURER(MANUFACTURER_NAME, FREE_TEXT) VALUES('" + m.getName() + "', '" + m.getFreeText() + "');";
+
         db.update(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
@@ -37,8 +50,7 @@ public class ManufacturerDAO implements ManufacturerDAOInterface {
 
     @Override
     public Manufacturer searchManufacturerById(final long id) {
-//        String sql = "SELECT * FROM MANUFACTURER WHERE MANUFACTURER.MANUFACTURER_ID = " + id + ";";
-        return db.query(new PreparedStatementCreator() {
+        /*return db.query(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
                 PreparedStatement ps = connection.prepareStatement("SELECT * FROM MANUFACTURER WHERE MANUFACTURER.MANUFACTURER_ID = ?");
@@ -50,12 +62,14 @@ public class ManufacturerDAO implements ManufacturerDAOInterface {
             public Manufacturer mapRow(ResultSet rs, int i) throws SQLException {
                 return new Manufacturer(rs.getLong("MANUFACTURER_ID"), rs.getString("MANUFACTURER_NAME"), rs.getString("FREE_TEXT"));
             }
-        }).get(0);
+        }).get(0);*/
+
+        return (Manufacturer) db.query(SQL_SEARCH_BY_MANUFACTURER_ID, mRowMapper, id).get(0);
     }
 
     @Override
-    public List<Manufacturer> searchManufacturerByName(final String name) {
-        String sql = "SELECT * FROM MANUFACTURER WHERE MANUFACTURER.MANUFACTURER_NAME LIKE '" + name + "%';";
+    public List<Manufacturer> searchManufacturerByName(String name) {
+        /*String sql = "SELECT * FROM MANUFACTURER WHERE MANUFACTURER.MANUFACTURER_NAME LIKE '" + name + "%';";
         return db.query(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
@@ -67,6 +81,24 @@ public class ManufacturerDAO implements ManufacturerDAOInterface {
             @Override
             public Manufacturer mapRow(ResultSet rs, int i) throws SQLException {
                 return new Manufacturer(rs.getLong("MANUFACTURER_ID"), rs.getString("MANUFACTURER_NAME"), rs.getString("FREE_TEXT"));
+            }
+        });*/
+        name += "%";
+        return db.query(SQL_SEARCH_BY_MANUFACTURER_NAME, mRowMapper, name);
+    }
+
+    @Override
+    public void editManufacturer(final Manufacturer manuf){
+        final Manufacturer oldManuf = searchManufacturerById(manuf.getId());
+
+        db.update(new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                PreparedStatement ps = connection.prepareStatement(SQL_UPDATE_MANUFACTURER);
+                ps.setString(1, manuf.getName());
+                ps.setString(2, manuf.getFreeText());
+                ps.setLong(3, oldManuf.getId());
+                return ps;
             }
         });
     }

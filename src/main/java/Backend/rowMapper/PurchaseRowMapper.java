@@ -1,6 +1,9 @@
 package Backend.rowMapper;
 
+import Backend.DAO.PurchaseDAO;
 import Backend.Purchase;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
@@ -24,8 +27,9 @@ public class PurchaseRowMapper implements RowMapper{
     public final static String CREATED_DATE = "CREATED_DATE";
 
 
+
     public Purchase mapRow(ResultSet rs, int i) throws SQLException {
-        return new Purchase(rs.getLong(PURCHASE_ID),
+        Purchase purchase = new Purchase(rs.getLong(PURCHASE_ID),
                 rs.getString(MANUFACTURER_NAME),
                 rs.getString(PRODUCT_NAME),
                 rs.getString(LICENSE_TYPE),
@@ -34,5 +38,6 @@ public class PurchaseRowMapper implements RowMapper{
                 rs.getString(CREATED_BY),
                 rs.getDate(CREATED_DATE));
 
+        return purchase;
     }
 }
