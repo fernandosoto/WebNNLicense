@@ -2,6 +2,8 @@ package Backend.DAO;
 
 import Backend.License;
 import Backend.Purchase;
+import Backend.rowMapper.DeletedLicenseRowMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
@@ -17,6 +19,9 @@ import java.util.List;
 public class LicenseDAO implements LicenseDAOInterface {
     private DataSource dataSource;
     private JdbcTemplate db;
+
+    @Autowired
+    DeletedLicenseRowMapper deletedLicenseRowMapper;
 
     @Override
     @Transactional
@@ -50,20 +55,21 @@ public class LicenseDAO implements LicenseDAOInterface {
     }
 
     public List<License> searchDeletedLicenses(){
-        List<License> l = db.query(new PreparedStatementCreator() {
-            @Override
-            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                PreparedStatement ps = connection.prepareStatement(SQL_SEARCH_DELETED_LICENSE);
-                return ps;
-            }
-        }, new RowMapper<License>() {
-            @Override
-            public License mapRow(ResultSet rs, int i) throws SQLException {
-                return new License(rs.getLong("LICENSE_ID"), rs.getString("LICENSE_USER"), rs.getString("LICENSE_KEY"),
-                        rs.getLong("L_PURCHASE_ID"), rs.getDate("EXPIRE_DATE"), rs.getDate("DELETED_DATE"),
-                        rs.getString("DELETED_BY"));
-            }
-        });
+//        List<License> l = db.query(new PreparedStatementCreator() {
+//            @Override
+//            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+//                PreparedStatement ps = connection.prepareStatement(SQL_SEARCH_DELETED_LICENSE);
+//                return ps;
+//            }
+//        }, new RowMapper<License>() {
+//            @Override
+//            public License mapRow(ResultSet rs, int i) throws SQLException {
+//                return new License(rs.getLong("LICENSE_ID"), rs.getString("LICENSE_USER"), rs.getString("LICENSE_KEY"),
+//                        rs.getLong("L_PURCHASE_ID"), rs.getDate("EXPIRE_DATE"), rs.getDate("DELETED_DATE"),
+//                        rs.getString("DELETED_BY"));
+//            }
+//        });
+        List<License> l = db.query(SQL_SEARCH_DELETED_LICENSE, deletedLicenseRowMapper);
         return l;
     }
 
@@ -176,8 +182,8 @@ public class LicenseDAO implements LicenseDAOInterface {
     }
 
     public static final String SQL_ADD_LICENSE = "INSERT INTO LICENSE_KEY(LICENSE_USER, SERIAL_KEY, PURCHASE_ID, EXPIRE_DATE) VALUES(?, ?, ?, ?)";
-    public static final String SQL_DELETE_LICENSE = "INSERT INTO DELETED_LICENSE(DELETED_BY, DELETED_DATE, LICENSE_KEY_ID) VALUES (?, ?, ?)";
-    public static final String SQL_SEARCH_DELETED_LICENSE = "SELECT L.*, DL.DELETED_BY, DL.DELETED_DATE FROM  LICENSE_KEY L, DELETED_LICENSE DL WHERE DL.LICENSE_KEY_ID = L.LICENSE_KEY_ID";
+    public static final String SQL_DELETE_LICENSE = "INSERT INTO DELETED_LICENSE(DELETED_BY, DELETED_DATE, D_LICENSE_KEY_ID) VALUES (?, ?, ?)";
+    public static final String SQL_SEARCH_DELETED_LICENSE = "SELECT L.*, DL.DELETED_BY, DL.DELETED_DATE, DL.DELETED_LICENSE_ID FROM  LICENSE_KEY L, DELETED_LICENSE DL WHERE DL.D_LICENSE_KEY_ID = L.LICENSE_KEY_ID";
     public static final String SQL_SEARCH_LICENSE_BY_USER = "SELECT * FROM LICENSE_KEY L WHERE LICENSE_USER LIKE ? AND L.LICENSE_KEY_ID != DL.LICENSE_KEY_ID";
     public static final String SQL_SEARCH_LICENSE_BY_PURCHASE = "SELECT * FROM LICENSE_KEY WHERE PURCHASE_ID = ? AND LICENSE_KEY_ID NOT IN (SELECT D_LICENSE_KEY_ID from DELETED_LICENSE )";
     public static final String SQL_SEARCH_LICENSE_BY_ID = "SELECT * FROM LICENSE_KEY WHERE LICENSE_KEY_ID = ? AND LICENSE_KEY_ID NOT IN(SELECT D_LICENSE_KEY_ID FROM DELETED_LICENSE)";

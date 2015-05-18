@@ -34,6 +34,7 @@ public class ManufacturerDAOTest {
     public void shouldSearchManufacturerById(){
         Manufacturer m = new Manufacturer(1, "AdobeOf2015NewEdition", "noScopeSerialKeys.com");
         //mDAO.addManufacturer(m);
+        //WOWOWOWOWOWOOW FIXA!!!!!
         when( mDAO.searchManufacturerById(1)).thenReturn(m);
         verify(mDAO).searchManufacturerById(1);
     }
