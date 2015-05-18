@@ -33,7 +33,7 @@ public class PurchaseDAO implements PurchaseDAOInterface {
     public static String SQL_SEARCH_BY_PRODUCT_NAME = "SELECT P.PURCHASE_ID, P.PRODUCT_NAME, P.LICENSE_TYPE, P.FREE_TEXT, D.DISTRIBUTOR_NAME, M.MANUFACTURER_NAME, CR.CREATED_BY,CR.CREATED_DATE " +
             "FROM PURCHASE P, MANUFACTURER M, DISTRIBUTOR D,CREATOR CR " +
             "WHERE M.MANUFACTURER_ID = P.MANUFACTURER_ID AND D.DISTRIBUTOR_ID = P.DISTRIBUTOR_ID " +
-            "AND P.PRODUCT_NAME LIKE ?" + "% " +
+            "AND P.PRODUCT_NAME LIKE ?" +
             "AND CR.C_PURCHASE_ID = P.PURCHASE_ID " +
             "AND P.PURCHASE_ID NOT IN (SELECT DP.D_PURCHASE_ID from DELETED_PURCHASE DP)";
 
@@ -151,32 +151,10 @@ public class PurchaseDAO implements PurchaseDAOInterface {
     }
 
     public List<Purchase> searchPurchaseByName(String product_name) throws Exception {
-//        String sql = "SELECT P.PURCHASE_ID, P.PRODUCT_NAME, P.LICENSE_TYPE, P.FREE_TEXT, D.DISTRIBUTOR_NAME, M.MANUFACTURER_NAME" +
-//                " FROM PURCHASE P, MANUFACTURER M, DISTRIBUTOR D, DELETED_PURCHASE DP" +
-//                " WHERE M.MANUFACTURER_ID = P.MANUFACTURER_ID AND D.DISTRIBUTOR_ID = P.DISTRIBUTOR_ID" +
-//                " AND P.PRODUCT_NAME LIKE '" + name + "%'" + " AND DP.PURCHASE_ID != P.PURCHASE_ID" + " AND P.PURCHASE_ID = " + " C.PURCHASE_ID;";
-
-       /* List<Purchase> p = db.query(new PreparedStatementCreator() {
-            @Override
-            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                PreparedStatement ps = connection.prepareStatement(SQL_SEARCH_BY_PRODUCT_NAME);
-                ps.setString(1, name+"%");
-                return ps;
-            }
-        },new PurchaseRowMapper());*/
         if(product_name == null)
             throw new Exception("Need a product name!");
 
-       return db.query(SQL_SEARCH_BY_PRODUCT_NAME, purchaseRowMapper,product_name);
-       /* new RowMapper<Purchase>() {
-            @Override
-            public Purchase mapRow(ResultSet rs, int i) throws SQLException {
-                return new Purchase(rs.getLong("PURCHASE_ID"), rs.getString("MANUFACTURER_NAME"), rs.getString("PRODUCT_NAME"),
-                        rs.getString("LICENSE_TYPE"), rs.getString("DISTRIBUTOR_NAME"), rs.getString("FREE_TEXT"), getUpgradedFrom(rs.getLong("PURCHASE_ID")),
-                        rs.getString("CREATED_BY"), rs.getDate("CREATED_DATE"));
-            }
-        }*/
-        //return p;
+        return db.query(SQL_SEARCH_BY_PRODUCT_NAME, purchaseRowMapper,product_name+"%");
     }
 
     public List<Purchase> searchPurchaseByDistributorName(final String name) {

@@ -83,8 +83,7 @@ public class ManufacturerDAO implements ManufacturerDAOInterface {
                 return new Manufacturer(rs.getLong("MANUFACTURER_ID"), rs.getString("MANUFACTURER_NAME"), rs.getString("FREE_TEXT"));
             }
         });*/
-        name += "%";
-        return db.query(SQL_SEARCH_BY_MANUFACTURER_NAME, mRowMapper, name);
+        return db.query(SQL_SEARCH_BY_MANUFACTURER_NAME, mRowMapper, name + "%");
     }
 
     @Override
