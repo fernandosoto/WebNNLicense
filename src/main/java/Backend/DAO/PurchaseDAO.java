@@ -54,6 +54,33 @@ public class PurchaseDAO implements PurchaseDAOInterface {
             "WHERE P.PURCHASE_ID = ? " +
             "AND DP.D_PURCHASE_ID IS NULL ";
 
+    public static final String SQL_SEARCH_BY_DISTRIBUTOR = "SELECT P.PURCHASE_ID, P.PRODUCT_NAME, P.LICENSE_TYPE, P.FREE_TEXT, D.DISTRIBUTOR_NAME, M.MANUFACTURER_NAME, CR.CREATED_BY,CR.CREATED_DATE " +
+            "FROM PURCHASE P " +
+            "JOIN MANUFACTURER M ON M.MANUFACTURER_ID = P.MANUFACTURER_ID " +
+            "JOIN DISTRIBUTOR D ON D.DISTRIBUTOR_ID = P.DISTRIBUTOR_ID " +
+            "JOIN CREATOR CR ON CR.C_PURCHASE_ID = P.PURCHASE_ID " +
+            "LEFT OUTER JOIN DELETED_PURCHASE DP ON DP.D_PURCHASE_ID=P.PURCHASE_ID " +
+            "WHERE D.DISTRIBUTOR_NAME LIKE ? " +
+            "AND DP.D_PURCHASE_ID IS NULL " ;
+
+    public static final String SQL_SEARCH_BY_MANUFACTURER = "SELECT P.PURCHASE_ID, P.PRODUCT_NAME, P.LICENSE_TYPE, P.FREE_TEXT, D.DISTRIBUTOR_NAME, M.MANUFACTURER_NAME, CR.CREATED_BY,CR.CREATED_DATE " +
+            "FROM PURCHASE P " +
+            "JOIN MANUFACTURER M ON M.MANUFACTURER_ID = P.MANUFACTURER_ID " +
+            "JOIN DISTRIBUTOR D ON D.DISTRIBUTOR_ID = P.DISTRIBUTOR_ID " +
+            "JOIN CREATOR CR ON CR.C_PURCHASE_ID = P.PURCHASE_ID " +
+            "LEFT OUTER JOIN DELETED_PURCHASE DP ON DP.D_PURCHASE_ID=P.PURCHASE_ID " +
+            "WHERE M.MANUFACTURER_NAME LIKE ? " +
+            "AND DP.D_PURCHASE_ID IS NULL " ;
+
+    public static final String SQL_SEARCH_BY_TYPE = "SELECT P.PURCHASE_ID, P.PRODUCT_NAME, P.LICENSE_TYPE, P.FREE_TEXT, D.DISTRIBUTOR_NAME, M.MANUFACTURER_NAME, CR.CREATED_BY,CR.CREATED_DATE " +
+            "FROM PURCHASE P " +
+            "JOIN MANUFACTURER M ON M.MANUFACTURER_ID = P.MANUFACTURER_ID " +
+            "JOIN DISTRIBUTOR D ON D.DISTRIBUTOR_ID = P.DISTRIBUTOR_ID " +
+            "JOIN CREATOR CR ON CR.C_PURCHASE_ID = P.PURCHASE_ID " +
+            "LEFT OUTER JOIN DELETED_PURCHASE DP ON DP.D_PURCHASE_ID=P.PURCHASE_ID " +
+            "WHERE P.LICENSE_TYPE LIKE ? " +
+            "AND DP.D_PURCHASE_ID IS NULL " ;
+
     @Transactional
     public long addPurchase(final Purchase pur, final String userName, final long distrId, final long manuId) throws Exception {
         final KeyHolder holder = new GeneratedKeyHolder();
@@ -146,90 +173,22 @@ public class PurchaseDAO implements PurchaseDAOInterface {
         return db.query(SQL_SEARCH_BY_PRODUCT_NAME, purchaseRowMapper,product_name+"%");
     }
 
-    public List<Purchase> searchPurchaseByDistributorName(final String name) {
-//        String sql = "SELECT P.PURCHASE_ID, P.PRODUCT_NAME, P.LICENSE_TYPE, P.FREE_TEXT, D.DISTRIBUTOR_NAME, M.MANUFACTURER_NAME, U.ORIGINAL_PURCHASE_ID" +
-//                " FROM PURCHASE P, MANUFACTURER M, DISTRIBUTOR D, UPGRADED_PURCHASE U, DELETED_PURCHASE DP" +
-//                " WHERE M.MANUFACTURER_ID = P.MANUFACTURER_ID AND D.DISTRIBUTOR_ID = P.DISTRIBUTOR_ID" +
-//                " AND D.DISTRIBUTOR_NAME LIKE '" + name + "%'" + " AND DP.PURCHASE_ID != P.PURCHASE_ID" + " AND P.PURCHASE_ID = " + " C.PURCHASE_ID;";
+    public List<Purchase> searchPurchaseByDistributorName(String name) {
 
-        List<Purchase> p = db.query(new PreparedStatementCreator() {
-            @Override
-            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                PreparedStatement ps = connection.prepareStatement("SELECT P.PURCHASE_ID, P.PRODUCT_NAME, P.LICENSE_TYPE, P.FREE_TEXT, D.DISTRIBUTOR_NAME, M.MANUFACTURER_NAME, U.ORIGINAL_PURCHASE_ID" +
-                        " FROM PURCHASE P, MANUFACTURER M, DISTRIBUTOR D, UPGRADED_PURCHASE U, DELETED_PURCHASE DP" +
-                        " WHERE M.MANUFACTURER_ID = P.MANUFACTURER_ID AND D.DISTRIBUTOR_ID = P.DISTRIBUTOR_ID" +
-                        " AND D.DISTRIBUTOR_NAME LIKE " + "?" + "%" + " AND DP.PURCHASE_ID != P.PURCHASE_ID" + " AND P.PURCHASE_ID = " + " C.PURCHASE_ID;");
-                ps.setString(1, name);
-                return ps;
-            }
-        }, new RowMapper<Purchase>() {
-            @Override
-            public Purchase mapRow(ResultSet rs, int i) throws SQLException {
-                return new Purchase(rs.getLong("PURCHASE_ID"), rs.getString("MANUFACTURER_NAME"), rs.getString("PRODUCT_NAME"),
-                        rs.getString("LICENSE_TYPE"), rs.getString("DISTRIBUTOR_NAME"), rs.getString("FREE_TEXT"), getUpgradedFrom(rs.getLong("PURCHASE_ID")),
-                        rs.getString("CREATED_BY"), rs.getDate("CREATED_DATE"));
-            }
-        });
-        return p;
+        return db.query(SQL_SEARCH_BY_DISTRIBUTOR,purchaseRowMapper,name+"%");
     }
 
-    public List<Purchase> searchPurchaseByManufacturerName(final String name) {
-//        String sql = "SELECT P.PURCHASE_ID, P.PRODUCT_NAME, P.LICENSE_TYPE, P.FREE_TEXT, D.DISTRIBUTOR_NAME, M.MANUFACTURER_NAME" +
-//                " FROM PURCHASE P, MANUFACTURER M, DISTRIBUTOR D, DELETED_PURCHASE DP" +
-//                " WHERE M.MANUFACTURER_ID = P.MANUFACTURER_ID AND D.DISTRIBUTOR_ID = P.DISTRIBUTOR_ID" +
-//                " AND M.MANUFACTURER_NAME LIKE '" + name + "%'" + " AND DP.PURCHASE_ID != P.PURCHASE_ID" + " AND P.PURCHASE_ID = " + " C.PURCHASE_ID;";
+    public List<Purchase> searchPurchaseByManufacturerName(String name) {
 
-
-        List<Purchase> p = db.query(new PreparedStatementCreator() {
-            @Override
-            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                PreparedStatement ps = connection.prepareStatement("SELECT P.PURCHASE_ID, P.PRODUCT_NAME, P.LICENSE_TYPE, P.FREE_TEXT, D.DISTRIBUTOR_NAME, M.MANUFACTURER_NAME" +
-                        " FROM PURCHASE P, MANUFACTURER M, DISTRIBUTOR D, DELETED_PURCHASE DP" +
-                        " WHERE M.MANUFACTURER_ID = P.MANUFACTURER_ID AND D.DISTRIBUTOR_ID = P.DISTRIBUTOR_ID" +
-                        " AND M.MANUFACTURER_NAME LIKE " + "?" + "%" + " AND DP.PURCHASE_ID != P.PURCHASE_ID" + " AND P.PURCHASE_ID = " + " C.PURCHASE_ID;");
-                ps.setString(1, name);
-                return ps;
-            }
-        }, new RowMapper<Purchase>() {
-            @Override
-            public Purchase mapRow(ResultSet rs, int i) throws SQLException {
-                return new Purchase(rs.getLong("PURCHASE_ID"), rs.getString("MANUFACTURER_NAME"), rs.getString("PRODUCT_NAME"),
-                        rs.getString("LICENSE_TYPE"), rs.getString("DISTRIBUTOR_NAME"), rs.getString("FREE_TEXT"), getUpgradedFrom(rs.getLong("PURCHASE_ID")),
-                        rs.getString("CREATED_BY"), rs.getDate("CREATED_DATE"));
-            }
-        });
-        return p;
+        return db.query(SQL_SEARCH_BY_MANUFACTURER, purchaseRowMapper,name+"%");
     }
 
     public List<Purchase> searchPurchaseByType(final String type) {
-//        String sql = "SELECT P.PURCHASE_ID, P.PRODUCT_NAME, P.LICENSE_TYPE, P.FREE_TEXT, D.DISTRIBUTOR_NAME, M.MANUFACTURER_NAME" +
-//                " FROM PURCHASE P, MANUFACTURER M, DISTRIBUTOR D, DELETED_PURCHASE DP" +
-//                " WHERE M.MANUFACTURER_ID = P.MANUFACTURER_ID AND D.DISTRIBUTOR_ID = P.DISTRIBUTOR_ID" +
-//                " AND P.LICENSE_TYPE LIKE '" + type + "%'" + " AND P.PURCHASE_ID = " + " C.PURCHASE_ID;";
 
-        List<Purchase> p = db.query(new PreparedStatementCreator() {
-            @Override
-            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                PreparedStatement ps = connection.prepareStatement("SELECT P.PURCHASE_ID, P.PRODUCT_NAME, P.LICENSE_TYPE, P.FREE_TEXT, D.DISTRIBUTOR_NAME, M.MANUFACTURER_NAME" +
-                " FROM PURCHASE P, MANUFACTURER M, DISTRIBUTOR D, DELETED_PURCHASE DP" +
-                " WHERE M.MANUFACTURER_ID = P.MANUFACTURER_ID AND D.DISTRIBUTOR_ID = P.DISTRIBUTOR_ID" +
-                " AND P.LICENSE_TYPE LIKE " + "?" + "%" + " AND P.PURCHASE_ID = " + " C.PURCHASE_ID;");
-                ps.setString(1, type);
-                return ps;
-            }
-        }, new RowMapper<Purchase>() {
-            @Override
-            public Purchase mapRow(ResultSet rs, int i) throws SQLException {
-                return new Purchase(rs.getLong("PURCHASE_ID"), rs.getString("MANUFACTURER_NAME"), rs.getString("PRODUCT_NAME"),
-                        rs.getString("LICENSE_TYPE"), rs.getString("DISTRIBUTOR_NAME"), rs.getString("FREE_TEXT"), getUpgradedFrom(rs.getLong("PURCHASE_ID")),
-                        rs.getString("CREATED_BY"), rs.getDate("CREATED_DATE"));
-            }
-        });
-        return p;
+        return db.query(SQL_SEARCH_BY_TYPE, purchaseRowMapper, type+"%");
     }
 
     public List<Purchase> searchAllPurchases(){
-        System.out.println("SUp");
         return db.query(SQL_SEARCH_ALL_PRODUCT, purchaseRowMapper);
     }
 

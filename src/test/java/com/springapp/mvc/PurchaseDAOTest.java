@@ -131,8 +131,24 @@ public class PurchaseDAOTest {
     public void searchByIdTest(){
         when(jdbcTemplate.query(pdao.SQL_SEARCH_BY_ID, purchaseRowMapper, expected.get(0).getPurchaseId())).thenReturn(expected);
 
-        assertEquals(expected.get(0),pdao.searchPurchaseById(expected.get(0).getPurchaseId()));
+        assertEquals(expected.get(0), pdao.searchPurchaseById(expected.get(0).getPurchaseId()));
     }
+
+    @Test
+    public void searchByDistributor(){
+        when(jdbcTemplate.query(pdao.SQL_SEARCH_BY_DISTRIBUTOR,purchaseRowMapper,expected.get(0).getDistributorName()+"%")).thenReturn(expected);
+
+        assertEquals(expected, pdao.searchPurchaseByDistributorName(expected.get(0).getDistributorName()));
+    }
+
+    @Test
+    public void searchByManufacturer(){
+        when(jdbcTemplate.query(pdao.SQL_SEARCH_BY_MANUFACTURER,purchaseRowMapper,expected.get(0).getManufacturerName()+"%")).thenReturn(expected);
+
+        assertEquals(expected,pdao.searchPurchaseByManufacturerName(expected.get(0).getManufacturerName()));
+    }
+
+
 
 
 
