@@ -59,22 +59,22 @@
 		</div>
 
 		<div class="work">
-			<a href="inner">
+			<a href="manufacturer_inner">
 				<img src="../../../resources/NNLicenseTheme/Nordnet/img/addManufacturer.jpg" class="media" alt=""/>
 				<div class="caption">
 					<div class="work_title">
-						<h1>Add Manufacturer</h1>
+						<h1>Add/Modify Manufacturer</h1>
 					</div>
 				</div>
 			</a>
 		</div>
 
 		<div class="work">
-			<a href="inner">
+			<a href="distributor_inner">
 				<img src="../../../resources/NNLicenseTheme/Nordnet/img/addDistributor.jpg" class="media" alt=""/>
 				<div class="caption">
 					<div class="work_title">
-						<h1>Add Distributor</h1>
+						<h1>Add/Modify Distributor</h1>
 					</div>
 				</div>
 			</a>
@@ -85,7 +85,7 @@
 				<img src="../../../resources/NNLicenseTheme/Nordnet/img/modifyLicense.jpg" class="media" alt=""/>
 				<div class="caption">
 					<div class="work_title">
-						<h1>Modify License</h1>
+						<h1>Modify Purchase/Licenses</h1>
 					</div>
 				</div>
 			</a>
