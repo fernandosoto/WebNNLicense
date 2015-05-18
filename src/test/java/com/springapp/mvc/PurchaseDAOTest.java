@@ -5,6 +5,7 @@ import Backend.DAO.LicenseDAO;
 import Backend.DAO.LicenseDAOInterface;
 import Backend.DAO.PurchaseDAO;
 import Backend.DAO.PurchaseDAOInterface;
+import Backend.rowMapper.DeletedPurchaseRowMapper;
 import Backend.rowMapper.PurchaseRowMapper;
 import junit.framework.Assert;
 import org.junit.Before;
@@ -61,12 +62,18 @@ public class PurchaseDAOTest {
     @Mock
     PurchaseRowMapper purchaseRowMapper;
 
+    @Mock
+    DeletedPurchaseRowMapper deletedPurchaseRowMapper;
+
     @InjectMocks
     PurchaseDAO pdao;
 
     Purchase p1,p2;
 
+    DeletedPurchase dp;
+
     List<Purchase> expected;
+    List<DeletedPurchase> dpExpected;
 
 
     @Before
@@ -89,6 +96,10 @@ public class PurchaseDAOTest {
         p2.setManufacturerName("Linux");
         p2.setType("server");
         p2.setFreeText("Bra server");
+        //long purchaseId, String manufacturerName, String productName, String type, String distributorName,
+        //String freeText, long upgradeFrom, String createdBy, Date createdDate, long id, String deletedBy,
+        //        Date deletedDate
+
         expected = new ArrayList<Purchase>();
         expected.add(p1);
 
@@ -147,6 +158,18 @@ public class PurchaseDAOTest {
 
         assertEquals(expected,pdao.searchPurchaseByManufacturerName(expected.get(0).getManufacturerName()));
     }
+
+    @Test
+    public void searchByType(){
+        when(jdbcTemplate.query(pdao.SQL_SEARCH_BY_TYPE,purchaseRowMapper,expected.get(0).getType()+"%")).thenReturn(expected);
+
+        assertEquals(expected,pdao.searchPurchaseByType(expected.get(0).getType()));
+    }
+
+    /*@Test
+    public void searchAllDeleted(){
+        when(jdbcTemplate.query(pdao.SQL_SEARCH_ALL_DELETED,deletedPurchaseRowMapper)).thenReturn()
+    }*/
 
 
 

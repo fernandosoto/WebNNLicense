@@ -97,9 +97,7 @@ public class PurchaseDAO implements PurchaseDAOInterface {
     @Transactional
     public long addPurchase(final Purchase pur, final String userName, final long distrId, final long manuId) throws Exception {
         final KeyHolder holder = new GeneratedKeyHolder();
-        System.out.println("Mockito suger balle");
         if(userName == null){
-            System.out.println("You done goofed");
             throw new Exception("You done goofed");
         }
 

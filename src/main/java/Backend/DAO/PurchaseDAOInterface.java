@@ -1,5 +1,6 @@
 package Backend.DAO;
 
+import Backend.DeletedPurchase;
 import Backend.Purchase;
 
 import javax.sql.DataSource;
@@ -22,6 +23,10 @@ public interface PurchaseDAOInterface {
     List<Purchase> searchPurchaseByManufacturerName(String name);
 
     List<Purchase> searchPurchaseByType(String type);
+
+    List<Purchase> searchAllPurchases();
+
+    List<DeletedPurchase> searchDeletedPurchases();
 
     void editPurchase(Purchase pur, String userName, long manufacturerId, long distributorId);
 
