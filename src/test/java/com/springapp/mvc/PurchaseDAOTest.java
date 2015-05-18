@@ -66,6 +66,8 @@ public class PurchaseDAOTest {
 
     Purchase p1,p2;
 
+    List<Purchase> expected;
+
 
     @Before
     public void setup() {
@@ -87,6 +89,8 @@ public class PurchaseDAOTest {
         p2.setManufacturerName("Linux");
         p2.setType("server");
         p2.setFreeText("Bra server");
+        expected = new ArrayList<Purchase>();
+        expected.add(p1);
 
     }
 
@@ -101,9 +105,6 @@ public class PurchaseDAOTest {
 
     @Test
     public void searchDAOTest()throws Exception{
-
-        List<Purchase> expected = new ArrayList<Purchase>();
-        expected.add(p1);
         System.out.println(expected.get(0).getProductName());
         when(jdbcTemplate.query(pdao.SQL_SEARCH_BY_PRODUCT_NAME, purchaseRowMapper, expected.get(0).getProductName()+"%")).thenReturn(expected);
         //when(db.query(anyString(),(RowMapper<Purchase>) anyObject(), anyString())).thenReturn(expected);
@@ -126,13 +127,12 @@ public class PurchaseDAOTest {
         pdao.searchPurchaseByName(null);
     }
 
-   /* @Test
+    @Test
     public void searchByIdTest(){
-        when(jdbcTemplate.queryForObject(pdao.SQL_SEARCH_BY_ID,purchaseRowMapper,1)).thenReturn(p1);
+        when(jdbcTemplate.query(pdao.SQL_SEARCH_BY_ID, purchaseRowMapper, expected.get(0).getPurchaseId())).thenReturn(expected);
 
-        assertEquals(p1,pdao.searchPurchaseById(1));
-
-    }*/
+        assertEquals(expected.get(0),pdao.searchPurchaseById(expected.get(0).getPurchaseId()));
+    }
 
 
 

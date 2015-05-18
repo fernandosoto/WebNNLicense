@@ -86,4 +86,21 @@ public class License
     public String getDeletedBy() { return deletedBy; }
 
     public void setDeletedBy(String deletedBy) { this.deletedBy = deletedBy; }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        License license = (License) o;
+
+        if (licenseId != license.licenseId) return false;
+        if (purchaseId != license.purchaseId) return false;
+        if (user != null ? !user.equals(license.user) : license.user != null) return false;
+        if (serialKey != null ? !serialKey.equals(license.serialKey) : license.serialKey != null) return false;
+        if (expireDate != null ? !expireDate.equals(license.expireDate) : license.expireDate != null) return false;
+        if (deleteDate != null ? !deleteDate.equals(license.deleteDate) : license.deleteDate != null) return false;
+        return !(deletedBy != null ? !deletedBy.equals(license.deletedBy) : license.deletedBy != null);
+
+    }
 }
