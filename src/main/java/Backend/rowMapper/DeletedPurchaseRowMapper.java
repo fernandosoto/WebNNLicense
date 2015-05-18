@@ -1,6 +1,7 @@
 package Backend.rowMapper;
 
 import Backend.DeletedPurchase;
+import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,7 +9,7 @@ import java.sql.SQLException;
 /**
  * Created by Isak on 2015-05-18.
  */
-public class DeletedPurchaseRowMapper {
+public class DeletedPurchaseRowMapper implements RowMapper{
     public final static String PURCHASE_ID = "PURCHASE_ID";
     public final static String MANUFACTURER_NAME = "MANUFACTURER_NAME";
     public final static String PRODUCT_NAME = "PRODUCT_NAME";

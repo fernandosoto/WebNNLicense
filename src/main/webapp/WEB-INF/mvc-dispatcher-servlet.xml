@@ -32,6 +32,7 @@
 
     <bean id="purchaseRowMapper" class="Backend.rowMapper.PurchaseRowMapper"/>
     <bean id="manufacturerRowMapper" class="Backend.rowMapper.ManufacturerRowMapper"/>
+    <bean id="deletedPurchaseRowMapper" class="Backend.rowMapper.DeletedPurchaseRowMapper"/>
 
     <bean id="ManufacturerDAO" class="Backend.DAO.ManufacturerDAO">
         <property name="dataSource" ref="dataSource" />

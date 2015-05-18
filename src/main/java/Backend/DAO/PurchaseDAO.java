@@ -1,11 +1,14 @@
 package Backend.DAO;
 
+import Backend.DeletedPurchase;
 import Backend.Purchase;
+import Backend.rowMapper.DeletedPurchaseRowMapper;
 import Backend.rowMapper.PurchaseRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -28,6 +31,9 @@ public class PurchaseDAO implements PurchaseDAOInterface {
 
     @Autowired
     PurchaseRowMapper purchaseRowMapper;
+
+    @Autowired
+    DeletedPurchaseRowMapper deletedPurchaseRowMapper;
 
 
     public static final String SQL_SEARCH_BY_PRODUCT_NAME = "SELECT P.PURCHASE_ID, P.PRODUCT_NAME, P.LICENSE_TYPE, P.FREE_TEXT, D.DISTRIBUTOR_NAME, M.MANUFACTURER_NAME, CR.CREATED_BY,CR.CREATED_DATE " +
@@ -80,6 +86,13 @@ public class PurchaseDAO implements PurchaseDAOInterface {
             "LEFT OUTER JOIN DELETED_PURCHASE DP ON DP.D_PURCHASE_ID=P.PURCHASE_ID " +
             "WHERE P.LICENSE_TYPE LIKE ? " +
             "AND DP.D_PURCHASE_ID IS NULL " ;
+
+    public static final String SQL_SEARCH_ALL_DELETED = "SELECT P.PURCHASE_ID, P.PRODUCT_NAME, P.LICENSE_TYPE, P.FREE_TEXT, D.DISTRIBUTOR_NAME, M.MANUFACTURER_NAME, CR.CREATED_BY,CR.CREATED_DATE " +
+            "FROM PURCHASE P " +
+            "JOIN MANUFACTURER M ON M.MANUFACTURER_ID = P.MANUFACTURER_ID " +
+            "JOIN DISTRIBUTOR D ON D.DISTRIBUTOR_ID = P.DISTRIBUTOR_ID " +
+            "JOIN CREATOR CR ON CR.C_PURCHASE_ID = P.PURCHASE_ID " +
+            "JOIN DELETED_PURCHASE DP ON DP.D_PURCHASE_ID=P.PURCHASE_ID";
 
     @Transactional
     public long addPurchase(final Purchase pur, final String userName, final long distrId, final long manuId) throws Exception {
@@ -136,28 +149,8 @@ public class PurchaseDAO implements PurchaseDAOInterface {
 //        db.update(sql);
     }
 
-    public List<Purchase> searchDeletedPurchases(){
-//        String sql = "SELECT P.PURCHASE_ID, P.PRODUCT_NAME, P.LICENSE_TYPE, DP.DELETED_DATE, DP.DELETED_BY, P.FREE_TEXT, D.DISTRIBUTOR_NAME, M.MANUFACTURER_NAME" +
-//                " FROM PURCHASE P, MANUFACTURER M, DISTRIBUTOR D, DELETED_PURCHASE DP" +
-//                " WHERE DP.PURCHASE_ID != P.PURCHASE_ID;";
-
-        List<Purchase> p = db.query(new PreparedStatementCreator() {
-            @Override
-            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                PreparedStatement ps = connection.prepareStatement("SELECT P.PURCHASE_ID, P.PRODUCT_NAME, P.LICENSE_TYPE, DP.DELETED_DATE, DP.DELETED_BY, P.FREE_TEXT, D.DISTRIBUTOR_NAME, M.MANUFACTURER_NAME" +
-                " FROM PURCHASE P, MANUFACTURER M, DISTRIBUTOR D, DELETED_PURCHASE DP" +
-               " WHERE DP.PURCHASE_ID != P.PURCHASE_ID;");
-                return ps;
-            }
-        }, new RowMapper<Purchase>() {
-            @Override
-            public Purchase mapRow(ResultSet rs, int i) throws SQLException {
-                return new Purchase(rs.getLong("PURCHASE_ID"), rs.getString("MANUFACTURER_NAME"), rs.getString("PRODUCT_NAME"),
-                        rs.getString("LICENSE_TYPE"), rs.getString("DISTRIBUTOR_NAME"), rs.getString("FREE_TEXT"), getUpgradedFrom(rs.getLong("PURCHASE_ID")),
-                        rs.getString("CREATED_BY"), rs.getDate("CREATED_DATE"), rs.getDate("DELETED_DATE"), rs.getString("DELTED_BY"));
-            }
-        });
-        return p;
+    public List<DeletedPurchase> searchDeletedPurchases(){
+        return db.query(SQL_SEARCH_ALL_DELETED, deletedPurchaseRowMapper);
     }
 
     public Purchase searchPurchaseById(final long id) {
