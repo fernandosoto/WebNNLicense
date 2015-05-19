@@ -25,10 +25,8 @@
 		<div id="menu_icon"></div>
 		<nav>
 			<ul>
-				<li><a href="/">Main</a></li>
-				<li><a href="#">...</a></li>
-				<li><a href="#">...</a></li>
-				<li><a href="#">...</a></li>
+				<li><a href="/index">Main</a></li>
+				<li><a href="/" class="selected">Log out</a></li>
 			</ul>
 		</nav><!-- end navigation menu -->
 
@@ -46,15 +44,7 @@
 
 		<section class="top">	
 			<div class="wrapper content_header clearfix">
-				<div class="work_nav">
 
-					<ul class="btn clearfix">
-						<li><a href="#" class="previous" data-title="Previous"></a></li>
-						<li><a href="main/index.jsp" class="grid" data-title="Portfolio"></a></li>
-						<li><a href="#" class="next" data-title="Next"></a></li>
-					</ul>
-					
-				</div><!-- end work_nav -->
 				<h1 class="title">Add manufacturer</h1>
 			</div>		
 		</section><!-- end top -->

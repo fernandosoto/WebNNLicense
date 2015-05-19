@@ -21,7 +21,7 @@ public class loginController {
     private User user = new User();
 
 
-    @RequestMapping(value = "/login",method = RequestMethod.GET)
+    @RequestMapping(value = "/",method = RequestMethod.GET)
     public String login(ModelMap model)
     {
         preDefinedUsers();
@@ -29,7 +29,7 @@ public class loginController {
         return "login/login";
     }
 
-    @RequestMapping(value = "/login",method = RequestMethod.POST)
+    @RequestMapping(value = "/",method = RequestMethod.POST)
     public String showPurchase(@ModelAttribute User user, ModelMap model)
     {
         for(User u:userList){
@@ -38,7 +38,7 @@ public class loginController {
             }
         }
 
-        return "redirect:/login";
+        return "redirect:/";
     }
 
     private void preDefinedUsers() {

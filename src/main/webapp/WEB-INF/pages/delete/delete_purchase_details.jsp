@@ -28,10 +28,8 @@
 		<div id="menu_icon"></div>
 		<nav>
 			<ul>
-				<li><a href="/">Main</a></li>
-				<li><a href="#">...</a></li>
-				<li><a href="#">...</a></li>
-				<li><a href="#">...</a></li>
+				<li><a href="/index">Main</a></li>
+				<li><a href="/" class="selected">Log out</a></li>
 			</ul>
 		</nav><!-- end navigation menu -->
 

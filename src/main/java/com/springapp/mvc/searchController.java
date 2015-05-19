@@ -72,7 +72,12 @@ public class searchController
     @RequestMapping(value = "/search_results",method = RequestMethod.POST)
     public String searchResults(@ModelAttribute SearchForm searchForm, ModelMap model)
     {
-        Purchase purchase = pdao.searchPurchaseById(searchForm.getPurchase().getPurchaseId());
+        Purchase purchase;
+        if(this.searchForm.getRadioButtonSelect().equals("active")) {
+            purchase = pdao.searchPurchaseById(searchForm.getPurchase().getPurchaseId());
+        }else{
+            purchase = pdao.searchDeletedPurchaseById(searchForm.getPurchase().getPurchaseId());
+        }
         this.searchForm.setPurchase(purchase);
         return "redirect:/search_details";
     }

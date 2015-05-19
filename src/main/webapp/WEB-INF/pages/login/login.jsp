@@ -6,7 +6,7 @@
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <title>Nordnet - Search</title>
+  <title>Nordnet - Login</title>
   <meta charset="utf-8">
   <meta name="author" content="pixelhint.com">
   <meta name="description" content="Nordnet - Add License"/>
@@ -26,10 +26,7 @@
   <div id="menu_icon"></div>
   <nav>
     <ul>
-      <li><a href="/">Main</a></li>
-      <li><a href="#">...</a></li>
-      <li><a href="#">...</a></li>
-      <li><a href="#">...</a></li>
+
     </ul>
   </nav><!-- end navigation menu -->
 
@@ -47,16 +44,8 @@
 
   <section class="top">
     <div class="wrapper content_header clearfix">
-      <div class="work_nav">
 
-        <ul class="btn clearfix">
-          <li><a href="#" class="previous" data-title="Previous"></a></li>
-          <li><a href="main/index.jsp" class="grid" data-title="Portfolio"></a></li>
-          <li><a href="#" class="next" data-title="Next"></a></li>
-        </ul>
-
-      </div><!-- end work_nav -->
-      <h1 class="title">Search</h1>
+      <h1 class="title">Login</h1>
     </div>
   </section><!-- end top -->
 
@@ -69,7 +58,7 @@
               <ul>
                 <div align="left">
                   <li><br>Username: <form:input path="userName" type="text"/></li>
-                  <li><br>Password: <form:input path="password" type="text"/></li>
+                  <li><br>Password: <form:input path="password" type="password"></form:input></li>
                   <li><br><input type="submit" value="Login" /></a>  <input type="reset" value="Clear"/></li>
                 </div>
               </ul>

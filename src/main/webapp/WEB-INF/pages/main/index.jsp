@@ -21,10 +21,8 @@
 		<div id="menu_icon"></div>
 		<nav>
 			<ul>
-				<li><a href="/" class="selected">Main</a></li>
-				<li><a href="#">...</a></li>
-				<li><a href="#">...</a></li>
-				<li><a href="#">...</a></li>
+				<li><a href="/" class="selected">Log out</a></li>
+
 			</ul>
 		</nav><!-- end navigation menu -->
 
