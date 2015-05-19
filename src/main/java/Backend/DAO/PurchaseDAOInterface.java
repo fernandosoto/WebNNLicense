@@ -28,7 +28,7 @@ public interface PurchaseDAOInterface {
 
     List<DeletedPurchase> searchDeletedPurchases();
 
-    List<DeletedPurchase> searchDeletedPurchaseById(long id);
+    DeletedPurchase searchDeletedPurchaseById(long id);
 
     void editPurchase(Purchase pur, String userName, long manufacturerId, long distributorId);
 

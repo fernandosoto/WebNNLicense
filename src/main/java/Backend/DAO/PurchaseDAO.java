@@ -217,9 +217,9 @@ public class PurchaseDAO implements PurchaseDAOInterface {
         });
     }
 
-    public List<DeletedPurchase> searchDeletedPurchaseById(long id)
+    public DeletedPurchase searchDeletedPurchaseById(long id)
     {
-        return db.query(SQL_SEARCH_DELETED_BY_ID,deletedPurchaseRowMapper,id);
+        return (DeletedPurchase) db.query(SQL_SEARCH_DELETED_BY_ID,deletedPurchaseRowMapper,id).get(0);
     }
 
     public long getUpgradedFrom(long newPurchaseId) {
