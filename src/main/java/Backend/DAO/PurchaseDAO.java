@@ -57,8 +57,7 @@ public class PurchaseDAO implements PurchaseDAOInterface {
             "JOIN DISTRIBUTOR D ON D.DISTRIBUTOR_ID = P.DISTRIBUTOR_ID " +
             "JOIN CREATOR CR ON CR.C_PURCHASE_ID = P.PURCHASE_ID " +
             "LEFT OUTER JOIN DELETED_PURCHASE DP ON DP.D_PURCHASE_ID=P.PURCHASE_ID " +
-            "WHERE P.PURCHASE_ID = ? " +
-            "AND DP.D_PURCHASE_ID IS NULL ";
+            "WHERE P.PURCHASE_ID = ? ";
 
     public static final String SQL_SEARCH_BY_DISTRIBUTOR = "SELECT P.PURCHASE_ID, P.PRODUCT_NAME, P.LICENSE_TYPE, P.FREE_TEXT, D.DISTRIBUTOR_NAME, M.MANUFACTURER_NAME, CR.CREATED_BY,CR.CREATED_DATE " +
             "FROM PURCHASE P " +
@@ -95,6 +94,7 @@ public class PurchaseDAO implements PurchaseDAOInterface {
             "JOIN CREATOR CR ON CR.C_PURCHASE_ID = P.PURCHASE_ID " +
             "JOIN DELETED_PURCHASE DP ON DP.D_PURCHASE_ID=P.PURCHASE_ID " +
             "LEFT OUTER JOIN UPGRADED_PURCHASE UP ON UP.NEW_PURCHASE_ID = P.PURCHASE_ID";
+
 
     @Transactional
     public long addPurchase(final Purchase pur, final String userName, final long distrId, final long manuId) throws Exception {
