@@ -19,7 +19,7 @@ public class DeletedPurchaseRowMapper implements RowMapper{
     public final static String UPGRADED_FROM = "ORIGINAL_PURCHASE_ID";
     public final static String CREATED_BY = "CREATED_BY";
     public final static String CREATED_DATE = "CREATED_DATE";
-    public final static String DELETED_ID = "DELETED_ID";
+    public final static String DELETED_ID = "DELETED_PURCHASE_ID";
     public final static String DELETED_BY = "DELETED_BY";
     public final static String DELETED_DATE = "DELETED_DATE";
 
