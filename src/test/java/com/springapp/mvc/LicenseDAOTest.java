@@ -98,6 +98,7 @@ public class LicenseDAOTest {
         assertEquals(expectedDeleted, ldao.searchDeletedLicenses());
     }
 
+
 //    @Test
 //    public void addViewTest()throws Exception{
 //        mockMvc.perform(get("/addPurchase"))

@@ -29,14 +29,13 @@ public class ManufacturerDAO implements ManufacturerDAOInterface {
     @Autowired
     ManufacturerRowMapper mRowMapper;
 
-    public final static String SQL_SEARCH_BY_MANUFACTURER_ID = "SELECT * FROM MANUFACTURER WHERE MANUFACTURER.MANUFACTURER_ID = ?";
+    public final static String SQL_SEARCH_BY_MANUFACTURER_ID = "SELECT * FROM MANUFACTURER WHERE MANUFACTURER_ID = ?";
     public final static String SQL_SEARCH_BY_MANUFACTURER_NAME = "SELECT * FROM MANUFACTURER WHERE MANUFACTURER.MANUFACTURER_NAME LIKE ?";
     public static final String SQL_UPDATE_MANUFACTURER = "UPDATE MANUFACTURER SET MANUFACTURER_NAME = ?, FREE_TEXT = ? WHERE MANUFACTURER_ID = ?";
 
     @Override
     @Transactional
     public void addManufacturer(final Manufacturer m) {
-
         db.update(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
@@ -50,39 +49,11 @@ public class ManufacturerDAO implements ManufacturerDAOInterface {
 
     @Override
     public Manufacturer searchManufacturerById(final long id) {
-        /*return db.query(new PreparedStatementCreator() {
-            @Override
-            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                PreparedStatement ps = connection.prepareStatement("SELECT * FROM MANUFACTURER WHERE MANUFACTURER.MANUFACTURER_ID = ?");
-                ps.setLong(1, id);
-                return ps;
-            }
-        }, new RowMapper<Manufacturer>() {
-            @Override
-            public Manufacturer mapRow(ResultSet rs, int i) throws SQLException {
-                return new Manufacturer(rs.getLong("MANUFACTURER_ID"), rs.getString("MANUFACTURER_NAME"), rs.getString("FREE_TEXT"));
-            }
-        }).get(0);*/
-
-        return (Manufacturer) db.query(SQL_SEARCH_BY_MANUFACTURER_ID, mRowMapper, id).get(0);
+            return (Manufacturer) db.query(SQL_SEARCH_BY_MANUFACTURER_ID, mRowMapper, id).get(0);
     }
 
     @Override
     public List<Manufacturer> searchManufacturerByName(String name) {
-        /*String sql = "SELECT * FROM MANUFACTURER WHERE MANUFACTURER.MANUFACTURER_NAME LIKE '" + name + "%';";
-        return db.query(new PreparedStatementCreator() {
-            @Override
-            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                PreparedStatement ps = connection.prepareStatement("SELECT * FROM MANUFACTURER WHERE MANUFACTURER.MANUFACTURER_NAME LIKE ?");
-                ps.setString(1, name+"%");
-                return ps;
-            }
-        }, new RowMapper<Manufacturer>() {
-            @Override
-            public Manufacturer mapRow(ResultSet rs, int i) throws SQLException {
-                return new Manufacturer(rs.getLong("MANUFACTURER_ID"), rs.getString("MANUFACTURER_NAME"), rs.getString("FREE_TEXT"));
-            }
-        });*/
         return db.query(SQL_SEARCH_BY_MANUFACTURER_NAME, mRowMapper, name + "%");
     }
 

@@ -40,6 +40,11 @@ public class Manufacturer implements Serializable {
         this.name = name;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        return ((Manufacturer)obj).id == id;
+    }
+
     private static final long serialVersionUID=245367867532234234L;
 
 }

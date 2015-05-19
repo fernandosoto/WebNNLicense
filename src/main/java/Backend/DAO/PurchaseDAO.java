@@ -135,7 +135,7 @@ public class PurchaseDAO implements PurchaseDAOInterface {
        db.update(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                PreparedStatement ps = connection.prepareStatement("INSERT INTO DELETED_PURCHASE(DELETED_BY, DELETED_DATE, PURCHASE_ID) VALUES(?, ?, ?)");
+                PreparedStatement ps = connection.prepareStatement("INSERT INTO DELETED_PURCHASE(DELETED_BY, DELETED_DATE, D_PURCHASE_ID) VALUES(?, ?, ?)");
                 ps.setString(1, userName);
                 ps.setDate(2, new Date(System.currentTimeMillis()));
                 ps.setLong(3, pur.getPurchaseId());
