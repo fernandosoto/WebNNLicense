@@ -6,7 +6,7 @@
 
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>Nordnet - Search</title>
+	<title>Nordnet - Delete</title>
 	<meta charset="utf-8">
 	<meta name="author" content="pixelhint.com">
 	<meta name="description" content="Nordnet - Add License"/>
@@ -56,26 +56,34 @@
 					</ul>
 					
 				</div><!-- end work_nav -->
-				<h1 class="title">Search</h1>
+				<h1 class="title">Delete License</h1>
 			</div>		
 		</section><!-- end top -->
 
 		<section class="wrapper">
 			<div class="content">
-				<form:form commandName="searchForm" method="POST">
+				<form:form commandName="deleteForm" method="POST">
 					<div class="fieldset">
-					<fieldset>
-					<nav>
-						<ul>
-							<div align="left">
-							<li><form:radiobutton path="radioButtonSelect" name="group1" value="active" checked="checked"/> Search for active purchases<br><br></li>
-							<li><form:radiobutton path="radioButtonSelect" name="group1" value="deleted"/> Search for deleted purchases<br><br></li>
-							<li><br>Product name: <form:input path="purchase.productName" type="text"/></li>
-							<li><br><a href="search_results"><input type="submit" value="Search" /></a>  <input type="reset" value="Clear"/></li>
-								</div>
-						</ul>
-					</nav><!-- end navigation menu -->
-					</fieldset>
+						<fieldset>
+							<nav>
+								<ul>
+									<div align="left">
+									<li>Product name: <form:input path="purchase.productName" value="${purchase.productName}" readonly="true" cssStyle="border: hidden"/></li>
+									<li><br>Manufacturer: <form:input path="purchase.manufacturerName" value="${purchase.manufacturerName}" readonly="true" cssStyle="border: hidden"/></li>
+									<li><br>Distributor: <form:input path="purchase.distributorName" value="${purchase.distributorName}" readonly="true" cssStyle="border: hidden"/></li>
+									<li><br>Created by: <form:input path="purchase.createdBy" value="${purchase.createdBy}" readonly="true" cssStyle="border: hidden"/></li>
+									<li><br>Created date: <form:input path="date" value="${date}" readonly="true" cssStyle="border: hidden"/></li>
+
+									<li><br>Licenses:<br><br>
+										<div style="width: 650px">
+											<form:radiobuttons items="${licenses}" path="license.licenseId" itemValue="licenseId" itemLabel="label"  element="li" checked="checked" ></form:radiobuttons>
+										</div>
+									</li>
+									<li><br><input type="submit"  value="Delete"  onclick="alert('License deleted!');"/></li>
+										</div>
+								</ul>
+							</nav><!-- end navigation menu -->
+						</fieldset>
 					</div>
 				</form:form>
 

@@ -6,7 +6,7 @@
 
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>Nordnet - Search</title>
+	<title>Nordnet - Search results</title>
 	<meta charset="utf-8">
 	<meta name="author" content="pixelhint.com">
 	<meta name="description" content="Nordnet - Add License"/>
@@ -56,29 +56,29 @@
 					</ul>
 					
 				</div><!-- end work_nav -->
-				<h1 class="title">Search</h1>
+				<h1 class="title">Delete / Search result</h1>
 			</div>		
 		</section><!-- end top -->
 
 		<section class="wrapper">
 			<div class="content">
-				<form:form commandName="searchForm" method="POST">
+				<form:form commandName="deleteForm" method="POST">
 					<div class="fieldset">
-					<fieldset>
-					<nav>
-						<ul>
-							<div align="left">
-							<li><form:radiobutton path="radioButtonSelect" name="group1" value="active" checked="checked"/> Search for active purchases<br><br></li>
-							<li><form:radiobutton path="radioButtonSelect" name="group1" value="deleted"/> Search for deleted purchases<br><br></li>
-							<li><br>Product name: <form:input path="purchase.productName" type="text"/></li>
-							<li><br><a href="search_results"><input type="submit" value="Search" /></a>  <input type="reset" value="Clear"/></li>
-								</div>
-						</ul>
-					</nav><!-- end navigation menu -->
-					</fieldset>
+						<fieldset>
+							<nav>
+								<ul style="list-style: none;">
+									<li><br>Search results:</li>
+									<li>
+										<form:select path="purchase.purchaseId" title="results" size="8" style="width: 300px;">
+											<form:option value="NONE" label="--- Select purchase ---" disabled="true"/>
+											<form:options items="${purchases}" itemValue="purchaseId" itemLabel="productName"/>
+										</form:select>
+								<li><br><input type="submit" value="Details"/> <a href="/delete_details" ><input type="button" value="New search"></a> </li>
+								</ul>
+							</nav><!-- end navigation menu -->
+						</fieldset>
 					</div>
 				</form:form>
-
 
 
 			</div><!-- end content -->

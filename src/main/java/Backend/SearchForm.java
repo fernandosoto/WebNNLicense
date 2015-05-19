@@ -8,6 +8,15 @@ import java.util.List;
  */
 public class SearchForm {
     private Purchase purchase;
+    private String radioButtonSelect;
+
+    public String getRadioButtonSelect() {
+        return radioButtonSelect;
+    }
+
+    public void setRadioButtonSelect(String radioButtonSelect) {
+        this.radioButtonSelect = radioButtonSelect;
+    }
 
     public List<String> LicenseDetailToString(List<License> licenses){
         List<String> licenseDetails = new ArrayList<String>();

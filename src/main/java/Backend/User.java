@@ -7,6 +7,10 @@ public class User {
     private String userName;
     private String password;
 
+    public User(){
+
+    }
+
     public User(String userName, String password){
         this.userName=userName;
         this.password=password;
@@ -26,5 +30,16 @@ public class User {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(this.getUserName().equals(((User)obj).getUserName())) {
+            if(this.getPassword().equals(((User)obj).getPassword())) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

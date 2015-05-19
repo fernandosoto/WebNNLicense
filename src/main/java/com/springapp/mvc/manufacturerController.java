@@ -40,12 +40,6 @@ public class manufacturerController {
     }
 
 
-
-
-
-
-
-
     @RequestMapping(value = "/manufacturer_add",method = RequestMethod.GET)
     public String manufacturerAdd(ModelMap model)
     {
@@ -63,11 +57,6 @@ public class manufacturerController {
     }
 
 
-
-
-
-
-
     @RequestMapping(value = "/manufacturer_modify",method = RequestMethod.GET)
     public String manufacturerModify(ModelMap model)
     {
@@ -78,17 +67,12 @@ public class manufacturerController {
     }
 
 
-
-
     @RequestMapping(value = "/manufacturer_modify",method = RequestMethod.POST)
     public String manufacturerModify(@ModelAttribute ManufacturerForm manufacturerForm,ModelMap model)
     {
         this.manufacturerForm.setManufacturer(manufacturerForm.getManufacturerById(manufacturers, manufacturerForm.getManufacturer().getId()));
         return "redirect:/manufacturer_details";
     }
-
-
-
 
 
     @RequestMapping(value = "/manufacturer_details",method = RequestMethod.GET)
@@ -98,8 +82,6 @@ public class manufacturerController {
         model.addAttribute("manufacturerForm",manufacturerForm);
         return "manufacturer/manufacturer_details";
     }
-
-
 
 
     @RequestMapping(value = "/manufacturer_details",method = RequestMethod.POST)

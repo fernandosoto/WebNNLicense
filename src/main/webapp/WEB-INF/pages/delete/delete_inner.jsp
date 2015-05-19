@@ -1,6 +1,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <br xmlns:th="http://www.thymeleaf.org">
 <!DOCTYPE html>
 <html lang="en">
@@ -13,61 +14,70 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
 	<link rel="stylesheet" type="text/css" href="../../resources/NNLicenseTheme/Nordnet/css/reset.css">
 	<link rel="stylesheet" type="text/css" href="../../resources/NNLicenseTheme/Nordnet/css/main.css">
-    <script type="text/javascript" src="../../resources/NNLicenseTheme/Nordnet/js/jquery.js"></script>
-    <script type="text/javascript" src="../../resources/NNLicenseTheme/Nordnet/js/main.js"></script>
+	<script type="text/javascript" src="../../resources/NNLicenseTheme/Nordnet/js/jquery.js"></script>
+	<script type="text/javascript" src="../../resources/NNLicenseTheme/Nordnet/js/main.js"></script>
 </head>
 <body>
 
-	<header>
-		<div class="logo">
-			<a href="index"><img src="../../../resources/NNLicenseTheme/Nordnet/img/nordnetlogga.png" title="Nordnet" alt="Nordnet"/></a>
-		</div><!-- end logo -->
+<header>
+	<div class="logo">
+		<a href="index"><img src="../../../resources/NNLicenseTheme/Nordnet/img/nordnetlogga.png" title="Nordnet" alt="Nordnet"/></a>
+	</div><!-- end logo -->
 
-		<div id="menu_icon"></div>
-		<nav>
-			<ul>
-				<li><a href="/">Main</a></li>
-				<li><a href="#">...</a></li>
-				<li><a href="#">...</a></li>
-				<li><a href="#">...</a></li>
-			</ul>
-		</nav><!-- end navigation menu -->
-
-
-		<div class="footer clearfix">
-
-			<!-- FOOTER KOD HÄR!! -->
-
-		</div ><!-- end footer -->
+	<div id="menu_icon"></div>
+	<nav>
+		<ul>
+			<li><a href=</a></li>
+			<li><a href="#">...</a></li>
+			<li><a href="#">...</a></li>
+			<li><a href="#">...</a></li>
+		</ul>
+	</nav><!-- end navigation menu -->
 
 
-	</header><!-- end header -->
+	<div class="footer clearfix">
 
-	<section class="main clearfix">
+		<!-- FOOTER KOD HÄR!! -->
 
-		<section class="top">	
-			<div class="wrapper content_header clearfix">
-				<div class="work_nav">
+	</div ><!-- end footer -->
 
-					<ul class="btn clearfix">
-						<li><a href="#" class="previous" data-title="Previous"></a></li>
-						<li><a href="main/index.jsp" class="grid" data-title="Portfolio"></a></li>
-						<li><a href="#" class="next" data-title="Next"></a></li>
+
+</header><!-- end header -->
+
+<section class="main clearfix">
+
+	<section class="top">
+		<div class="wrapper content_header clearfix">
+			<div class="work_nav">
+
+				<ul class="btn clearfix">
+					<li><a href="#" class="previous" data-title="Previous"></a></li>
+					<li><a href="main/index.jsp" class="grid" data-title="Portfolio"></a></li>
+					<li><a href="#" class="next" data-title="Next"></a></li>
+				</ul>
+
+			</div><!-- end work_nav -->
+			<h1 class="title">Delete</h1>
+		</div>
+	</section><!-- end top -->
+
+	<section class="wrapper">
+
+		<div class="content">
+
+			<form:form commandName="deleteForm" method="POST">
+				<nav>
+					<ul>
+						<li><form:radiobutton path="radioButtonSelect" name="group1" value="delete_purchase_details" checked="checked"/> Delete purchase<br><br></li>
+						<li><form:radiobutton path="radioButtonSelect" name="group1" value="delete_licenseKey_details"/> Delete license<br><br></li>
+						<li><br><input type="submit" value="Ok" /></li>
 					</ul>
-					
-				</div><!-- end work_nav -->
-				<h1 class="title">Delete</h1>
-			</div>		
-		</section><!-- end top -->
+				</nav><!-- end navigation menu -->
+			</form:form>
 
-		<section class="wrapper">
-			<div class="content">
+		</div><!-- end content -->
+	</section>
+</section><!-- end main -->
 
-				DELETE
-
-			</div><!-- end content -->
-		</section>
-	</section><!-- end main -->
-	
 </body>
 </html>

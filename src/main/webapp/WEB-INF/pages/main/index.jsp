@@ -30,8 +30,6 @@
 
 		<div class="footer clearfix">
 
-
-
 		</div ><!-- end footer -->
 	</header><!-- end header -->
 
@@ -92,7 +90,7 @@
 		</div>
 
 		<div class="work">
-			<a href="delete_index">
+			<a href="delete_inner">
 				<img src="../../../resources/NNLicenseTheme/Nordnet/img/deleteLicense.jpg" class="media" alt=""/>
 				<div class="caption">
 					<div class="work_title">
