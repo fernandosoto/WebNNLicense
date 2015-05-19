@@ -45,15 +45,7 @@
 
 		<section class="top">	
 			<div class="wrapper content_header clearfix">
-				<div class="work_nav">
 
-					<ul class="btn clearfix">
-						<li><a href="#" class="previous" data-title="Previous"></a></li>
-						<li><a href="main/index.jsp" class="grid" data-title="Portfolio"></a></li>
-						<li><a href="#" class="next" data-title="Next"></a></li>
-					</ul>
-					
-				</div><!-- end work_nav -->
 				<h1 class="title">Details</h1>
 			</div>		
 		</section><!-- end top -->
