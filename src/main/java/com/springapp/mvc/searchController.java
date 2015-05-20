@@ -111,9 +111,9 @@ public class searchController
     {
 
         List<License> dbLicenses = ldao.searchLicenseByUser(this.searchForm.getSearchUserName());
-        model.addAttribute("userLicensList",dbLicenses);
-        System.out.println(dbLicenses.get(0).getLicenseId());
-        System.out.println(dbLicenses.get(1).getLicenseId());
+        model.addAttribute("userLicenseList",dbLicenses);
+        //System.out.println(dbLicenses.get(0).getLicenseId());
+        //System.out.println(dbLicenses.get(1).getLicenseId());
         model.addAttribute("searchForm", searchForm);
         return "search/user_results";
     }

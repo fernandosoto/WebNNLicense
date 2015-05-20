@@ -62,7 +62,7 @@
 									<li><br>Username: <form:input path="searchUserName" type="text" value="${searchUserName}" readonly="true"/></li>
 										<form:select path="" title="Users" size="8" style="width: 300px;">
 											<form:option value="NONE" label="--- Select user ---" disabled="true"/>
-											<form:options items="${userLicensList}" itemValue="serialKey" itemLabel="serialKey"/>
+											<form:options items="${userLicenseList}" itemValue="serialKey" itemLabel="serialKey"/>
 										</form:select>
 								<li><br><input type="submit" value="Show licenses"/> <a href="/search_inner" ><input type="button" value="New search"></a> </li>
 								</ul>

@@ -12,8 +12,8 @@ import java.sql.SQLException;
 public class LicenseRowMapper implements RowMapper {
     public static final String LICENSE_ID = "LICENSE_KEY_ID";
     public static final String LICENSE_USER = "LICENSE_USER";
-    public static final String LICENSE_KEY = "LICENSE_KEY";
-    public static final String L_PURCHASE_ID= "L_PURCHASE_ID";
+    public static final String LICENSE_KEY = "SERIAL_KEY";
+    public static final String L_PURCHASE_ID= "PURCHASE_ID";
     public static final String EXPIRE_DATE = "EXPIRE_DATE";
 
 
