@@ -46,7 +46,7 @@
 		<section class="top">	
 			<div class="wrapper content_header clearfix">
 
-				<h1 class="title">Search result</h1>
+				<h1 class="title">Available licenses</h1>
 			</div>		
 		</section><!-- end top -->
 
@@ -57,14 +57,14 @@
 						<fieldset>
 							<nav>
 								<ul style="list-style: none;">
-									<li><br>User results:</li>
-									<li>
-									<li><br>Username: <form:input path="searchUserName" type="text" value="${searchUserName}" readonly="true"/></li>
-										<form:select path="" title="Users" size="8" style="width: 300px;">
-											<form:option value="NONE" label="--- Select user ---" disabled="true"/>
-											<form:options items="${userLicenseList}" itemValue="serialKey" itemLabel="serialKey"/>
+									<div align="left">
+									<li><br>Username: <form:input path="searchUserName" type="text" value="${searchUserName}" readonly="true" cssStyle="border: hidden"/></li>
+										<br><form:select path="" title="Users" size="8" style="width: 300px;">
+											<form:option value="NONE" label="--- Licenses ---" disabled="true"/>
+											<form:options items="${userLicenseList}" itemValue="serialKey" itemLabel="serialKey" disabled="true"/>
 										</form:select>
-								<li><br><input type="submit" value="Show licenses"/> <a href="/search_inner" ><input type="button" value="New search"></a> </li>
+										</div>
+
 								</ul>
 							</nav><!-- end navigation menu -->
 						</fieldset>
