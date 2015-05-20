@@ -99,6 +99,10 @@ public class PurchaseDAOTest {
         //long purchaseId, String manufacturerName, String productName, String type, String distributorName,
         //String freeText, long upgradeFrom, String createdBy, Date createdDate, long id, String deletedBy,
         //        Date deletedDate
+        dp = new DeletedPurchase(1,"Microsoft","Windows 7","OS","komplett","Bra grejer",0,"Kalle",new Date(System.currentTimeMillis()),
+                0,"Kalle",new Date(System.currentTimeMillis()));
+        dpExpected = new ArrayList<DeletedPurchase>();
+        dpExpected.add(dp);
 
         expected = new ArrayList<Purchase>();
         expected.add(p1);
@@ -115,7 +119,7 @@ public class PurchaseDAOTest {
 
 
     @Test
-    public void searchDAOTest()throws Exception{
+    public void searchByNameDAOTest()throws Exception{
         System.out.println(expected.get(0).getProductName());
         when(jdbcTemplate.query(pdao.SQL_SEARCH_BY_PRODUCT_NAME, purchaseRowMapper, expected.get(0).getProductName()+"%")).thenReturn(expected);
         //when(db.query(anyString(),(RowMapper<Purchase>) anyObject(), anyString())).thenReturn(expected);
@@ -125,51 +129,81 @@ public class PurchaseDAOTest {
     }
 
     @Test(expected = DataAccessException.class)
-    public void searchNameDAOAccessExceptionTest()throws Exception{
+    public void searchByNameDAOAccessExceptionTest()throws Exception{
         when(jdbcTemplate.query(pdao.SQL_SEARCH_BY_PRODUCT_NAME,purchaseRowMapper,p1.getProductName()+"%")).thenThrow(mock(DataAccessException.class));
 
         pdao.searchPurchaseByName(p1.getProductName());
     }
 
-    @Test(expected = Exception.class)
-    public void searchNameDAONameExceptionTest()throws Exception{
-        when(jdbcTemplate.query(pdao.SQL_SEARCH_BY_PRODUCT_NAME,purchaseRowMapper,null)).thenThrow(mock(Exception.class));
+    @Test(expected = IllegalArgumentException.class)
+    public void searchByNameDAONameExceptionTest(){
+        when(jdbcTemplate.query(pdao.SQL_SEARCH_BY_PRODUCT_NAME,purchaseRowMapper,null)).thenThrow(mock(IllegalArgumentException.class));
 
         pdao.searchPurchaseByName(null);
     }
 
     @Test
-    public void searchByIdTest(){
+    public void searchByIdDAOTest(){
         when(jdbcTemplate.query(pdao.SQL_SEARCH_BY_ID, purchaseRowMapper, expected.get(0).getPurchaseId())).thenReturn(expected);
 
         assertEquals(expected.get(0), pdao.searchPurchaseById(expected.get(0).getPurchaseId()));
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void searchByIdExceptionTest(){
+        when(jdbcTemplate.query(pdao.SQL_SEARCH_BY_ID,purchaseRowMapper,0)).thenThrow(mock(IllegalArgumentException.class));
+
+        pdao.searchPurchaseById(0);
+    }
+
     @Test
-    public void searchByDistributor(){
+    public void searchByDistributorDAOTest(){
         when(jdbcTemplate.query(pdao.SQL_SEARCH_BY_DISTRIBUTOR,purchaseRowMapper,expected.get(0).getDistributorName()+"%")).thenReturn(expected);
 
         assertEquals(expected, pdao.searchPurchaseByDistributorName(expected.get(0).getDistributorName()));
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void searchDistributorDAOExceptionTest(){
+        when(jdbcTemplate.query(pdao.SQL_SEARCH_BY_DISTRIBUTOR,purchaseRowMapper,null)).thenThrow(mock(IllegalArgumentException.class));
+
+        pdao.searchPurchaseByDistributorName(null);
+    }
+
     @Test
-    public void searchByManufacturer(){
+    public void searchByManufacturerDAOTest(){
         when(jdbcTemplate.query(pdao.SQL_SEARCH_BY_MANUFACTURER,purchaseRowMapper,expected.get(0).getManufacturerName()+"%")).thenReturn(expected);
 
-        assertEquals(expected,pdao.searchPurchaseByManufacturerName(expected.get(0).getManufacturerName()));
+        assertEquals(expected, pdao.searchPurchaseByManufacturerName(expected.get(0).getManufacturerName()));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void searchByManufacturerDAOExceptionTest(){
+        when(jdbcTemplate.query(pdao.SQL_SEARCH_BY_MANUFACTURER,purchaseRowMapper,null)).thenThrow(mock(IllegalArgumentException.class));
+
+        pdao.searchPurchaseByManufacturerName(null);
     }
 
     @Test
     public void searchByType(){
         when(jdbcTemplate.query(pdao.SQL_SEARCH_BY_TYPE,purchaseRowMapper,expected.get(0).getType()+"%")).thenReturn(expected);
 
-        assertEquals(expected,pdao.searchPurchaseByType(expected.get(0).getType()));
+        assertEquals(expected, pdao.searchPurchaseByType(expected.get(0).getType()));
     }
 
-    /*@Test
+    @Test(expected = IllegalArgumentException.class)
+    public void searchByTypeDAOExceptionTest(){
+        when(jdbcTemplate.query(pdao.SQL_SEARCH_BY_TYPE,purchaseRowMapper,null)).thenThrow(mock(IllegalArgumentException.class));
+
+        pdao.searchPurchaseByType(null);
+    }
+
+    @Test
     public void searchAllDeleted(){
-        when(jdbcTemplate.query(pdao.SQL_SEARCH_ALL_DELETED,deletedPurchaseRowMapper)).thenReturn()
-    }*/
+        when(jdbcTemplate.query(pdao.SQL_SEARCH_ALL_DELETED,deletedPurchaseRowMapper)).thenReturn(dpExpected);
+
+        assertEquals(dpExpected,pdao.searchDeletedPurchases());
+    }
 
 
 

@@ -111,7 +111,7 @@ public class PurchaseDAO implements PurchaseDAOInterface {
     public long addPurchase(final Purchase pur, final String userName, final long distrId, final long manuId) throws Exception {
         final KeyHolder holder = new GeneratedKeyHolder();
         if(userName == null){
-            throw new Exception("You done goofed");
+            throw new IllegalArgumentException(userName);
         }
 
         db.update(new PreparedStatementCreator() {
@@ -161,33 +161,42 @@ public class PurchaseDAO implements PurchaseDAOInterface {
     }
 
     public List<DeletedPurchase> searchDeletedPurchases(){
+
         return db.query(SQL_SEARCH_ALL_DELETED, deletedPurchaseRowMapper);
     }
 
-    public Purchase searchPurchaseById(final long id) {
+    public Purchase searchPurchaseById(long id) {
+        if(id == 0)
+            throw new IllegalArgumentException("Id must be separate from 0, Id is : " + id);
 
         return (Purchase) db.query(SQL_SEARCH_BY_ID,purchaseRowMapper,id).get(0);
 
     }
 
-    public List<Purchase> searchPurchaseByName(String product_name) throws Exception {
+    public List<Purchase> searchPurchaseByName(String product_name) {
         if(product_name == null)
-            throw new Exception("Need a product name!");
+            throw new IllegalArgumentException(product_name);
 
         return db.query(SQL_SEARCH_BY_PRODUCT_NAME, purchaseRowMapper,product_name+"%");
     }
 
     public List<Purchase> searchPurchaseByDistributorName(String name) {
+        if(name == null)
+            throw new IllegalArgumentException(name);
 
         return db.query(SQL_SEARCH_BY_DISTRIBUTOR,purchaseRowMapper,name+"%");
     }
 
     public List<Purchase> searchPurchaseByManufacturerName(String name) {
+        if(name == null)
+            throw new IllegalArgumentException(name);
 
         return db.query(SQL_SEARCH_BY_MANUFACTURER, purchaseRowMapper,name+"%");
     }
 
-    public List<Purchase> searchPurchaseByType(final String type) {
+    public List<Purchase> searchPurchaseByType(String type) {
+        if(type == null)
+            throw new IllegalArgumentException(type);
 
         return db.query(SQL_SEARCH_BY_TYPE, purchaseRowMapper, type+"%");
     }
