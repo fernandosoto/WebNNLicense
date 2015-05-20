@@ -5,6 +5,7 @@ import Backend.DAO.PurchaseDAOInterface;
 import Backend.DeleteForm;
 import Backend.License;
 import Backend.Purchase;
+import Backend.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -100,9 +101,9 @@ public class deleteController {
     @RequestMapping(value = "/delete_purchase_details",method = RequestMethod.POST)
     public String deletePurchaseDetails(@ModelAttribute DeleteForm deleteForm,ModelMap model)
     {
-        pdao.deletePurchase(this.deleteForm.getPurchase(), "Anwar al Sham");
+        pdao.deletePurchase(this.deleteForm.getPurchase(), User.getLoggedInUser());
         for(License l: dbLicenses) {
-            ldao.deleteLicense(l, "Anwar al Halabi");
+            ldao.deleteLicense(l, User.getLoggedInUser());
         }
         return "redirect:/delete_search";
     }
@@ -125,7 +126,7 @@ public class deleteController {
     public String deleteLicenseKeyDetails(@ModelAttribute DeleteForm deleteForm,ModelMap model)
     {
         this.deleteForm.setLicense(this.deleteForm.getLicenseFromId(deleteForm.getLicense().getLicenseId()));
-        ldao.deleteLicense(this.deleteForm.getLicense(), "Anwar al Sham");
+        ldao.deleteLicense(this.deleteForm.getLicense(), User.getLoggedInUser());
         this.deleteForm.clearLicenseKeys();
         return "redirect:/delete_licenseKey_details";
     }

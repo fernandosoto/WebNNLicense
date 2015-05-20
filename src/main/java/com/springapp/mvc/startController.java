@@ -15,7 +15,6 @@ public class startController {
     @RequestMapping(value = "/index",method = RequestMethod.GET)
     public String index(ModelMap model){
 
-
         return "main/index";
     }
 }

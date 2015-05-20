@@ -85,8 +85,8 @@ public class LicenseDAO implements LicenseDAOInterface {
         }, new RowMapper<License>() {
             @Override
             public License mapRow(ResultSet rs, int i) throws SQLException {
-                return new License(rs.getLong("LICENSE_ID"), rs.getString("LICENSE_USER"), rs.getString("LICENSE_KEY"),
-                        rs.getLong("L_PURCHASE_ID"), rs.getDate("EXPIRE_DATE"));
+                return new License(rs.getLong("LICENSE_KEY_ID"), rs.getString("LICENSE_USER"), rs.getString("D_LICENSE_KEY_ID"),
+                        rs.getLong("PURCHASE_ID"), rs.getDate("EXPIRE_DATE"));
             }
         });
 
@@ -184,7 +184,7 @@ public class LicenseDAO implements LicenseDAOInterface {
     public static final String SQL_ADD_LICENSE = "INSERT INTO LICENSE_KEY(LICENSE_USER, SERIAL_KEY, PURCHASE_ID, EXPIRE_DATE) VALUES(?, ?, ?, ?)";
     public static final String SQL_DELETE_LICENSE = "INSERT INTO DELETED_LICENSE(DELETED_BY, DELETED_DATE, D_LICENSE_KEY_ID) VALUES (?, ?, ?)";
     public static final String SQL_SEARCH_DELETED_LICENSE = "SELECT L.*, DL.DELETED_BY, DL.DELETED_DATE, DL.DELETED_LICENSE_ID FROM  LICENSE_KEY L, DELETED_LICENSE DL WHERE DL.D_LICENSE_KEY_ID = L.LICENSE_KEY_ID";
-    public static final String SQL_SEARCH_LICENSE_BY_USER = "SELECT * FROM LICENSE_KEY L WHERE LICENSE_USER LIKE ? AND L.LICENSE_KEY_ID != DL.LICENSE_KEY_ID";
+    public static final String SQL_SEARCH_LICENSE_BY_USER = "SELECT * FROM LICENSE_KEY L, DELETED_LICENSE DL WHERE L.LICENSE_USER LIKE ? AND L.LICENSE_KEY_ID != DL.D_LICENSE_KEY_ID";
     public static final String SQL_SEARCH_LICENSE_BY_PURCHASE = "SELECT * FROM LICENSE_KEY WHERE PURCHASE_ID = ? AND LICENSE_KEY_ID NOT IN (SELECT D_LICENSE_KEY_ID from DELETED_LICENSE )";
     public static final String SQL_SEARCH_LICENSE_BY_ID = "SELECT * FROM LICENSE_KEY WHERE LICENSE_KEY_ID = ? AND LICENSE_KEY_ID NOT IN(SELECT D_LICENSE_KEY_ID FROM DELETED_LICENSE)";
     public static final String SQL_INSERT_INTO_MODIFY_TABLE = "INSERT INTO MODIFY(MODIFIED_BY, MODIFY_DATE, LICENS_KEY_ID, FREE_TEXT) VALUES(?, ?, ?, ?)";

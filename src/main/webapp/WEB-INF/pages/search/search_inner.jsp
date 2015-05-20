@@ -61,6 +61,10 @@
 							<li><form:radiobutton path="radioButtonSelect" name="group1" value="active" checked="checked"/> Search for active purchases<br><br></li>
 							<li><form:radiobutton path="radioButtonSelect" name="group1" value="deleted"/> Search for deleted purchases<br><br></li>
 							<li><br>Product name: <form:input path="purchase.productName" type="text"/></li>
+								<li><hr><br></li>
+								<li><form:radiobutton path="radioButtonSelect" name="group1" value="user"/> Search for licenses by user<br><br></li>
+								<li><br>Username: <form:input path="searchUserName" type="text"/></li>
+								<li><hr><br><br></li>
 							<li><br><a href="search_results"><input type="submit" value="Search" /></a>  <input type="reset" value="Clear"/></li>
 								</div>
 						</ul>
@@ -68,8 +72,6 @@
 					</fieldset>
 					</div>
 				</form:form>
-
-
 
 			</div><!-- end content -->
 		</section>

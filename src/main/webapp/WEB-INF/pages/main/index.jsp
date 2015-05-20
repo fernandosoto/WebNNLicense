@@ -15,7 +15,7 @@
 
 	<header>
 		<div class="logo">
-			<a href="index"><img src="../../../resources/NNLicenseTheme/Nordnet/img/nordnetlogga.png" title="Nordnet" alt="Nordnet"/></a>
+			<img src="../../../resources/NNLicenseTheme/Nordnet/img/nordnetlogga.png" title="Nordnet" alt="Nordnet"/>
 		</div><!-- end logo -->
 
 		<div id="menu_icon"></div>

@@ -146,7 +146,7 @@ public class modifyController {
         this.modifyForm.getLicense().setUser(modifyForm.getLicense().getUser());
         this.modifyForm.getLicense().setSerialKey(modifyForm.getLicense().getSerialKey());
 
-        ldao.editLicense(this.modifyForm.getLicense(), "Hodor");
+        ldao.editLicense(this.modifyForm.getLicense(), User.getLoggedInUser());
         this.modifyForm.clearLicenseKeys();
         return "redirect:/modify_licenseKeys";
     }

@@ -36,7 +36,7 @@ public class addController{
 
         licenses = regForm.getSerialKeysWithSeparatedLicenses();
         Purchase p= regForm.getPurchases();
-        purchaseID = db.addPurchase(p,"John Doe",regForm.getDistributor().getId(),regForm.getManufacturer().getId());
+        purchaseID = db.addPurchase(p,User.getLoggedInUser(),regForm.getDistributor().getId(),regForm.getManufacturer().getId());
 
         for(License L: licenses){
             L.setPurchaseId(purchaseID);

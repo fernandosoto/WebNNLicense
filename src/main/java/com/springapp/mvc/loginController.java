@@ -32,8 +32,10 @@ public class loginController {
     @RequestMapping(value = "/",method = RequestMethod.POST)
     public String showPurchase(@ModelAttribute User user, ModelMap model)
     {
+        this.user=user;
         for(User u:userList){
             if(u.equals(user)){
+                User.setLoggedInUser(user.getUserName());
                 return "redirect:/index";
             }
         }

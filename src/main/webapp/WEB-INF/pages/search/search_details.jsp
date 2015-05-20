@@ -63,6 +63,8 @@
 							<li><br>Distributor: <form:input path="purchase.distributorName" value="${purchase.distributorName}" readonly="true" cssStyle="border: hidden"/></li>
 							<li><br>Created by: <form:input path="purchase.createdBy" value="${purchase.createdBy}" readonly="true" cssStyle="border: hidden"/></li>
 							<li><br>Created date: <form:input path="purchase.createdDate" value="${purchase.createdDate}" readonly="true" cssStyle="border: hidden"/></li>
+								<li><br>Deleted by: <form:input path="deletedBy" value="${deletedBy}" readonly="true" cssStyle="border: hidden"/></li>
+								<li><br>Deleted date: <form:input path="deletedDate" value="${deletedDate}" readonly="true" cssStyle="border: hidden"/></li>
 							</div>
 							<li><br>Comments:<br><form:textarea path="purchase.freeText" value="${purchase.freeText}" readonly="true" title="Comments" size="6" style="width: 400px; height: 100px; background-color:#f6f6f6;"/></li>
 							<li><br>Serial Keys:<br><form:select path="" title="Licenses" size="6" style="width: 400px; background-color:#f6f6f6;" multiple="true">

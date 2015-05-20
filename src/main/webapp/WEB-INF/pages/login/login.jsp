@@ -20,7 +20,7 @@
 
 <header>
   <div class="logo">
-    <a href="index"><img src="../../../resources/NNLicenseTheme/Nordnet/img/nordnetlogga.png" title="Nordnet" alt="Nordnet"/></a>
+    <img src="../../../resources/NNLicenseTheme/Nordnet/img/nordnetlogga.png" title="Nordnet" alt="Nordnet"/>
   </div><!-- end logo -->
 
   <div id="menu_icon"></div>
@@ -57,6 +57,9 @@
             <nav>
               <ul>
                 <div align="left">
+                  <div style="color:#00aeef; font-size: 23pt">Nordnet License Register</div>
+                  <br>
+                  <br>
                   <li><br>Username: <form:input path="userName" type="text"/></li>
                   <li><br>Password: <form:input path="password" type="password"></form:input></li>
                   <li><br><input type="submit" value="Login" /></a>  <input type="reset" value="Clear"/></li>

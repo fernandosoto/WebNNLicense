@@ -9,6 +9,9 @@ import java.util.List;
 public class SearchForm {
     private Purchase purchase;
     private String radioButtonSelect;
+    private String deletedBy, deletedDate;
+    private String searchUserName;
+
 
     public String getRadioButtonSelect() {
         return radioButtonSelect;
@@ -26,6 +29,30 @@ public class SearchForm {
         return licenseDetails;
     }
 
+    public String getDeletedBy() {
+        return deletedBy;
+    }
+
+    public void setDeletedBy(String deletedBy) {
+        this.deletedBy = deletedBy;
+    }
+
+    public String getDeletedDate() {
+        return deletedDate;
+    }
+
+    public void setDeletedDate(String deletedDate) {
+        this.deletedDate = deletedDate;
+    }
+
+    public String getSearchUserName() {
+        return searchUserName;
+    }
+
+    public void setSearchUserName(String searchUserName) {
+        this.searchUserName = searchUserName;
+    }
+
     public Purchase getPurchase() {
         return purchase;
     }
@@ -33,6 +60,7 @@ public class SearchForm {
     public void setPurchase(Purchase purchase) {
         this.purchase = purchase;
     }
+
 
 
 

@@ -6,6 +6,7 @@ package Backend;
 public class User {
     private String userName;
     private String password;
+    private static String LoggedInUser;
 
     public User(){
 
@@ -14,6 +15,14 @@ public class User {
     public User(String userName, String password){
         this.userName=userName;
         this.password=password;
+    }
+
+    public static String getLoggedInUser() {
+        return LoggedInUser;
+    }
+
+    public static void setLoggedInUser(String loggedInUser) {
+        LoggedInUser = loggedInUser;
     }
 
     public String getPassword() {
