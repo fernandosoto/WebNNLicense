@@ -16,7 +16,7 @@ public interface PurchaseDAOInterface {
 
     Purchase searchPurchaseById(long id);
 
-    List<Purchase> searchPurchaseByName(String name) throws Exception;
+    List<Purchase> searchPurchaseByName(String name) ;
 
     List<Purchase> searchPurchaseByDistributorName(String name);
 
