@@ -120,11 +120,8 @@ public class PurchaseDAOTest {
 
     @Test
     public void searchByNameDAOTest()throws Exception{
-        System.out.println(expected.get(0).getProductName());
         when(jdbcTemplate.query(pdao.SQL_SEARCH_BY_PRODUCT_NAME, purchaseRowMapper, expected.get(0).getProductName()+"%")).thenReturn(expected);
-        //when(db.query(anyString(),(RowMapper<Purchase>) anyObject(), anyString())).thenReturn(expected);
-        //when(jdbcTemplate.query(pdao.SQL_SEARCH_ALL_PRODUCT,purchaseRowMapper)).thenReturn(expected);
-        //assertEquals(expected, pdao.searchAllPurchases());
+
         assertEquals(expected, pdao.searchPurchaseByName(p1.getProductName()));
     }
 

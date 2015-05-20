@@ -3,6 +3,7 @@ package Backend.DAO;
 import Backend.License;
 import Backend.Purchase;
 import Backend.rowMapper.DeletedLicenseRowMapper;
+import Backend.rowMapper.LicenseRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -22,6 +23,9 @@ public class LicenseDAO implements LicenseDAOInterface {
 
     @Autowired
     DeletedLicenseRowMapper deletedLicenseRowMapper;
+
+    @Autowired
+    LicenseRowMapper licenseRowMapper;
 
     @Override
     @Transactional
@@ -74,21 +78,8 @@ public class LicenseDAO implements LicenseDAOInterface {
     }
 
     @Override
-    public List<License> searchLicenseByUser(final String name) {
-        List<License> l = db.query(new PreparedStatementCreator() {
-            @Override
-            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                PreparedStatement ps = connection.prepareStatement(SQL_SEARCH_LICENSE_BY_USER);
-                ps.setString(1, name+"%");
-                return ps;
-            }
-        }, new RowMapper<License>() {
-            @Override
-            public License mapRow(ResultSet rs, int i) throws SQLException {
-                return new License(rs.getLong("LICENSE_KEY_ID"), rs.getString("LICENSE_USER"), rs.getString("D_LICENSE_KEY_ID"),
-                        rs.getLong("PURCHASE_ID"), rs.getDate("EXPIRE_DATE"));
-            }
-        });
+    public List<License> searchLicenseByUser(String name) {
+        List<License> l = db.query(SQL_SEARCH_LICENSE_BY_USER,licenseRowMapper,name);
 
         return l;
     }
@@ -184,7 +175,9 @@ public class LicenseDAO implements LicenseDAOInterface {
     public static final String SQL_ADD_LICENSE = "INSERT INTO LICENSE_KEY(LICENSE_USER, SERIAL_KEY, PURCHASE_ID, EXPIRE_DATE) VALUES(?, ?, ?, ?)";
     public static final String SQL_DELETE_LICENSE = "INSERT INTO DELETED_LICENSE(DELETED_BY, DELETED_DATE, D_LICENSE_KEY_ID) VALUES (?, ?, ?)";
     public static final String SQL_SEARCH_DELETED_LICENSE = "SELECT L.*, DL.DELETED_BY, DL.DELETED_DATE, DL.DELETED_LICENSE_ID FROM  LICENSE_KEY L, DELETED_LICENSE DL WHERE DL.D_LICENSE_KEY_ID = L.LICENSE_KEY_ID";
-    public static final String SQL_SEARCH_LICENSE_BY_USER = "SELECT * FROM LICENSE_KEY L, DELETED_LICENSE DL WHERE L.LICENSE_USER LIKE ? AND L.LICENSE_KEY_ID != DL.D_LICENSE_KEY_ID";
+    public static final String SQL_SEARCH_LICENSE_BY_USER = "SELECT L.LICENSE_KEY_ID, L.LICENSE_USER, L.SERIAL_KEY, L.PURCHASE_ID, L.EXPIRE_DATE " +
+                                                            "FROM LICENSE_KEY L " +
+                                                            "WHERE L.LICENSE_USER = ?";
     public static final String SQL_SEARCH_LICENSE_BY_PURCHASE = "SELECT * FROM LICENSE_KEY WHERE PURCHASE_ID = ? AND LICENSE_KEY_ID NOT IN (SELECT D_LICENSE_KEY_ID from DELETED_LICENSE )";
     public static final String SQL_SEARCH_LICENSE_BY_ID = "SELECT * FROM LICENSE_KEY WHERE LICENSE_KEY_ID = ? AND LICENSE_KEY_ID NOT IN(SELECT D_LICENSE_KEY_ID FROM DELETED_LICENSE)";
     public static final String SQL_INSERT_INTO_MODIFY_TABLE = "INSERT INTO MODIFY(MODIFIED_BY, MODIFY_DATE, LICENS_KEY_ID, FREE_TEXT) VALUES(?, ?, ?, ?)";

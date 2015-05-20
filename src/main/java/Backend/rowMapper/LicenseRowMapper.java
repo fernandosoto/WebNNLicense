@@ -10,7 +10,7 @@ import java.sql.SQLException;
  * Created by Anna on 2015-05-15.
  */
 public class LicenseRowMapper implements RowMapper {
-    public static final String LICENSE_ID = "LICENSE_ID";
+    public static final String LICENSE_ID = "LICENSE_KEY_ID";
     public static final String LICENSE_USER = "LICENSE_USER";
     public static final String LICENSE_KEY = "LICENSE_KEY";
     public static final String L_PURCHASE_ID= "L_PURCHASE_ID";
