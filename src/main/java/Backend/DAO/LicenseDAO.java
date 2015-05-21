@@ -59,20 +59,6 @@ public class LicenseDAO implements LicenseDAOInterface {
     }
 
     public List<License> searchDeletedLicenses(){
-//        List<License> l = db.query(new PreparedStatementCreator() {
-//            @Override
-//            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-//                PreparedStatement ps = connection.prepareStatement(SQL_SEARCH_DELETED_LICENSE);
-//                return ps;
-//            }
-//        }, new RowMapper<License>() {
-//            @Override
-//            public License mapRow(ResultSet rs, int i) throws SQLException {
-//                return new License(rs.getLong("LICENSE_ID"), rs.getString("LICENSE_USER"), rs.getString("LICENSE_KEY"),
-//                        rs.getLong("L_PURCHASE_ID"), rs.getDate("EXPIRE_DATE"), rs.getDate("DELETED_DATE"),
-//                        rs.getString("DELETED_BY"));
-//            }
-//        });
         List<License> l = db.query(SQL_SEARCH_DELETED_LICENSE, deletedLicenseRowMapper);
         return l;
     }
@@ -85,41 +71,15 @@ public class LicenseDAO implements LicenseDAOInterface {
     }
 
     @Override
-    public List<License> searchLicenseByPurchase(final Purchase p) {
-        List<License> l = db.query(new PreparedStatementCreator() {
-            @Override
-            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                PreparedStatement ps = connection.prepareStatement(SQL_SEARCH_LICENSE_BY_PURCHASE);
-                ps.setLong(1, p.getPurchaseId());
-                return ps;
-            }
-        }, new RowMapper<License>() {
-            @Override
-            public License mapRow(ResultSet rs, int i) throws SQLException {
-                return new License(rs.getLong("LICENSE_KEY_ID"), rs.getString("LICENSE_USER"), rs.getString("SERIAL_KEY"),
-                        rs.getLong("PURCHASE_ID"), rs.getDate("EXPIRE_DATE"));
-            }
-        });
+    public List<License> searchLicenseByPurchase(Purchase p) {
+        List<License> l = db.query(SQL_SEARCH_LICENSE_BY_PURCHASE, licenseRowMapper, p.getPurchaseId());
 
         return l;
     }
 
     @Override
-    public License searchLicenseById(final Long id) {
-        List<License> l = db.query(new PreparedStatementCreator() {
-            @Override
-            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                PreparedStatement ps = connection.prepareStatement(SQL_SEARCH_LICENSE_BY_ID);
-                ps.setLong(1, id);
-                return ps;
-            }
-        }, new RowMapper<License>() {
-            @Override
-            public License mapRow(ResultSet rs, int i) throws SQLException {
-                return new License(rs.getLong("LICENSE_KEY_ID"), rs.getString("LICENSE_USER"), rs.getString("SERIAL_KEY"),
-                        rs.getLong("PURCHASE_ID"), rs.getDate("EXPIRE_DATE"));
-            }
-        });
+    public License searchLicenseById(Long id) {
+        List<License> l = db.query(SQL_SEARCH_LICENSE_BY_ID, licenseRowMapper, id);
 
         return l.get(0);
     }
@@ -178,8 +138,14 @@ public class LicenseDAO implements LicenseDAOInterface {
     public static final String SQL_SEARCH_LICENSE_BY_USER = "SELECT L.LICENSE_KEY_ID, L.LICENSE_USER, L.SERIAL_KEY, L.PURCHASE_ID, L.EXPIRE_DATE " +
                                                             "FROM LICENSE_KEY L " +
                                                             "WHERE L.LICENSE_USER = ?";
-    public static final String SQL_SEARCH_LICENSE_BY_PURCHASE = "SELECT * FROM LICENSE_KEY WHERE PURCHASE_ID = ? AND LICENSE_KEY_ID NOT IN (SELECT D_LICENSE_KEY_ID from DELETED_LICENSE )";
-    public static final String SQL_SEARCH_LICENSE_BY_ID = "SELECT * FROM LICENSE_KEY WHERE LICENSE_KEY_ID = ? AND LICENSE_KEY_ID NOT IN(SELECT D_LICENSE_KEY_ID FROM DELETED_LICENSE)";
+    public static final String SQL_SEARCH_LICENSE_BY_PURCHASE = "SELECT * FROM LICENSE_KEY L " +
+            "JOIN DELETED_LICENSE DL ON L.LICENSE_KEY_ID != DL.D_LICENSE_KEY_ID " +
+            "WHERE L.PURCHASE_ID = ?";
+    public static final String SQL_SEARCH_LICENSE_BY_ID = "SELECT L.LICENSE_KEY_ID, L.LICENSE_USER, L.SERIAL_KEY, L.PURCHASE_ID, L.EXPIRE_DATE " +
+            "FROM LICENSE_KEY L " +
+            "LEFT OUTER JOIN DELETED_LICENSE DL ON DL.D_LICENSE_KEY_ID = L.LICENSE_KEY_ID " +
+            "WHERE L.LICENSE_KEY_ID = ? " +
+            "AND DL.D_LICENSE_KEY_ID IS NULL";
     public static final String SQL_INSERT_INTO_MODIFY_TABLE = "INSERT INTO MODIFY(MODIFIED_BY, MODIFY_DATE, LICENS_KEY_ID, FREE_TEXT) VALUES(?, ?, ?, ?)";
     public static final String SQL_UPDATE_LICENSE_KEY = "UPDATE LICENSE_KEY SET LICENSE_USER = ?"+
             ", SERIAL_KEY = ? ,EXPIRE_DATE = ? WHERE LICENSE_KEY_ID = ?";
