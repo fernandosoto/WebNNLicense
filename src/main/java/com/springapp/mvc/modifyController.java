@@ -178,7 +178,20 @@ public class modifyController {
         this.modifyForm.getPurchase().setProductName(modifyForm.getPurchase().getProductName());
         this.modifyForm.getPurchase().setFreeText(modifyForm.getPurchase().getFreeText());
         this.modifyForm.getPurchase().setType(modifyForm.getPurchase().getType());
-        pdao.editPurchase(this.modifyForm.getPurchase(), "John Doe", modifyForm.getManufacturer().getId(), modifyForm.getDistributor().getId());
+
+        System.out.printf(modifyForm.getManufacturer().getName() + "         " + modifyForm.getDistributor().getName() + "\n\n\n");
+
+        Purchase newPurchase = new Purchase(this.modifyForm.getPurchase().getPurchaseId(),
+                manufacturerDAO.searchManufacturerById(modifyForm.getManufacturer().getId()).getName(),
+                this.modifyForm.getPurchase().getProductName(),
+                this.modifyForm.getPurchase().getType(),
+                distributorDAO.searchDistributorById(modifyForm.getDistributor().getId()).getName(),
+                this.modifyForm.getPurchase().getFreeText(),
+                this.modifyForm.getPurchase().getUpgradeFrom(),
+                this.modifyForm.getPurchase().getCreatedBy(),
+                this.modifyForm.getPurchase().getCreatedDate());
+
+        pdao.editPurchase(newPurchase, User.getLoggedInUser(), modifyForm.getManufacturer().getId(), modifyForm.getDistributor().getId());
 
         if(modifyForm.getNewSerialKeys().length()!=0) {
             List<License> licenses;

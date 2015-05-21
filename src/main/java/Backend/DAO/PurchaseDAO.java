@@ -148,8 +148,42 @@ public class PurchaseDAO implements PurchaseDAOInterface {
     }
 
     @Override
+    @Transactional
     public void editPurchase(final Purchase pur, final String userName, final long manufacturerId, final long distributorId) {
         final Purchase oldPur = searchPurchaseById(pur.getPurchaseId());
+
+        StringBuilder sb = new StringBuilder();
+
+        System.out.println("\n\n\n\noldPur:    Manufacturer: " + oldPur.getManufacturerName() + "  , Distributor: " + oldPur.getDistributorName() + "\n\npur:    Manufacturer:" + pur.getManufacturerName() + "  , Distributor: " + pur.getDistributorName() + "\n\n");
+
+        if (!oldPur.getDistributorName().equals(pur.getDistributorName())){
+            sb.append("Distributor Changed: \"" + oldPur.getDistributorName() + "\" to \"" + pur.getDistributorName() + "\" | ");
+        }
+        if (!oldPur.getManufacturerName().equals(pur.getManufacturerName())){
+            sb.append("Manufacturer Changed: \"" + oldPur.getManufacturerName() + "\" to \"" + pur.getManufacturerName() + "\" | ");
+        }
+        if (!oldPur.getProductName().equals(pur.getProductName())){
+            sb.append("Product Name Changed: \"" + oldPur.getProductName() + "\" to \"" + pur.getProductName() + "\" | ");
+        }
+        if (!oldPur.getType().equals(pur.getType())){
+            sb.append("Type Changed: \"" + oldPur.getType() + "\" to \"" + pur.getType() + "\" |");
+        }
+        if (!oldPur.getFreeText().equals(pur.getFreeText())){
+            sb.append("Free Text Changed: \"" + oldPur.getFreeText() + "\" to \"" + pur.getFreeText() + "\" | ");
+        }
+        final String s = sb.toString();
+        db.update(new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                PreparedStatement ps = connection.prepareStatement(SQL_INSERT_INTO_MODIFY_PURCHASE_TABLE);
+                ps.setString(1, userName);
+                ps.setDate(2, new Date(System.currentTimeMillis()));
+                ps.setLong(3, pur.getPurchaseId());
+                ps.setString(4, s);
+                return ps;
+            }
+        });
+
 
         db.update(new PreparedStatementCreator() {
             @Override
@@ -272,4 +306,5 @@ public class PurchaseDAO implements PurchaseDAOInterface {
             "LEFT OUTER JOIN UPGRADED_PURCHASE UP ON UP.NEW_PURCHASE_ID = P.PURCHASE_ID "+
             "WHERE P.PURCHASE_ID = ?";
 
+    public static final String SQL_INSERT_INTO_MODIFY_PURCHASE_TABLE = "INSERT INTO MODIFY_PURCHASE(MODIFIED_BY, MODIFY_DATE, M_PURCHASE_ID, FREE_TEXT) VALUES(?, ?, ?, ?)";
 }
