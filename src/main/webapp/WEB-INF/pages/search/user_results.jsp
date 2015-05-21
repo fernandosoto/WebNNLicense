@@ -61,10 +61,9 @@
 									<li><br>Username: <form:input path="searchUserName" type="text" value="${searchUserName}" readonly="true" cssStyle="border: hidden"/></li>
 										<br><form:select path="" title="Users" size="8" style="width: 300px;">
 											<form:option value="NONE" label="--- Licenses ---" disabled="true"/>
-											<form:options items="${userLicenseList}" itemValue="serialKey" itemLabel="serialKey" disabled="true"/>
+											<form:options items="${userLicenseList}" itemValue="label" itemLabel="label" disabled="true"/>
 										</form:select>
 										</div>
-
 								</ul>
 							</nav><!-- end navigation menu -->
 						</fieldset>

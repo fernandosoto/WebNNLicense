@@ -1,5 +1,6 @@
 package Backend;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +12,7 @@ public class SearchForm {
     private String radioButtonSelect;
     private String deletedBy, deletedDate;
     private String searchUserName;
+    private List<LicenseToUser> licenseToUser=new ArrayList<LicenseToUser>();
 
 
     public String getRadioButtonSelect() {
@@ -27,6 +29,14 @@ public class SearchForm {
             licenseDetails.add(l.getSerialKey() +" User: " + l.getUser() + " Expire date: "+ l.getExpireDate());
         }
         return licenseDetails;
+    }
+
+    public List<LicenseToUser> getLicenseToUser() {
+        return licenseToUser;
+    }
+
+    public void setLicenseToUser(List<LicenseToUser> licenseToUser) {
+        this.licenseToUser = licenseToUser;
     }
 
     public String getDeletedBy() {
@@ -62,6 +72,42 @@ public class SearchForm {
     }
 
 
+    public class LicenseToUser{
+        private String label;
+        private String serialKey, productName, expireDate;
+
+        public LicenseToUser(String serialKey, String productName, String expireDate){
+            this.serialKey=serialKey;
+            this.productName=productName;
+            this.expireDate=expireDate;
+            label = getSerialKey()+" "+getProductName()+" "+getExpireDate();
+        }
+
+        public String getSerialKey() {return serialKey;}
+
+        public void setSerialKey(String serialKey) {this.serialKey = serialKey;}
+
+        public String getProductName() {return productName;}
+
+        public void setProductName(String productName) {this.productName = productName;}
+
+        public String getExpireDate() {return expireDate;}
+
+        public void setExpireDate(String expireDate) {this.expireDate = expireDate;}
+
+        public String getLabel() {return label;}
+
+        public void setLabel(String label) {this.label = label;}
+
+    }
+
+    public void clearLicenseKeyToList(){
+        licenseToUser.clear();
+    }
+
+    public void setLicenseKeyToList(Purchase p, License l){
+        licenseToUser.add(new LicenseToUser(l.getSerialKey(),p.getProductName(),l.getExpireDate().toString()));
+    }
 
 
 }
