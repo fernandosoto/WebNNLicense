@@ -6,6 +6,7 @@ import Backend.DAO.LicenseDAOInterface;
 import Backend.DAO.PurchaseDAO;
 import Backend.DAO.PurchaseDAOInterface;
 import Backend.rowMapper.DeletedLicenseRowMapper;
+import Backend.rowMapper.LicenseRowMapper;
 import Backend.rowMapper.PurchaseRowMapper;
 import com.sun.org.apache.xpath.internal.SourceTree;
 import junit.framework.Assert;
@@ -63,6 +64,9 @@ public class LicenseDAOTest {
     @Mock
     DeletedLicenseRowMapper deletedLicenseRowMapper;
 
+    @Mock
+    LicenseRowMapper licenseRowMapper;
+
     @InjectMocks
     LicenseDAO ldao;
 
@@ -100,21 +104,9 @@ public class LicenseDAOTest {
 
 
 //    @Test
-//    public void addViewTest()throws Exception{
-//        mockMvc.perform(get("/addPurchase"))
-//                .andExpect(status().isOk())
-//                .andExpect(view().name("add/add_inner"));
-//
-//    }
-
-
-//    @Test
 //    public void searchDAOTest()throws Exception{
 //        System.out.println(expected.get(0).getProductName());
 //        when(jdbcTemplate.query(pdao.SQL_SEARCH_BY_PRODUCT_NAME, purchaseRowMapper, expected.get(0).getProductName()+"%")).thenReturn(expected);
-//        //when(db.query(anyString(),(RowMapper<Purchase>) anyObject(), anyString())).thenReturn(expected);
-//        //when(jdbcTemplate.query(pdao.SQL_SEARCH_ALL_PRODUCT,purchaseRowMapper)).thenReturn(expected);
-//        //assertEquals(expected, pdao.searchAllPurchases());
 //        assertEquals(expected, pdao.searchPurchaseByName(p1.getProductName()));
 //    }
 
