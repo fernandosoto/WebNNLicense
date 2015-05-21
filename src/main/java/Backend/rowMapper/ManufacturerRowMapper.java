@@ -1,11 +1,15 @@
 package Backend.rowMapper;
 
 import Backend.Manufacturer;
+import Backend.DAO.ManufacturerDAO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
-import org.springframework.jdbc.core.RowMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 
 
 /**
