@@ -92,13 +92,13 @@ public class LicenseDAO implements LicenseDAOInterface {
         StringBuilder sb = new StringBuilder();
 
         if (!oldLic.getUser().equals(lic.getUser())){
-            sb.append("License User Changed: \"" + oldLic.getUser() + "\" to \"" + lic.getUser() + "\" |");
+            sb.append("License User Changed: \"" + oldLic.getUser() + "\" to \"" + lic.getUser() + "\" | ");
         }
         if (!oldLic.getSerialKey().equals(lic.getSerialKey())){
-            sb.append("Serial Key Changed: \"" + oldLic.getSerialKey() + "\" to \"" + lic.getSerialKey() + "\" |");
+            sb.append("Serial Key Changed: \"" + oldLic.getSerialKey() + "\" to \"" + lic.getSerialKey() + "\" | ");
         }
         if (oldLic.getExpireDate().compareTo(lic.getExpireDate()) != 0){
-            sb.append("Expire Date Changed: \"" + oldLic.getExpireDate().toString() + "\" to \"" + lic.getExpireDate().toString() + "\" |");
+            sb.append("Expire Date Changed: \"" + oldLic.getExpireDate().toString() + "\" to \"" + lic.getExpireDate().toString() + "\" | ");
         }
         final String s = sb.toString();
         db.update(new PreparedStatementCreator() {
