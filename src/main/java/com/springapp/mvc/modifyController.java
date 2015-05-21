@@ -172,13 +172,10 @@ public class modifyController {
     @RequestMapping(value = "/modify_purchase",method = RequestMethod.POST)
     public String modifyPurchase(@ModelAttribute ModifyForm modifyForm,ModelMap model)
     {
-
-        System.out.println(modifyForm.getManufacturer().getId());
-
         this.modifyForm.getPurchase().setProductName(modifyForm.getPurchase().getProductName());
         this.modifyForm.getPurchase().setFreeText(modifyForm.getPurchase().getFreeText());
         this.modifyForm.getPurchase().setType(modifyForm.getPurchase().getType());
-        pdao.editPurchase(this.modifyForm.getPurchase(), "John Doe", modifyForm.getManufacturer().getId(), modifyForm.getDistributor().getId());
+        pdao.editPurchase(this.modifyForm.getPurchase(), User.getLoggedInUser(), modifyForm.getManufacturer().getId(), modifyForm.getDistributor().getId());
 
         if(modifyForm.getNewSerialKeys().length()!=0) {
             List<License> licenses;

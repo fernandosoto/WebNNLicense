@@ -113,21 +113,12 @@ public class searchController
     @RequestMapping(value = "/user_results",method = RequestMethod.GET)
     public String userResults(ModelMap model)
     {
-
         this.searchForm.clearLicenseKeyToList();
         List<License> dbLicenses = ldao.searchLicenseByUser(this.searchForm.getSearchUserName());
 
-
-        for(int i=0;i < dbLicenses.size();++i){
-            System.out.println(dbLicenses.get(i).getPurchaseId());
-        }
-
-
         Purchase purchase;
         for(License l: dbLicenses){
-            System.out.println(l.getPurchaseId()+" före");
             purchase = pdao.searchPurchaseById(l.getPurchaseId());
-            System.out.println(purchase.getPurchaseId()+" efter");
             this.searchForm.setLicenseKeyToList(purchase, l);
         }
         model.addAttribute("userLicenseList",this.searchForm.getLicenseToUser());

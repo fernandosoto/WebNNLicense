@@ -136,11 +136,17 @@ public class LicenseDAO implements LicenseDAOInterface {
     public static final String SQL_DELETE_LICENSE = "INSERT INTO DELETED_LICENSE(DELETED_BY, DELETED_DATE, D_LICENSE_KEY_ID) VALUES (?, ?, ?)";
     public static final String SQL_SEARCH_DELETED_LICENSE = "SELECT L.*, DL.DELETED_BY, DL.DELETED_DATE, DL.DELETED_LICENSE_ID FROM  LICENSE_KEY L, DELETED_LICENSE DL WHERE DL.D_LICENSE_KEY_ID = L.LICENSE_KEY_ID";
     public static final String SQL_SEARCH_LICENSE_BY_USER = "SELECT L.LICENSE_KEY_ID, L.LICENSE_USER, L.SERIAL_KEY, L.PURCHASE_ID, L.EXPIRE_DATE " +
-                                                            "FROM LICENSE_KEY L " +
-                                                            "WHERE L.LICENSE_USER = ?";
-    public static final String SQL_SEARCH_LICENSE_BY_PURCHASE = "SELECT * FROM LICENSE_KEY L " +
-            "JOIN DELETED_LICENSE DL ON L.LICENSE_KEY_ID != DL.D_LICENSE_KEY_ID " +
-            "WHERE L.PURCHASE_ID = ?";
+            "                                                            FROM LICENSE_KEY L  " +
+            "                                                            LEFT OUTER JOIN DELETED_LICENSE DL ON DL.D_LICENSE_KEY_ID = L.LICENSE_KEY_ID " +
+            "                                                            WHERE L.LICENSE_USER = ? " +
+            "                                                            AND DL.D_LICENSE_KEY_ID IS NULL;";
+
+    public static final String SQL_SEARCH_LICENSE_BY_PURCHASE = "SELECT L.LICENSE_KEY_ID, L.LICENSE_USER, L.SERIAL_KEY, L.PURCHASE_ID, L.EXPIRE_DATE " +
+            "FROM LICENSE_KEY L " +
+            "LEFT OUTER JOIN DELETED_LICENSE DL ON DL.D_LICENSE_KEY_ID = L.LICENSE_KEY_ID " +
+            "WHERE L.PURCHASE_ID = ? " +
+            "AND DL.D_LICENSE_KEY_ID IS NULL";
+
     public static final String SQL_SEARCH_LICENSE_BY_ID = "SELECT L.LICENSE_KEY_ID, L.LICENSE_USER, L.SERIAL_KEY, L.PURCHASE_ID, L.EXPIRE_DATE " +
             "FROM LICENSE_KEY L " +
             "LEFT OUTER JOIN DELETED_LICENSE DL ON DL.D_LICENSE_KEY_ID = L.LICENSE_KEY_ID " +
