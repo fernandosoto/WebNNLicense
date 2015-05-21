@@ -3,6 +3,15 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee 
 	http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
 
+	<listener>
+		<listener-class>Backend.ContextListener</listener-class>
+	</listener>
+
+	<listener>
+		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+	</listener>
+
+
 	<display-name>Spring MVC Application</display-name>
 
 	<servlet>
@@ -37,5 +46,12 @@
 		<servlet-name>default</servlet-name>
 		<url-pattern>*.png</url-pattern>
 	</servlet-mapping>
+	
+	<context-param>
+		<param-name>log4jConfigLocation</param-name>
+		<param-value>/WEB-INF/log4j.properties</param-value>
+	</context-param>
+	
+
 
 </web-app>

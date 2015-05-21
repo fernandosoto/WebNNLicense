@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -44,13 +43,7 @@ public class searchController
     public String showPurchase(@ModelAttribute SearchForm searchForm, ModelMap model)
     {
         this.searchForm.setRadioButtonSelect(searchForm.getRadioButtonSelect());
-        this.searchForm.getPurchase().setProductName(searchForm.getPurchase().getProductName());
-
-        if(this.searchForm.getRadioButtonSelect().equals("user")){
-            this.searchForm.setSearchUserName(searchForm.getSearchUserName());
-            return "redirect:/user_results"; // search licenses by user ---> user_results.jsp
-        }
-
+        this.searchForm.getPurchase().setProductName(searchForm.getPurchase().getProductName()); // Sätter namnet från webben
         return "redirect:/search_results";
     }
 
@@ -82,14 +75,9 @@ public class searchController
         Purchase purchase;
         if(this.searchForm.getRadioButtonSelect().equals("active")) {
             purchase = pdao.searchPurchaseById(searchForm.getPurchase().getPurchaseId());
-            this.searchForm.setDeletedBy("  -");
-            this.searchForm.setDeletedDate("  -");
         }else{
             purchase = pdao.searchDeletedPurchaseById(searchForm.getPurchase().getPurchaseId());
-            this.searchForm.setDeletedBy(((DeletedPurchase) purchase).getDeletedBy());
-            this.searchForm.setDeletedDate(((DeletedPurchase) purchase).getDeletedDate().toString());
         }
-
         this.searchForm.setPurchase(purchase);
         return "redirect:/search_details";
     }
@@ -104,16 +92,4 @@ public class searchController
         model.addAttribute("searchForm", searchForm);
         return "search/search_details";
     }
-
-
-    @RequestMapping(value = "/user_results",method = RequestMethod.GET)
-    public String userResults(ModelMap model)
-    {
-
-        List<License> dbLicenses = ldao.searchLicenseByUser(this.searchForm.getSearchUserName());
-        model.addAttribute("userLicenseList",dbLicenses);
-        model.addAttribute("searchForm", searchForm);
-        return "search/user_results";
-    }
-
 }
