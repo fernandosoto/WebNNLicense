@@ -1,10 +1,12 @@
 package Backend.DAO;
 
+import Backend.ContextListener;
 import Backend.License;
 import Backend.Purchase;
 import Backend.rowMapper.DeletedLicenseRowMapper;
 import Backend.rowMapper.LicenseRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
@@ -29,7 +31,12 @@ public class LicenseDAO implements LicenseDAOInterface {
 
     @Override
     @Transactional
-    public void addLicense(final License l) {
+    public void addLicense(final License l) throws IllegalArgumentException{
+        if (l == null){
+            ContextListener.log.error("License cannot be null.", new IllegalArgumentException());
+            throw new IllegalArgumentException();
+        }
+
         db.update(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
@@ -45,7 +52,14 @@ public class LicenseDAO implements LicenseDAOInterface {
 
     @Transactional
     @Override
-    public void deleteLicense(final License l, final String userName) {
+    public void deleteLicense(final License l, final String userName) throws IllegalArgumentException{
+        if (l == null){
+            ContextListener.log.error("License cannot be null.", new IllegalArgumentException());
+            throw new IllegalArgumentException();
+        } else if (userName == null){
+            ContextListener.log.error("userName cannot be null.", new IllegalArgumentException());
+            throw new IllegalArgumentException();
+        }
         db.update(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
@@ -64,29 +78,52 @@ public class LicenseDAO implements LicenseDAOInterface {
     }
 
     @Override
-    public List<License> searchLicenseByUser(String name) {
+    public List<License> searchLicenseByUser(String name) throws IllegalArgumentException{
+        if (name == null){
+            ContextListener.log.error("name cannot be null.", new IllegalArgumentException());
+            throw new IllegalArgumentException();
+        }
         List<License> l = db.query(SQL_SEARCH_LICENSE_BY_USER,licenseRowMapper,name);
-
         return l;
     }
 
     @Override
-    public List<License> searchLicenseByPurchase(Purchase p) {
+    public List<License> searchLicenseByPurchase(Purchase p) throws IllegalArgumentException{
+        if (p == null){
+            ContextListener.log.error("Purchase cannot be null.", new IllegalArgumentException());
+            throw new IllegalArgumentException();
+        }
         List<License> l = db.query(SQL_SEARCH_LICENSE_BY_PURCHASE, licenseRowMapper, p.getPurchaseId());
-
         return l;
     }
 
     @Override
-    public License searchLicenseById(Long id) {
-        List<License> l = db.query(SQL_SEARCH_LICENSE_BY_ID, licenseRowMapper, id);
-
-        return l.get(0);
+    public License searchLicenseById(Long id) throws IllegalArgumentException, DataAccessException, NullPointerException{
+        if (id == 0){
+            ContextListener.log.error("Id cannot be 0.", new IllegalArgumentException());
+            throw new IllegalArgumentException();
+        }
+        try {
+            return (License) db.query(SQL_SEARCH_LICENSE_BY_ID, licenseRowMapper, id).get(0);
+        } catch (DataAccessException e){
+            ContextListener.log.error("DataAccessException, probably because of database connection error", e);
+            throw e;
+        } catch (NullPointerException e){
+            ContextListener.log.error("searchPurchaseById returned empty list with id :" + id, e);
+            throw e;
+        }
     }
 
     @Override
     @Transactional
-    public void editLicense(final License lic, final String userName){
+    public void editLicense(final License lic, final String userName) throws IllegalArgumentException, DataAccessException, NullPointerException{
+        if (lic == null){
+            ContextListener.log.error("License cannot be null.", new IllegalArgumentException());
+            throw new IllegalArgumentException();
+        } else if (userName == null){
+            ContextListener.log.error("userName cannot be null.", new IllegalArgumentException());
+            throw new IllegalArgumentException();
+        }
         final License oldLic = searchLicenseById(lic.getLicenseId());
 
         StringBuilder sb = new StringBuilder();
