@@ -98,7 +98,7 @@ public class LicenseDAO implements LicenseDAOInterface {
     }
 
     @Override
-    public License searchLicenseById(Long id) throws IllegalArgumentException, DataAccessException, NullPointerException{
+    public License searchLicenseById(long id) throws IllegalArgumentException, DataAccessException, NullPointerException{
         if (id == 0){
             ContextListener.log.error("Id cannot be 0.", new IllegalArgumentException());
             throw new IllegalArgumentException();
