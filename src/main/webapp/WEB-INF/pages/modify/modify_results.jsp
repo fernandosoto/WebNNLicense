@@ -46,7 +46,7 @@
 		<section class="top">	
 			<div class="wrapper content_header clearfix">
 
-				<h1 class="title">Modify - Search result</h1>
+				<h1 class="title">Modify / Search result</h1>
 			</div>		
 		</section><!-- end top -->
 
@@ -60,10 +60,10 @@
 									<li><br>Search results:</li>
 									<li>
 										<form:select path="purchase.purchaseId" title="results" size="8" style="width: 300px;">
-											<form:option value="NONE" label="--- Select purchase ---" disabled="true"/>
-											<form:options items="${purchases}" itemValue="purchaseId" itemLabel="productName"/>
+											<form:option value="NONE" label="--- Select ---" disabled="true"/>
+											<form:options items="${purchases}" itemValue="purchaseId" itemLabel="productName" selected="selected"/>
 										</form:select>
-								<li><br><input type="submit" value="Modify"/> <input type="button" value="New search (Ur funktion)"> </li>
+								<li><br><input type="submit" value="Modify"/></li>
 								</ul>
 							</nav><!-- end navigation menu -->
 						</fieldset>

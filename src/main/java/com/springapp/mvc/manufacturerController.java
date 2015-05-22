@@ -51,6 +51,9 @@ public class manufacturerController {
     @RequestMapping(value = "/manufacturer_add",method = RequestMethod.POST)
     public String manufacturerAdd(@ModelAttribute ManufacturerForm manufacturerForm,ModelMap model)
     {
+        if(manufacturerForm.getManufacturer().getName().length()==0){
+            return "redirect:/manufacturer_inner";
+        }
         this.manufacturerForm.setManufacturer(manufacturerForm.getManufacturer());
         manufacturerDAO.addManufacturer(this.manufacturerForm.getManufacturer());
         return "redirect:/manufacturer_inner";
@@ -60,6 +63,7 @@ public class manufacturerController {
     @RequestMapping(value = "/manufacturer_modify",method = RequestMethod.GET)
     public String manufacturerModify(ModelMap model)
     {
+        manufacturers.clear();
         manufacturers =  manufacturerDAO.searchManufacturerByName("");
         model.addAttribute("manufacturers", manufacturers);
         model.addAttribute("manufacturerForm",manufacturerForm);
@@ -70,6 +74,7 @@ public class manufacturerController {
     @RequestMapping(value = "/manufacturer_modify",method = RequestMethod.POST)
     public String manufacturerModify(@ModelAttribute ManufacturerForm manufacturerForm,ModelMap model)
     {
+
         this.manufacturerForm.setManufacturer(manufacturerForm.getManufacturerById(manufacturers, manufacturerForm.getManufacturer().getId()));
         return "redirect:/manufacturer_details";
     }
@@ -90,7 +95,7 @@ public class manufacturerController {
         this.manufacturerForm.getManufacturer().setName(manufacturerForm.getManufacturer().getName());
         this.manufacturerForm.getManufacturer().setFreeText(manufacturerForm.getManufacturer().getFreeText());
         System.out.println(this.manufacturerForm.getManufacturer().getName());
-        //Backen func!
+        manufacturerDAO.editManufacturer(this.manufacturerForm.getManufacturer());
         return "redirect:/manufacturer_modify";
     }
 

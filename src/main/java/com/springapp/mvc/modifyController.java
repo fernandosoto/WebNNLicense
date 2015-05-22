@@ -106,9 +106,6 @@ public class modifyController {
 
 
 
-
-
-
     @RequestMapping(value = "/modify_licenseKeys",method = RequestMethod.GET)
     public String modifyDetails(ModelMap model)
     {
@@ -153,12 +150,6 @@ public class modifyController {
 
 
 
-
-
-
-
-
-
     @RequestMapping(value = "/modify_purchase",method = RequestMethod.GET)
     public String modifyPurchase(ModelMap model)
     {
@@ -174,6 +165,8 @@ public class modifyController {
         this.modifyForm.getPurchase().setProductName(modifyForm.getPurchase().getProductName());
         this.modifyForm.getPurchase().setFreeText(modifyForm.getPurchase().getFreeText());
         this.modifyForm.getPurchase().setType(modifyForm.getPurchase().getType());
+
+
 
         Purchase newPurchase = new Purchase(this.modifyForm.getPurchase().getPurchaseId(),
                 manufacturerDAO.searchManufacturerById(modifyForm.getManufacturer().getId()).getName(),

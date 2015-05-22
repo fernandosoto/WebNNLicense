@@ -48,6 +48,9 @@ public class searchController
 
         if(this.searchForm.getRadioButtonSelect().equals("user")){
             this.searchForm.setSearchUserName(searchForm.getSearchUserName());
+            if(this.searchForm.getSearchUserName().length()==0){
+                return "redirect:/search_inner";
+            }
             return "redirect:/user_results"; // search licenses by user ---> user_results.jsp
         }
 
@@ -55,20 +58,18 @@ public class searchController
     }
 
 
-
-
     @RequestMapping(value = "/search_results",method = RequestMethod.GET)
     public String searchResults(ModelMap model)throws Exception
     {
+
         List<Purchase> purchases = new ArrayList<Purchase>();
         if(this.searchForm.getRadioButtonSelect().equals("active")) {
             purchases = pdao.searchPurchaseByName(searchForm.getPurchase().getProductName());
         } else {
-            List <DeletedPurchase> deletedPurchases =  pdao.searchDeletedPurchases();
+            List <DeletedPurchase> deletedPurchases =  pdao.searchDeletedPurchaseByName(this.searchForm.getPurchase().getProductName());
             for(DeletedPurchase dL: deletedPurchases) {
                 purchases.add(dL);
             }
-            // if purchases.size()==0
         }
         model.addAttribute("purchases", purchases);
         model.addAttribute("searchForm", searchForm);
@@ -106,10 +107,6 @@ public class searchController
     }
 
 
-
-
-
-
     @RequestMapping(value = "/user_results",method = RequestMethod.GET)
     public String userResults(ModelMap model)
     {
@@ -125,5 +122,7 @@ public class searchController
         model.addAttribute("searchForm", searchForm);
         return "search/user_results";
     }
+
+
 
 }

@@ -57,9 +57,9 @@
 					<nav>
 						<ul>
 							<li>Available distributors</li>
-							<li><form:select path="distributor.id" title="Select distributor" style="width: 550px; height: 200px" multiple="True" >
+							<li><form:select path="distributor.id" title="Select distributor" size="8" style="width: 550px;">
 								<form:option value="NONE" label="--- Select ---" disabled="true"/>
-								<form:options items="${distributors}" itemValue="id" itemLabel="name"/>
+								<form:options items="${distributors}" itemValue="id" itemLabel="name" selected="selected"/>
 							</form:select>
 							</li>
 							<li><br><input type="submit" value="Modify"/></li>

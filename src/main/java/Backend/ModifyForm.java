@@ -152,7 +152,7 @@ public class ModifyForm {
 
 
         for(int i=0;i<splitSerialKeys.length;++i){
-            licenses.add(new License(0,"Kalle", splitSerialKeys[i],0, date));
+            licenses.add(new License(0,User.getLoggedInUser(), splitSerialKeys[i],0, date));
         }
         return licenses;
     }
