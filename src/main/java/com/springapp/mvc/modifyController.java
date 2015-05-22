@@ -170,16 +170,10 @@ public class modifyController {
     }
 
     @RequestMapping(value = "/modify_purchase",method = RequestMethod.POST)
-    public String modifyPurchase(@ModelAttribute ModifyForm modifyForm,ModelMap model)
-    {
-
-        System.out.println(modifyForm.getManufacturer().getId());
-
+    public String modifyPurchase(@ModelAttribute ModifyForm modifyForm,ModelMap model) {
         this.modifyForm.getPurchase().setProductName(modifyForm.getPurchase().getProductName());
         this.modifyForm.getPurchase().setFreeText(modifyForm.getPurchase().getFreeText());
         this.modifyForm.getPurchase().setType(modifyForm.getPurchase().getType());
-
-        System.out.printf(modifyForm.getManufacturer().getName() + "         " + modifyForm.getDistributor().getName() + "\n\n\n");
 
         Purchase newPurchase = new Purchase(this.modifyForm.getPurchase().getPurchaseId(),
                 manufacturerDAO.searchManufacturerById(modifyForm.getManufacturer().getId()).getName(),

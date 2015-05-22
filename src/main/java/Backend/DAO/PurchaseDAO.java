@@ -154,8 +154,6 @@ public class PurchaseDAO implements PurchaseDAOInterface {
 
         StringBuilder sb = new StringBuilder();
 
-        System.out.println("\n\n\n\noldPur:    Manufacturer: " + oldPur.getManufacturerName() + "  , Distributor: " + oldPur.getDistributorName() + "\n\npur:    Manufacturer:" + pur.getManufacturerName() + "  , Distributor: " + pur.getDistributorName() + "\n\n");
-
         if (!oldPur.getDistributorName().equals(pur.getDistributorName())){
             sb.append("Distributor Changed: \"" + oldPur.getDistributorName() + "\" to \"" + pur.getDistributorName() + "\" | ");
         }
