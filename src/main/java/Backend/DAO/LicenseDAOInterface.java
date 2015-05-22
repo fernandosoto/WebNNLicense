@@ -19,7 +19,7 @@ public interface LicenseDAOInterface {
 
     List<License> searchLicenseByPurchase(Purchase p);
 
-    License searchLicenseById(Long id);
+    License searchLicenseById(long id);
 
     public void editLicense(License lic, String userName);
 

@@ -199,9 +199,14 @@ public class PurchaseDAOTest {
 
     @Test
     public void searchDeletedByNameDAOTest(){
-        when(jdbcTemplate.query(pdao.SQL_SEARCH_DELETED_BY_NAME,deletedPurchaseRowMapper,dpExpected.get(0).getProductName())).thenReturn(dpExpected);
+        when(jdbcTemplate.query(pdao.SQL_SEARCH_DELETED_BY_NAME,deletedPurchaseRowMapper,dpExpected.get(0).getProductName()+"%")).thenReturn(dpExpected);
 
         assertEquals(dpExpected,pdao.searchDeletedPurchaseByName(dpExpected.get(0).getProductName()));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void searchDeletedByNameExcepetionDAOTest(){
+        pdao.searchDeletedPurchaseByName(null);
     }
 
 

@@ -39,10 +39,19 @@ public class PurchaseDAO implements PurchaseDAOInterface {
     DeletedPurchaseRowMapper deletedPurchaseRowMapper;
 
     @Transactional
-    public long addPurchase(final Purchase pur, final String userName, final long distrId, final long manuId) throws Exception {
+    public long addPurchase(final Purchase pur, final String userName, final long distrId, final long manuId) throws IllegalArgumentException {
         final KeyHolder holder = new GeneratedKeyHolder();
-        if(userName == null){
+        if (pur == null){
+          ContextListener.log.error("Purchase cannot be null.", new IllegalArgumentException());
+        } else if(userName == null){
+            ContextListener.log.error("userName cannot be null.", new IllegalArgumentException());
             throw new IllegalArgumentException(userName);
+        } else if (distrId == 0){
+            ContextListener.log.error("Distributor id must be higher than 0.", new IllegalArgumentException());
+            throw new IllegalArgumentException();
+        } else if (manuId == 0){
+            ContextListener.log.error("Manufacturer id must be higher than 0.", new IllegalArgumentException());
+            throw new IllegalArgumentException();
         }
 
         db.update(new PreparedStatementCreator() {
@@ -72,7 +81,14 @@ public class PurchaseDAO implements PurchaseDAOInterface {
     }
 
     @Override
-    public void deletePurchase(final Purchase pur, final String userName) {
+    public void deletePurchase(final Purchase pur, final String userName) throws IllegalArgumentException{
+        if (pur == null){
+            ContextListener.log.error("Purchase cannot be null", new IllegalArgumentException());
+            throw new IllegalArgumentException();
+        } else if (userName == null){
+            ContextListener.log.error("userName cannot be null.", new IllegalArgumentException());
+            throw new IllegalArgumentException();
+        }
 
        db.update(new PreparedStatementCreator() {
             @Override
@@ -87,11 +103,10 @@ public class PurchaseDAO implements PurchaseDAOInterface {
     }
 
     public List<DeletedPurchase> searchDeletedPurchases(){
-
         return db.query(SQL_SEARCH_ALL_DELETED, deletedPurchaseRowMapper);
     }
 
-    public Purchase searchPurchaseById(long id) {
+    public Purchase searchPurchaseById(long id) throws IllegalArgumentException, DataAccessException, NullPointerException{
         if(id == 0) {
             ContextListener.log.error("Id must be separate from 0, Id is : " + id, new IllegalArgumentException());
             throw new IllegalArgumentException("Id must be separate from 0, Id is : " + id);
@@ -107,7 +122,7 @@ public class PurchaseDAO implements PurchaseDAOInterface {
         }
     }
 
-    public List<Purchase> searchPurchaseByName(String product_name) {
+    public List<Purchase> searchPurchaseByName(String product_name) throws IllegalArgumentException{
         if(product_name == null) {
             ContextListener.log.error("Purchase name cannot be null.", new IllegalArgumentException(product_name));
             throw new IllegalArgumentException(product_name);
@@ -116,7 +131,7 @@ public class PurchaseDAO implements PurchaseDAOInterface {
         return db.query(SQL_SEARCH_BY_PRODUCT_NAME, purchaseRowMapper, product_name + "%");
     }
 
-    public List<Purchase> searchPurchaseByDistributorName(String name) {
+    public List<Purchase> searchPurchaseByDistributorName(String name) throws IllegalArgumentException{
         if(name == null) {
             ContextListener.log.error("Distributor name cannot be null.", new IllegalArgumentException(name));
             throw new IllegalArgumentException(name);
@@ -125,7 +140,7 @@ public class PurchaseDAO implements PurchaseDAOInterface {
         return db.query(SQL_SEARCH_BY_DISTRIBUTOR, purchaseRowMapper, name + "%");
     }
 
-    public List<Purchase> searchPurchaseByManufacturerName(String name) {
+    public List<Purchase> searchPurchaseByManufacturerName(String name) throws IllegalArgumentException{
         if(name == null){
             ContextListener.log.error("Manufacturer name cannot be null.", new IllegalArgumentException(name));
             throw new IllegalArgumentException(name);
@@ -134,7 +149,7 @@ public class PurchaseDAO implements PurchaseDAOInterface {
         return db.query(SQL_SEARCH_BY_MANUFACTURER, purchaseRowMapper, name + "%");
     }
 
-    public List<Purchase> searchPurchaseByType(String type) {
+    public List<Purchase> searchPurchaseByType(String type) throws IllegalArgumentException{
         if(type == null){
             ContextListener.log.error("Purchase type cannot be null.", new IllegalArgumentException(type));
             throw new IllegalArgumentException(type);
@@ -149,7 +164,21 @@ public class PurchaseDAO implements PurchaseDAOInterface {
 
     @Override
     @Transactional
-    public void editPurchase(final Purchase pur, final String userName, final long manufacturerId, final long distributorId) {
+    public void editPurchase(final Purchase pur, final String userName, final long manufacturerId, final long distributorId) throws IllegalArgumentException, DataAccessException, NullPointerException{
+        if (pur == null){
+            ContextListener.log.error("Purchase cannot be null.", new IllegalArgumentException());
+            throw new IllegalArgumentException();
+        } else if (userName == null){
+            ContextListener.log.error("userName cannot be null.", new IllegalArgumentException());
+            throw new IllegalArgumentException();
+        } else if (manufacturerId == 0){
+            ContextListener.log.error("Manufacturer id must be higher than 0.", new IllegalArgumentException());
+            throw new IllegalArgumentException();
+        } else if (distributorId == 0){
+            ContextListener.log.error("Distributor id must be higher than 0.", new IllegalArgumentException());
+            throw new IllegalArgumentException();
+        }
+
         final Purchase oldPur = searchPurchaseById(pur.getPurchaseId());
 
         StringBuilder sb = new StringBuilder();
@@ -200,8 +229,7 @@ public class PurchaseDAO implements PurchaseDAOInterface {
         });
     }
 
-    public DeletedPurchase searchDeletedPurchaseById(long id)
-    {
+    public DeletedPurchase searchDeletedPurchaseById(long id) throws IllegalArgumentException, DataAccessException, NullPointerException{
         if(id == 0) {
             ContextListener.log.error("Id must be separate from 0, Id is : " + id, new IllegalArgumentException());
             throw new IllegalArgumentException("Id must be separate from 0, Id is : " + id);
@@ -217,8 +245,7 @@ public class PurchaseDAO implements PurchaseDAOInterface {
         }
     }
 
-    public List<DeletedPurchase> searchDeletedPurchaseByName(String name)
-    {
+    public List<DeletedPurchase> searchDeletedPurchaseByName(String name) throws IllegalArgumentException{
         if(name == null) {
             ContextListener.log.error("Name must not be null: ", new IllegalArgumentException());
             throw new IllegalArgumentException("Name must not be null! ");

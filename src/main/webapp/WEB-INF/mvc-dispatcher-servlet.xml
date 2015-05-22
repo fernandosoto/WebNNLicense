@@ -32,6 +32,7 @@
 
     <bean id="purchaseRowMapper" class="Backend.rowMapper.PurchaseRowMapper"/>
     <bean id="manufacturerRowMapper" class="Backend.rowMapper.ManufacturerRowMapper"/>
+    <bean id="distributorRowMapper" class="Backend.rowMapper.DistributorRowMapper"/>
     <bean id="deletedPurchaseRowMapper" class="Backend.rowMapper.DeletedPurchaseRowMapper"/>
     <bean id="deletedLicenseRowMapper" class="Backend.rowMapper.DeletedLicenseRowMapper"/>
     <bean id="licenseRowMapper" class="Backend.rowMapper.LicenseRowMapper"/>

@@ -90,6 +90,9 @@ public class LicenseDAOTest {
         l1.setSerialKey("dsadf234");
         l1.setExpireDate(new Date(20150513));
 
+        expectedLicense = new ArrayList<License>();
+        expectedLicense.add(l1);
+
         dl1 = new DeletedLicense(40, null, "345345", 38, new Date(20150513), 1, "Kalle", new Date(20150518));
         expectedDeleted = new ArrayList<DeletedLicense>();
         expectedDeleted.add(dl1);
@@ -97,56 +100,56 @@ public class LicenseDAOTest {
 
 
     @Test
-    public void searchDeletedTest() throws Exception {
-        when(jdbcTemplate.query(ldao.SQL_SEARCH_DELETED_LICENSE, deletedLicenseRowMapper)).thenReturn(expectedDeleted);
+    public void searchDeletedTest(){
+        when(jdbcTemplate.query(ldao.SQL_SEARCH_DELETED_LICENSE, deletedLicenseRowMapper))
+                .thenReturn(expectedDeleted);
         assertEquals(expectedDeleted, ldao.searchDeletedLicenses());
     }
 
+    @Test
+    public void searchByUserDAOTest(){
+        when(jdbcTemplate.query(ldao.SQL_SEARCH_LICENSE_BY_USER,licenseRowMapper,expectedLicense.get(0).getUser()))
+                .thenReturn(expectedLicense);
 
-//    @Test
-//    public void searchDAOTest()throws Exception{
-//        System.out.println(expected.get(0).getProductName());
-//        when(jdbcTemplate.query(pdao.SQL_SEARCH_BY_PRODUCT_NAME, purchaseRowMapper, expected.get(0).getProductName()+"%")).thenReturn(expected);
-//        assertEquals(expected, pdao.searchPurchaseByName(p1.getProductName()));
-//    }
+        assertEquals(expectedLicense,ldao.searchLicenseByUser(expectedLicense.get(0).getUser()));
+    }
 
-//    @Test(expected = DataAccessException.class)
-//    public void searchNameDAOAccessExceptionTest()throws Exception{
-//        when(jdbcTemplate.query(pdao.SQL_SEARCH_BY_PRODUCT_NAME,purchaseRowMapper,p1.getProductName()+"%")).thenThrow(mock(DataAccessException.class));
-//
-//        pdao.searchPurchaseByName(p1.getProductName());
-//    }
-//
-//    @Test(expected = Exception.class)
-//    public void searchNameDAONameExceptionTest()throws Exception{
-//        when(jdbcTemplate.query(pdao.SQL_SEARCH_BY_PRODUCT_NAME,purchaseRowMapper,null)).thenThrow(mock(Exception.class));
-//
-//        pdao.searchPurchaseByName(null);
-//    }
-//
-//    @Test
-//    public void searchByIdTest(){
-//        when(jdbcTemplate.query(pdao.SQL_SEARCH_BY_ID, purchaseRowMapper, expected.get(0).getPurchaseId())).thenReturn(expected);
-//
-//        assertEquals(expected.get(0), pdao.searchPurchaseById(expected.get(0).getPurchaseId()));
-//    }
-//
-//    @Test
-//    public void searchByDistributor(){
-//        when(jdbcTemplate.query(pdao.SQL_SEARCH_BY_DISTRIBUTOR,purchaseRowMapper,expected.get(0).getDistributorName()+"%")).thenReturn(expected);
-//
-//        assertEquals(expected, pdao.searchPurchaseByDistributorName(expected.get(0).getDistributorName()));
-//    }
-//
-//    @Test
-//    public void searchByManufacturer(){
-//        when(jdbcTemplate.query(pdao.SQL_SEARCH_BY_MANUFACTURER,purchaseRowMapper,expected.get(0).getManufacturerName()+"%")).thenReturn(expected);
-//
-//        assertEquals(expected,pdao.searchPurchaseByManufacturerName(expected.get(0).getManufacturerName()));
-//    }
+    @Test(expected = IllegalArgumentException.class)
+    public void searchByUserDAOExceptionTest(){
+        ldao.searchLicenseByUser(null);
+    }
+
+    @Test
+    public void searchByPurchaseDAOTest(){
+        Purchase p  = new Purchase();
+        p.setPurchaseId(1);
+        p.setProductName("XP");
+        p.setCreatedDate(new Date(System.currentTimeMillis()));
+        p.setDistributorName("Komplett");
+        p.setManufacturerName("Microsoft");
+        p.setType("os");
+        p.setFreeText("Bra grejer");
+
+        when(jdbcTemplate.query(ldao.SQL_SEARCH_LICENSE_BY_PURCHASE,licenseRowMapper,p.getPurchaseId())).thenReturn(expectedLicense);
+
+        assertEquals(expectedLicense, ldao.searchLicenseByPurchase(p));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void searchByPurchaseDAOExceptionTest(){
+        ldao.searchLicenseByPurchase(null);
+    }
 
 
+    @Test
+    public void searchByIdDAOTest(){
+        when(jdbcTemplate.query(ldao.SQL_SEARCH_LICENSE_BY_ID,licenseRowMapper,expectedLicense.get(0).getLicenseId())).thenReturn(expectedLicense);
 
+        assertEquals(expectedLicense.get(0),ldao.searchLicenseById(expectedLicense.get(0).getLicenseId()));
+    }
 
-
+    @Test(expected = IllegalArgumentException.class)
+    public void searchByIdDAOExceptionTest(){
+        ldao.searchLicenseById(0);
+    }
 }
