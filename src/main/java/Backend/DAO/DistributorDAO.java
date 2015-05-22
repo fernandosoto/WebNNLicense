@@ -101,7 +101,7 @@ public class DistributorDAO implements DistributorDAOInterface {
             ContextListener.log.error("name cannot be null.", new IllegalArgumentException());
             throw new IllegalArgumentException();
         }
-        return db.query(SQL_SEARCH_DISTRIBUTOR_BY_NAME, dRowMapper, name);
+        return db.query(SQL_SEARCH_DISTRIBUTOR_BY_NAME, dRowMapper, name+"%");
     }
 
     @Override
