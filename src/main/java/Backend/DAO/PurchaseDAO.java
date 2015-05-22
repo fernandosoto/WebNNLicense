@@ -223,7 +223,7 @@ public class PurchaseDAO implements PurchaseDAOInterface {
             ContextListener.log.error("Name must not be null: ", new IllegalArgumentException());
             throw new IllegalArgumentException("Name must not be null! ");
         }
-        return db.query(SQL_SEARCH_DELETED_BY_NAME,deletedPurchaseRowMapper, name);
+        return db.query(SQL_SEARCH_DELETED_BY_NAME,deletedPurchaseRowMapper, name+"%");
     }
 
     public long getUpgradedFrom(long newPurchaseId){
