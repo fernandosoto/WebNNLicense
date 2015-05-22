@@ -32,5 +32,7 @@ public interface PurchaseDAOInterface {
 
     void editPurchase(Purchase pur, String userName, long manufacturerId, long distributorId);
 
+    DeletedPurchase searchDeletedPurchaseByName(String name);
+
    // void setDataSource(DataSource dataSource);
 }
