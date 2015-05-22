@@ -85,27 +85,25 @@ public class ManufacturerDAOTest {
     }
 
     @Test
-    public void shouldSearchManufacturerById() throws Exception{
-        when(jdbcTemplate.query(mDAO.SQL_SEARCH_BY_MANUFACTURER_ID,manufacturerRowMapper,(long) 1)).thenReturn(mList);
+    public void shouldSearchManufacturerById(){
+        when(jdbcTemplate.query(mDAO.SQL_SEARCH_BY_MANUFACTURER_ID,manufacturerRowMapper, (long) 1)).thenReturn(mList);
         assertEquals(mList.get(0), mDAO.searchManufacturerById((long) 1));
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
-    public void shouldReturnANull() throws Exception{
-        when(jdbcTemplate.query(mDAO.SQL_SEARCH_BY_MANUFACTURER_ID, manufacturerRowMapper, m3.getId())).thenThrow(mock(IndexOutOfBoundsException.class));
-        mDAO.searchManufacturerById(m3.getId());
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldReturnExceptionManufacturerById(){
+        mDAO.searchManufacturerById(0);
     }
 
     @Test
-    public void shouldReturnManufacturerByNameQuery() throws Exception{
+    public void shouldReturnManufacturerByNameQuery(){
         when(jdbcTemplate.query(mDAO.SQL_SEARCH_BY_MANUFACTURER_NAME,manufacturerRowMapper, mList.get(0).getName()+"%")).thenReturn(mList);
         assertEquals(mList, mDAO.searchManufacturerByName(mList.get(0).getName()));
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
-    public void shouldNotReturnManufacturerByName() throws Exception{
-        when(jdbcTemplate.query(mDAO.SQL_SEARCH_BY_MANUFACTURER_NAME, manufacturerRowMapper, m4.getName()+"%")).thenThrow(mock(IndexOutOfBoundsException.class));
-        mDAO.searchManufacturerByName(m4.getName());
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldReturnExceptionManufacturerByName(){
+        mDAO.searchManufacturerByName(null);
     }
 
 

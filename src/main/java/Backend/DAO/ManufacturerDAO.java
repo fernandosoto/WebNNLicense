@@ -54,7 +54,7 @@ public class ManufacturerDAO implements ManufacturerDAOInterface {
     }
 
     @Override
-    public Manufacturer searchManufacturerById(final long id) throws IllegalArgumentException, DataAccessException, NullPointerException{
+    public Manufacturer searchManufacturerById(long id) throws IllegalArgumentException, DataAccessException, NullPointerException{
         if (id == 0){
             ContextListener.log.error("id must be higher then 0, id is : " + id, new IllegalArgumentException());
             throw new IllegalArgumentException();
