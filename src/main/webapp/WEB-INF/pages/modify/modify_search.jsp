@@ -45,7 +45,7 @@
 		<section class="top">	
 			<div class="wrapper content_header clearfix">
 
-				<h1 class="title">Modify - Search</h1>
+				<h1 class="title">Modify / Search</h1>
 			</div>		
 		</section><!-- end top -->
 

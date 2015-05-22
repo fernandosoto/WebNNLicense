@@ -63,6 +63,7 @@
 											<form:option value="NONE" label="--- Select purchase ---" disabled="true"/>
 											<form:options items="${purchases}" itemValue="purchaseId" itemLabel="productName"/>
 										</form:select>
+									</li>
 								<li><br><input type="submit" value="Details"/> <a href="/search_inner" ><input type="button" value="New search"></a> </li>
 								</ul>
 							</nav><!-- end navigation menu -->

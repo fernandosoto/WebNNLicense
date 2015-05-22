@@ -80,7 +80,7 @@ public class SearchForm {
             this.serialKey=serialKey;
             this.productName=productName;
             this.expireDate=expireDate;
-            label = getSerialKey()+" "+getProductName()+" "+getExpireDate();
+            label = "Serial key: "+getSerialKey()+"  Product name: "+getProductName()+" Expire date: "+getExpireDate();
         }
 
         public String getSerialKey() {return serialKey;}

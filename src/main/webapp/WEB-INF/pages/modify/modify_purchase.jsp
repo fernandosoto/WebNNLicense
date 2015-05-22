@@ -59,17 +59,18 @@
 								<ul>
 									<div align="right">
 										<li><br>Product name: <form:input path="purchase.productName" value="${purchase.productName}" type="text" maxlength="50"/></li>
-										<li><br>Manufacturer Name:
+										<li><br><div style="color:crimson; font-size: 12pt"> *</div> Manufacturer Name:
 											<form:select path="manufacturer.id" title="Select manufacturer">
-												<form:option value="NONE" label="-- Select new manufacturer --"/>
+												<form:option value="NONE" label="--- Select manufacturer ---"/>
 												<form:options items="${manufacturers}" itemValue="id" itemLabel="name"/>
 											</form:select>
+
 											<br><div style="color:crimson; font-size: 8pt">Current manufacturer: <form:input path="purchase.manufacturerName" value="${purchase.manufacturerName}" readonly="true" cssStyle="border: hidden"/></div>
 										</li>
-										<li><br>Distributor Name:
+										<li><br><div style="color:crimson; font-size: 12pt"> *</div> Distributor Name:
 											<form:select path="distributor.id" value="${purchase.distributorName}" title="Select distributor">
-												<form:option value="NONE" label="--- Select new distributor ---"/>
-												<form:options items="${distributors}" itemValue="id" itemLabel="name"/>
+												<form:option value="NONE" label="--- Select distributor ---"/>
+												<form:options items="${distributors}" itemValue="id" itemLabel="name" />
 											</form:select>
 											<br><div style="color:crimson; font-size: 8pt">Current distributor: <form:input path="purchase.distributorName" value="${purchase.manufacturerName}" readonly="true" cssStyle="border: hidden"/></div>
 
@@ -78,8 +79,9 @@
 										<li><br>Created by: <form:input path="purchase.createdBy" value="${purchase.createdBy}" readonly="true" cssStyle="border: hidden"/></li>
 										<li><br>Created date: <form:input path="date" value="${date}" readonly="true" cssStyle="border: hidden"/></li>
 										<li><br>Comments: <form:textarea path="purchase.freeText" value="${purchase.freeText}" rows="5" cols="80" maxlength="300"/></li>
-										<li><br>New expire date: <form:input path="expireDate" type="date" /></li>
-										<li><br>License key separator: <form:input path="keySeparator" type="text"/></li>
+										<li><br><hr> Optional: New license keys<br><hr></li>
+										<li><br><div style="color:crimson; font-size: 12pt"> *</div> New expire date: <form:input path="expireDate" type="date" /></li>
+										<li><br><div style="color:crimson; font-size: 12pt"> *</div> License key separator: <form:input path="keySeparator" type="text"/></li>
 										<li><br>New serial keys: <form:textarea path="newSerialKeys" rows="5" cols="80"/></li>
 									</div>
 									<li><br><input type="submit"  value="Modify"/></li>

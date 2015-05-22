@@ -66,8 +66,8 @@
 								<li><br>Deleted by: <form:input path="deletedBy" value="${deletedBy}" readonly="true" cssStyle="border: hidden"/></li>
 								<li><br>Deleted date: <form:input path="deletedDate" value="${deletedDate}" readonly="true" cssStyle="border: hidden"/></li>
 							</div>
-							<li><br>Comments:<br><form:textarea path="purchase.freeText" value="${purchase.freeText}" readonly="true" title="Comments" size="6" style="width: 400px; height: 100px; background-color:#f6f6f6;"/></li>
-							<li><br>Serial Keys:<br><form:select path="" title="Licenses" size="6" style="width: 400px; background-color:#f6f6f6;" multiple="true">
+							<li><br>Comments:<br><form:textarea path="purchase.freeText" value="${purchase.freeText}" readonly="true" title="Comments" size="6" style="width: 600px; height: 100px; background-color:#f6f6f6;"/></li>
+							<li><br>Serial Keys:<br><form:select path="" title="Licenses" size="6" style="width: 600px; background-color:#f6f6f6;" multiple="true">
 								<form:options items="${licenses}" title="Available licenses"/>
 							</form:select></li>
 							<li><br><input type="button"  onClick="window.print()"  value="Print details"/></li>

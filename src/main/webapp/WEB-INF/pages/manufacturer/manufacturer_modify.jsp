@@ -57,9 +57,9 @@
 					<nav>
 						<ul>
 							<li>Available manufacturers</li>
-							<li><form:select path="manufacturer.id" title="Select manufacturer" style="width: 550px; height: 200px" multiple="True" >
+							<li><form:select path="manufacturer.id" title="Select manufacturer" size="8" style="width: 550px;">
 								<form:option value="NONE" label="--- Select ---" disabled="true"/>
-								<form:options items="${manufacturers}" itemValue="id" itemLabel="name"/>
+								<form:options items="${manufacturers}" itemValue="id" itemLabel="name" selected="selected"/>
 							</form:select>
 							</li>
 							<li><br><input type="submit" value="Modify"/></li>

@@ -26,7 +26,7 @@ public class DistributorForm {
         this.radioButtonSelect = radioButtonSelect;
     }
 
-    public Distributor getManufacturerById(List<Distributor> distributors, long id) {
+    public Distributor getDistributorById(List<Distributor> distributors, long id) {
 
         for(Distributor d: distributors) {
             if(d.getId() == id) {
