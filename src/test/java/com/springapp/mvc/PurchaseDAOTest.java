@@ -119,7 +119,7 @@ public class PurchaseDAOTest {
 
 
     @Test
-    public void searchByNameDAOTest()throws Exception{
+    public void searchByNameDAOTest(){
         when(jdbcTemplate.query(pdao.SQL_SEARCH_BY_PRODUCT_NAME, purchaseRowMapper, expected.get(0).getProductName()+"%")).thenReturn(expected);
 
         assertEquals(expected, pdao.searchPurchaseByName(p1.getProductName()));
@@ -134,7 +134,6 @@ public class PurchaseDAOTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void searchByNameDAONameExceptionTest(){
-        when(jdbcTemplate.query(pdao.SQL_SEARCH_BY_PRODUCT_NAME,purchaseRowMapper,null)).thenThrow(mock(IllegalArgumentException.class));
 
         pdao.searchPurchaseByName(null);
     }
@@ -148,7 +147,6 @@ public class PurchaseDAOTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void searchByIdExceptionTest(){
-        when(jdbcTemplate.query(pdao.SQL_SEARCH_BY_ID,purchaseRowMapper,0)).thenThrow(mock(IllegalArgumentException.class));
 
         pdao.searchPurchaseById(0);
     }
@@ -162,7 +160,6 @@ public class PurchaseDAOTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void searchDistributorDAOExceptionTest(){
-        when(jdbcTemplate.query(pdao.SQL_SEARCH_BY_DISTRIBUTOR,purchaseRowMapper,null)).thenThrow(mock(IllegalArgumentException.class));
 
         pdao.searchPurchaseByDistributorName(null);
     }
@@ -176,7 +173,6 @@ public class PurchaseDAOTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void searchByManufacturerDAOExceptionTest(){
-        when(jdbcTemplate.query(pdao.SQL_SEARCH_BY_MANUFACTURER,purchaseRowMapper,null)).thenThrow(mock(IllegalArgumentException.class));
 
         pdao.searchPurchaseByManufacturerName(null);
     }
@@ -190,7 +186,6 @@ public class PurchaseDAOTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void searchByTypeDAOExceptionTest(){
-        when(jdbcTemplate.query(pdao.SQL_SEARCH_BY_TYPE,purchaseRowMapper,null)).thenThrow(mock(IllegalArgumentException.class));
 
         pdao.searchPurchaseByType(null);
     }
@@ -200,6 +195,11 @@ public class PurchaseDAOTest {
         when(jdbcTemplate.query(pdao.SQL_SEARCH_ALL_DELETED,deletedPurchaseRowMapper)).thenReturn(dpExpected);
 
         assertEquals(dpExpected,pdao.searchDeletedPurchases());
+    }
+
+    @Test
+    public void searchDeletedByNameDAOTest(){
+
     }
 
 

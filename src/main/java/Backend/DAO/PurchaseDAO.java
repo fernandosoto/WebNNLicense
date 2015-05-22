@@ -217,21 +217,13 @@ public class PurchaseDAO implements PurchaseDAOInterface {
         }
     }
 
-    public DeletedPurchase searchDeletedPurchaseByName(String name)
+    public List<DeletedPurchase> searchDeletedPurchaseByName(String name)
     {
         if(name == null) {
             ContextListener.log.error("Name must not be null: ", new IllegalArgumentException());
             throw new IllegalArgumentException("Name must not be null! ");
         }
-        try {
-            return (DeletedPurchase) db.query(SQL_SEARCH_DELETED_BY_NAME,deletedPurchaseRowMapper, name).get(0);
-        } catch (DataAccessException e){
-            ContextListener.log.error("DataAccessException, probably database connection error.", e);
-            throw e;
-        } catch (NullPointerException e){
-            ContextListener.log.error("searchPurchaseById returned empty list with name : " + name, e);
-            throw e;
-        }
+        return db.query(SQL_SEARCH_DELETED_BY_NAME,deletedPurchaseRowMapper, name);
     }
 
     public long getUpgradedFrom(long newPurchaseId){
