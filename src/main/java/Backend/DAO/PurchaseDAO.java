@@ -217,7 +217,24 @@ public class PurchaseDAO implements PurchaseDAOInterface {
         }
     }
 
-    public long getUpgradedFrom(long newPurchaseId) {
+    public DeletedPurchase searchDeletedPurchaseByName(String name)
+    {
+        if(name == null) {
+            ContextListener.log.error("Name must not be null: ", new IllegalArgumentException());
+            throw new IllegalArgumentException("Name must not be null! ");
+        }
+        try {
+            return (DeletedPurchase) db.query(SQL_SEARCH_DELETED_BY_NAME,deletedPurchaseRowMapper, name).get(0);
+        } catch (DataAccessException e){
+            ContextListener.log.error("DataAccessException, probably database connection error.", e);
+            throw e;
+        } catch (NullPointerException e){
+            ContextListener.log.error("searchPurchaseById returned empty list with name : " + name, e);
+            throw e;
+        }
+    }
+
+    public long getUpgradedFrom(long newPurchaseId){
         long id;
         try {
             id = db.queryForLong("SELECT ORIGINAL_PURCHASE_ID FROM UPGRADED_PURCHASE WHERE NEW_PURCHASE_ID = " + newPurchaseId + ";");
@@ -303,6 +320,16 @@ public class PurchaseDAO implements PurchaseDAOInterface {
             "JOIN DELETED_PURCHASE DP ON DP.D_PURCHASE_ID=P.PURCHASE_ID " +
             "LEFT OUTER JOIN UPGRADED_PURCHASE UP ON UP.NEW_PURCHASE_ID = P.PURCHASE_ID "+
             "WHERE P.PURCHASE_ID = ?";
+
+    public static final String SQL_SEARCH_DELETED_BY_NAME = "SELECT P.PURCHASE_ID, P.PRODUCT_NAME, P.LICENSE_TYPE, P.FREE_TEXT, D.DISTRIBUTOR_NAME, M.MANUFACTURER_NAME, CR.CREATED_BY,CR.CREATED_DATE, UP.ORIGINAL_PURCHASE_ID" +
+            ", DP.DELETED_PURCHASE_ID, DP.DELETED_BY, DP.DELETED_DATE " +
+            "FROM PURCHASE P " +
+            "JOIN MANUFACTURER M ON M.MANUFACTURER_ID = P.MANUFACTURER_ID " +
+            "JOIN DISTRIBUTOR D ON D.DISTRIBUTOR_ID = P.DISTRIBUTOR_ID " +
+            "JOIN CREATOR CR ON CR.C_PURCHASE_ID = P.PURCHASE_ID " +
+            "JOIN DELETED_PURCHASE DP ON DP.D_PURCHASE_ID=P.PURCHASE_ID " +
+            "LEFT OUTER JOIN UPGRADED_PURCHASE UP ON UP.NEW_PURCHASE_ID = P.PURCHASE_ID "+
+            "WHERE P.PRODUCT_NAME LIKE ?";
 
     public static final String SQL_INSERT_INTO_MODIFY_PURCHASE_TABLE = "INSERT INTO MODIFY_PURCHASE(MODIFIED_BY, MODIFY_DATE, M_PURCHASE_ID, FREE_TEXT) VALUES(?, ?, ?, ?)";
 }
