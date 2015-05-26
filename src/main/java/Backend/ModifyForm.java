@@ -93,6 +93,7 @@ public class ModifyForm {
     }
 
     public List<LicenseKey> getLicenseKeyList(List<License> licenses){
+        licenseKeys.clear();
         for(License l : licenses) {
             licenseKeys.add(new LicenseKey(l.getLicenseId(),l.getSerialKey(),l.getExpireDate(),l.getUser(),l.getPurchaseId(),l.getDeleteDate(),l.getDeletedBy()));
             //Long licenseId, String serialKey, Date expireDate, String user, long purchaseId,Date deleteDate,String deletedBy
@@ -136,6 +137,7 @@ public class ModifyForm {
     public List<License> getSerialKeysWithSeparatedLicenses(){
 
         List<License> licenses = new ArrayList<License>();
+        licenses.clear();
         int year = Integer.parseInt(getExpireDate().substring(0, 4));
         int month = (Integer.parseInt(getExpireDate().substring(5, 7)) - 1); // months: 0(jan), 11(dec)
         int day = Integer.parseInt(getExpireDate().substring(8, 10));

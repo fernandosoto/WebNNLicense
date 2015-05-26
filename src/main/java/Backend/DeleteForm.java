@@ -48,6 +48,7 @@ public class DeleteForm {
 
     public List<String> LicenseDetailToString(List<License> licenses){
         List<String> licenseDetails = new ArrayList<String>();
+        licenseDetails.clear();
         for(License l : licenses){
             licenseDetails.add(l.getSerialKey() +" User: " + l.getUser() + " Expire date: "+ l.getExpireDate());
         }
@@ -68,6 +69,7 @@ public class DeleteForm {
     }
 
     public List<LicenseKey> getLicenseKeyList(List<License> licenses){
+        licenseKeys.clear();
         for(License l : licenses) {
             licenseKeys.add(new LicenseKey(l.getLicenseId(),l.getSerialKey(),l.getExpireDate(),l.getUser(),l.getPurchaseId(),l.getDeleteDate(),l.getDeletedBy()));
             //Long licenseId, String serialKey, Date expireDate, String user, long purchaseId,Date deleteDate,String deletedBy

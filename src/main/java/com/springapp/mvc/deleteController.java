@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,7 +28,7 @@ public class deleteController {
     @Autowired
     private LicenseDAOInterface ldao;
     private DeleteForm deleteForm = new DeleteForm();
-    private List<License> dbLicenses;
+    private List<License> dbLicenses = new ArrayList<License>();
 
 
     @RequestMapping(value = "/delete_inner",method = RequestMethod.GET)
@@ -113,8 +114,8 @@ public class deleteController {
     @RequestMapping(value = "/delete_licenseKey_details",method = RequestMethod.GET)
     public String deleteLicenseKeyDetails(ModelMap model)
     {
+        dbLicenses.clear();
         List<License> dbLicenses = ldao.searchLicenseByPurchase(deleteForm.getPurchase());
-        List<String> licenses = deleteForm.LicenseDetailToString(dbLicenses);
 
         model.addAttribute("licenses", deleteForm.getLicenseKeyList(dbLicenses));
         model.addAttribute("deleteForm",deleteForm);

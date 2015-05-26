@@ -179,9 +179,9 @@ public class modifyController {
         pdao.editPurchase(newPurchase, User.getLoggedInUser(), modifyForm.getManufacturer().getId(), modifyForm.getDistributor().getId());
 
         if(modifyForm.getNewSerialKeys().length()!=0) {
-            List<License> licenses;
+            List<License> licenses = new ArrayList<License>();
+            licenses.clear();
             licenses = modifyForm.getSerialKeysWithSeparatedLicenses();
-
             for (License L : licenses) {
                 L.setPurchaseId(this.modifyForm.getPurchase().getPurchaseId());
                 ldao.addLicense(L);
