@@ -23,6 +23,8 @@ import java.util.List;
  */
 public class DistributorDAO implements DistributorDAOInterface {
     private DataSource dataSource;
+
+    @Autowired
     private JdbcTemplate db;
 
     @Autowired
@@ -52,21 +54,7 @@ public class DistributorDAO implements DistributorDAOInterface {
     }
 
     @Override
-    public Distributor searchDistributorById(final long id) throws IllegalArgumentException, DataAccessException, NullPointerException{
-//        return db.query(new PreparedStatementCreator() {
-//            @Override
-//            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-//                PreparedStatement ps = connection.prepareStatement(SQL_SEARCH_DISTRIBUTOR_BY_ID);
-//                ps.setLong(1, id);
-//                return ps;
-//            }
-//        }, new RowMapper<Distributor>() {
-//            @Override
-//            public Distributor mapRow(ResultSet rs, int i) throws SQLException {
-//                return new Distributor(rs.getLong("DISTRIBUTOR_ID"), rs.getString("DISTRIBUTOR_NAME"), rs.getString("FREE_TEXT"));
-//            }
-//        }).get(0);
-
+    public Distributor searchDistributorById(long id) throws IllegalArgumentException, DataAccessException, NullPointerException{
         if (id == 0){
             ContextListener.log.error("id must be higher then 0, id is : " + id, new IllegalArgumentException());
             throw new IllegalArgumentException();
@@ -83,20 +71,7 @@ public class DistributorDAO implements DistributorDAOInterface {
     }
 
     @Override
-    public List<Distributor> searchDistributorByName(final String name) throws IllegalArgumentException{
-//        return db.query(new PreparedStatementCreator() {
-//            @Override
-//            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-//                PreparedStatement ps = connection.prepareStatement(SQL_SEARCH_DISTRIBUTOR_BY_NAME);
-//                ps.setString(1, name + "%");
-//                return ps;
-//            }
-//        }, new RowMapper<Distributor>() {
-//            @Override
-//            public Distributor mapRow(ResultSet rs, int i) throws SQLException {
-//                return new Distributor(rs.getLong("DISTRIBUTOR_ID"), rs.getString("DISTRIBUTOR_NAME"), rs.getString("FREE_TEXT"));
-//            }
-//        });
+    public List<Distributor> searchDistributorByName(String name) throws IllegalArgumentException{
         if (name == null){
             ContextListener.log.error("name cannot be null.", new IllegalArgumentException());
             throw new IllegalArgumentException();

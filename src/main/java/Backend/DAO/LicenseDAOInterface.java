@@ -24,4 +24,6 @@ public interface LicenseDAOInterface {
     public void editLicense(License lic, String userName);
 
     void setDataSource(DataSource dataSource);
+
+    List<License> searchDeletedLicensesByPurchaseId(long id);
 }

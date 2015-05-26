@@ -27,7 +27,7 @@ import java.util.List;
  */
 @Service
 public class PurchaseDAO implements PurchaseDAOInterface {
-    public DataSource dataSource;
+    private DataSource dataSource;
 
     @Autowired
     public JdbcTemplate db;
@@ -351,4 +351,5 @@ public class PurchaseDAO implements PurchaseDAOInterface {
             "WHERE P.PRODUCT_NAME LIKE ?";
 
     public static final String SQL_INSERT_INTO_MODIFY_PURCHASE_TABLE = "INSERT INTO MODIFY_PURCHASE(MODIFIED_BY, MODIFY_DATE, M_PURCHASE_ID, FREE_TEXT) VALUES(?, ?, ?, ?)";
+
 }

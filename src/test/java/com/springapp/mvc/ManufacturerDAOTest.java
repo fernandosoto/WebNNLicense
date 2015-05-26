@@ -86,7 +86,7 @@ public class ManufacturerDAOTest {
 
     @Test
     public void shouldSearchManufacturerById(){
-        when(jdbcTemplate.query(mDAO.SQL_SEARCH_BY_MANUFACTURER_ID,manufacturerRowMapper, (long) 1)).thenReturn(mList);
+        when(jdbcTemplate.query(mDAO.SQL_SEARCH_BY_MANUFACTURER_ID,manufacturerRowMapper,(long) 1)).thenReturn(mList);
         assertEquals(mList.get(0), mDAO.searchManufacturerById((long) 1));
     }
 

@@ -21,6 +21,8 @@ import java.util.List;
  */
 public class LicenseDAO implements LicenseDAOInterface {
     private DataSource dataSource;
+
+    @Autowired
     private JdbcTemplate db;
 
     @Autowired
@@ -114,6 +116,14 @@ public class LicenseDAO implements LicenseDAOInterface {
         }
     }
 
+    public List<License> searchDeletedLicensesByPurchaseId(long id) throws IllegalArgumentException, DataAccessException, NullPointerException{
+        if (id == 0){
+            ContextListener.log.error("Id cannot be 0.", new IllegalArgumentException());
+            throw new IllegalArgumentException();
+        }
+        return db.query(SQL_SEARCH_DELETED_LICENSE_BY_PURCHASE_ID, licenseRowMapper, id);
+    }
+
     @Override
     @Transactional
     public void editLicense(final License lic, final String userName) throws IllegalArgumentException, DataAccessException, NullPointerException{
@@ -192,4 +202,9 @@ public class LicenseDAO implements LicenseDAOInterface {
     public static final String SQL_INSERT_INTO_MODIFY_TABLE = "INSERT INTO MODIFY(MODIFIED_BY, MODIFY_DATE, LICENS_KEY_ID, FREE_TEXT) VALUES(?, ?, ?, ?)";
     public static final String SQL_UPDATE_LICENSE_KEY = "UPDATE LICENSE_KEY SET LICENSE_USER = ?"+
             ", SERIAL_KEY = ? ,EXPIRE_DATE = ? WHERE LICENSE_KEY_ID = ?";
+
+    public static final String SQL_SEARCH_DELETED_LICENSE_BY_PURCHASE_ID = "SELECT L.* " +
+            "FROM LICENSE_KEY L " +
+            "JOIN DELETED_LICENSE DL ON DL.D_LICENSE_KEY_ID = L.LICENSE_KEY_ID " +
+            "WHERE L.PURCHASE_ID = ?";
 }
