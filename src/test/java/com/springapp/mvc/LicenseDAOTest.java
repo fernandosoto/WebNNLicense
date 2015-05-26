@@ -145,11 +145,25 @@ public class LicenseDAOTest {
     public void searchByIdDAOTest(){
         when(jdbcTemplate.query(ldao.SQL_SEARCH_LICENSE_BY_ID,licenseRowMapper,expectedLicense.get(0).getLicenseId())).thenReturn(expectedLicense);
 
-        assertEquals(expectedLicense.get(0),ldao.searchLicenseById(expectedLicense.get(0).getLicenseId()));
+        assertEquals(expectedLicense.get(0), ldao.searchLicenseById(expectedLicense.get(0).getLicenseId()));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void searchByIdDAOExceptionTest(){
         ldao.searchLicenseById(0);
+    }
+
+
+    @Test
+    public void searchByPurchaseIdForDeletedLicenses(){
+        when(jdbcTemplate.query(ldao.SQL_SEARCH_DELETED_LICENSE_BY_PURCHASE_ID,licenseRowMapper,expectedLicense.get(0).getPurchaseId()))
+                .thenReturn(expectedLicense);
+
+        ldao.searchDeletedLicensesByPurchaseId(expectedLicense.get(0).getPurchaseId());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void searchByPurchaseIdForDeletedLicensesIllegalArgumentException(){
+        ldao.searchDeletedLicensesByPurchaseId(0);
     }
 }

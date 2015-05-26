@@ -57,6 +57,8 @@ public class DistributorDAOTest {
                 .thenReturn(oneDistributor);
 
         assertEquals(oneDistributor.get(0), dDao.searchDistributorById(oneDistributor.get(0).getId()));
+
+        verify(jdbcTemplate,times(1)).query(dDao.SQL_SEARCH_DISTRIBUTOR_BY_ID, distributorRowMapper, oneDistributor.get(0).getId());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -84,6 +86,8 @@ public class DistributorDAOTest {
                 .thenReturn(allDistributor);
 
         assertEquals(allDistributor, dDao.searchDistributorByName(allDistributor.get(0).getName()));
+
+        verify(jdbcTemplate,times(1)).query(dDao.SQL_SEARCH_DISTRIBUTOR_BY_NAME,distributorRowMapper,allDistributor.get(0).getName()+"%");
     }
 
     @Test(expected = IllegalArgumentException.class)

@@ -28,9 +28,11 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.mockito.Mockito.*;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -88,6 +90,7 @@ public class ManufacturerDAOTest {
     public void shouldSearchManufacturerById(){
         when(jdbcTemplate.query(mDAO.SQL_SEARCH_BY_MANUFACTURER_ID,manufacturerRowMapper,(long) 1)).thenReturn(mList);
         assertEquals(mList.get(0), mDAO.searchManufacturerById((long) 1));
+        verify(jdbcTemplate, times(1)).query(mDAO.SQL_SEARCH_BY_MANUFACTURER_ID, manufacturerRowMapper, (long) 1);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -99,6 +102,7 @@ public class ManufacturerDAOTest {
     public void shouldReturnManufacturerByNameQuery(){
         when(jdbcTemplate.query(mDAO.SQL_SEARCH_BY_MANUFACTURER_NAME,manufacturerRowMapper, mList.get(0).getName()+"%")).thenReturn(mList);
         assertEquals(mList, mDAO.searchManufacturerByName(mList.get(0).getName()));
+        verify(jdbcTemplate, times(1)).query(mDAO.SQL_SEARCH_BY_MANUFACTURER_NAME,manufacturerRowMapper, mList.get(0).getName()+"%");
     }
 
     @Test(expected = IllegalArgumentException.class)
