@@ -58,20 +58,21 @@
 					<nav>
 						<ul>
 							<li><br>Product name: <form:input path="purchases.productName" type="text" maxlength="50"/></li>
-							<li><br>Manufacturer Name:
+							<li><br><div style="color:crimson; font-size: 12pt"> *</div>Manufacturer Name:
 								<form:select path="manufacturer.id" title="Select manufacturer">
 									<form:option value="NONE" label="--- Select ---"/>
 									<form:options items="${manufacturers}" itemValue="id" itemLabel="name"/>
 									</form:select>
 							</li>
-							<li><br>Distributor Name:
+							<li><br><div style="color:crimson; font-size: 12pt"> *</div>Distributor Name:
 								<form:select path="distributor.id" title="Select distributor">
 									<form:option value="NONE" label="--- Select ---"/>
 									<form:options items="${distributors}" itemValue="id" itemLabel="name"/>
 								</form:select>
 							</li>
-							<li><br>Expire date: <form:input path="date" type="date" /></li>
-							<li><br>License key separator: <form:input path="keySeparator" type="text"/></li>
+							<li><br><div style="color:crimson; font-size: 12pt"> *</div>
+								Expire date: <form:input path="date" type="date" /><div style="color:crimson; font-size: 8pt"> (yyyy-mm-dd)</div></li>
+							<li><br><div style="color:crimson; font-size: 12pt"> *</div>License key separator: <form:input path="keySeparator" type="text"/></li>
 							<li><br>License type: <form:input path="purchases.type" type="text" maxlength="50"/></li>
 							<li><br>Serial keys: <form:textarea path="serialKeys" rows="5" cols="80"/></li>
 							<li><br>Comments: <form:textarea path="purchases.freeText" rows="5" cols="80" maxlength="300"/></li>

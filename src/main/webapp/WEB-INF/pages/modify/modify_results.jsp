@@ -61,7 +61,7 @@
 									<li>
 										<form:select path="purchase.purchaseId" title="results" size="8" style="width: 300px;">
 											<form:option value="NONE" label="--- Select ---" disabled="true"/>
-											<form:options items="${purchases}" itemValue="purchaseId" itemLabel="productName" selected="selected"/>
+											<form:options items="${purchases}" itemValue="purchaseId" itemLabel="productName" selected="selected" ondblclick="onDbClickFunction()"/>
 										</form:select>
 								<li><br><input type="submit" value="Modify"/></li>
 								</ul>
@@ -70,6 +70,11 @@
 					</div>
 				</form:form>
 
+				<script>
+					function onDbClickFunction() {
+						document.forms["modifyForm"].submit();
+					}
+				</script>
 
 			</div><!-- end content -->
 		</section>

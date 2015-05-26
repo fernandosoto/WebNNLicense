@@ -31,7 +31,7 @@ public class searchController
     @Autowired
     private LicenseDAOInterface ldao;
     private SearchForm searchForm = new SearchForm();
-
+    private List<License> dbLicenses;
 
     @RequestMapping(value = "/search_inner",method = RequestMethod.GET)
     public String searchPurchaseByName(ModelMap model)
@@ -83,10 +83,12 @@ public class searchController
         Purchase purchase;
         if(this.searchForm.getRadioButtonSelect().equals("active")) {
             purchase = pdao.searchPurchaseById(searchForm.getPurchase().getPurchaseId());
+            dbLicenses = ldao.searchLicenseByPurchase(searchForm.getPurchase());
             this.searchForm.setDeletedBy("  -");
             this.searchForm.setDeletedDate("  -");
         }else{
             purchase = pdao.searchDeletedPurchaseById(searchForm.getPurchase().getPurchaseId());
+            dbLicenses = ldao.searchDeletedLicensesByPurchaseId(searchForm.getPurchase().getPurchaseId());
             this.searchForm.setDeletedBy(((DeletedPurchase) purchase).getDeletedBy());
             this.searchForm.setDeletedDate(((DeletedPurchase) purchase).getDeletedDate().toString());
         }
@@ -99,7 +101,6 @@ public class searchController
     @RequestMapping(value = "/search_details",method = RequestMethod.GET)
     public String searchDetails(ModelMap model)
     {
-        List<License> dbLicenses = ldao.searchLicenseByPurchase(searchForm.getPurchase());
         List<String> licenses = searchForm.LicenseDetailToString(dbLicenses);
         model.addAttribute("licenses", licenses);
         model.addAttribute("searchForm", searchForm);

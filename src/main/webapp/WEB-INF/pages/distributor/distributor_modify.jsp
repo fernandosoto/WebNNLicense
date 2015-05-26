@@ -59,13 +59,19 @@
 							<li>Available distributors</li>
 							<li><form:select path="distributor.id" title="Select distributor" size="8" style="width: 550px;">
 								<form:option value="NONE" label="--- Select ---" disabled="true"/>
-								<form:options items="${distributors}" itemValue="id" itemLabel="name" selected="selected"/>
+								<form:options items="${distributors}" itemValue="id" itemLabel="name" selected="selected" ondblclick="onDbClickFunction()"/>
 							</form:select>
 							</li>
 							<li><br><input type="submit" value="Modify"/></li>
 						</ul>
 					</nav><!-- end navigation menu -->
 				</form:form>
+
+				<script>
+					function onDbClickFunction() {
+						document.forms["distributorForm"].submit();
+					}
+				</script>
 
 			</div><!-- end content -->
 		</section>

@@ -166,8 +166,6 @@ public class modifyController {
         this.modifyForm.getPurchase().setFreeText(modifyForm.getPurchase().getFreeText());
         this.modifyForm.getPurchase().setType(modifyForm.getPurchase().getType());
 
-
-
         Purchase newPurchase = new Purchase(this.modifyForm.getPurchase().getPurchaseId(),
                 manufacturerDAO.searchManufacturerById(modifyForm.getManufacturer().getId()).getName(),
                 this.modifyForm.getPurchase().getProductName(),

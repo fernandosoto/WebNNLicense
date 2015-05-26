@@ -42,7 +42,7 @@ public class addController{
             L.setPurchaseId(purchaseID);
             licenseDao.addLicense(L);
         }
-        return "add/add_inner";
+        return "main/index";
     }
 
     private void getManufacturersAndDistributors(){

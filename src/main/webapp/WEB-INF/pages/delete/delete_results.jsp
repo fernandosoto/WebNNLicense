@@ -61,7 +61,7 @@
 									<li>
 										<form:select path="purchase.purchaseId" title="results" size="8" style="width: 300px;">
 											<form:option value="NONE" label="--- Select purchase ---" disabled="true"/>
-											<form:options items="${purchases}" itemValue="purchaseId" itemLabel="productName"/>
+											<form:options items="${purchases}" itemValue="purchaseId" itemLabel="productName" ondblclick="onDbClickFunction()"/>
 										</form:select>
 								<li><br><input type="submit" value="Details"/> <a href="/delete_details" ><input type="button" value="New search"></a> </li>
 								</ul>
@@ -70,6 +70,11 @@
 					</div>
 				</form:form>
 
+				<script>
+					function onDbClickFunction() {
+						document.forms["deleteForm"].submit();
+					}
+				</script>
 
 			</div><!-- end content -->
 		</section>
