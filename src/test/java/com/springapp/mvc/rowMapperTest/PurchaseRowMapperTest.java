@@ -34,6 +34,7 @@ public class PurchaseRowMapperTest {
 
     private static Purchase testPurchase;
 
+
     @Mock
     ResultSet resultSet;
 
