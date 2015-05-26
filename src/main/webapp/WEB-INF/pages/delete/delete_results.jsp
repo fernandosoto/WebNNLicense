@@ -61,9 +61,9 @@
 									<li>
 										<form:select path="purchase.purchaseId" title="results" size="8" style="width: 300px;">
 											<form:option value="NONE" label="--- Select purchase ---" disabled="true"/>
-											<form:options items="${purchases}" itemValue="purchaseId" itemLabel="productName" ondblclick="onDbClickFunction()"/>
+											<form:options items="${purchases}" itemValue="purchaseId" itemLabel="productName" selected="selected" ondblclick="onDbClickFunction()"/>
 										</form:select>
-								<li><br><input type="submit" value="Details"/> <a href="/delete_details" ><input type="button" value="New search"></a> </li>
+								<li><br><input type="submit" value="Details"/> </li>
 								</ul>
 							</nav><!-- end navigation menu -->
 						</fieldset>

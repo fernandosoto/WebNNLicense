@@ -37,7 +37,7 @@
 				<img src="../../../resources/NNLicenseTheme/Nordnet/img/search.jpg" class="media" alt=""/>
 				<div class="caption">
 					<div class="work_title">
-						<h1>Search product</h1>
+						<h1>Search purchase/license/user</h1>
 					</div>
 				</div>
 			</a>
@@ -48,7 +48,7 @@
 				<img src="../../../resources/NNLicenseTheme/Nordnet/img/addLicense.jpg" class="media" alt=""/>
 				<div class="caption">
 					<div class="work_title">
-						<h1>Add purchase</h1>
+						<h1>Add purchase + licenses</h1>
 					</div>
 				</div>
 			</a>
@@ -81,7 +81,7 @@
 				<img src="../../../resources/NNLicenseTheme/Nordnet/img/modifyLicense.jpg" class="media" alt=""/>
 				<div class="caption">
 					<div class="work_title">
-						<h1>Modify Purchase/Licenses</h1>
+						<h1>Modify purchase/license</h1>
 					</div>
 				</div>
 			</a>

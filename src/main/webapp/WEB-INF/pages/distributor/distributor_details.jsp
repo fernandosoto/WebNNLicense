@@ -58,7 +58,7 @@
 						<ul>
 							<li><br>Distributor name: <form:input path="distributor.name" value="${distributor.name}" type="text" maxlength="50"/></li>
 							<li><br>Comments: <form:textarea path="distributor.freeText" value="${distributor.freeText}" rows="5" cols="80" maxlength="300"/></li>
-							<li><br><input type="submit" value="Modify" />  <input type="reset" value="Clear"/></li>
+							<li><br><input type="submit" value="Modify" /></li>
 						</ul>
 					</nav><!-- end navigation menu -->
 				</form:form>

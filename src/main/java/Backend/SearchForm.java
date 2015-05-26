@@ -26,7 +26,7 @@ public class SearchForm {
     public List<String> LicenseDetailToString(List<License> licenses){
         List<String> licenseDetails = new ArrayList<String>();
         for(License l : licenses){
-            licenseDetails.add(l.getSerialKey() +" User: " + l.getUser() + " Expire date: "+ l.getExpireDate());
+            licenseDetails.add(l.getSerialKey() +" User: " + l.getUser() + " , Expire date: "+ l.getExpireDate());
         }
         return licenseDetails;
     }
@@ -80,7 +80,7 @@ public class SearchForm {
             this.serialKey=serialKey;
             this.productName=productName;
             this.expireDate=expireDate;
-            label = "Serial key: "+getSerialKey()+"  Product name: "+getProductName()+" Expire date: "+getExpireDate();
+            label = "Serial key: "+getSerialKey()+" ,  Product name: "+getProductName()+" , Expire date: "+getExpireDate();
         }
 
         public String getSerialKey() {return serialKey;}

@@ -36,7 +36,7 @@ public class distributorController {
     }
 
     @RequestMapping(value = "/distributor_inner",method = RequestMethod.POST)
-    public String modifyIndex(@ModelAttribute DistributorForm distributorForm,ModelMap model)
+    public String modifyIndex(@ModelAttribute DistributorForm distributorForm)
     {
         this.distributorForm.setRadioButtonSelect(distributorForm.getRadioButtonSelect());
         return "redirect:/"+distributorForm.getRadioButtonSelect();
@@ -52,7 +52,7 @@ public class distributorController {
     }
 
     @RequestMapping(value = "/distributor_add",method = RequestMethod.POST)
-    public String distributorAdd(@ModelAttribute DistributorForm distributorForm,ModelMap model)
+    public String distributorAdd(@ModelAttribute DistributorForm distributorForm)
     {
         if(distributorForm.getDistributor().getName().length()==0){
             return "redirect:/distributor_inner";
@@ -61,10 +61,6 @@ public class distributorController {
         distributorDAO.addDistributor(this.distributorForm.getDistributor());
         return "redirect:/distributor_inner";
     }
-
-
-
-
 
 
 
@@ -82,7 +78,7 @@ public class distributorController {
 
 
     @RequestMapping(value = "/distributor_modify",method = RequestMethod.POST)
-    public String distributorModify(@ModelAttribute DistributorForm distributorForm,ModelMap model)
+    public String distributorModify(@ModelAttribute DistributorForm distributorForm)
     {
         this.distributorForm.setDistributor(distributorForm.getDistributorById(distributors, distributorForm.getDistributor().getId()));
         return "redirect:/distributor_details";
@@ -98,7 +94,7 @@ public class distributorController {
 
 
     @RequestMapping(value = "/distributor_details",method = RequestMethod.POST)
-    public String distributorDetails(@ModelAttribute DistributorForm distributorForm,ModelMap model)
+    public String distributorDetails(@ModelAttribute DistributorForm distributorForm)
     {
         this.distributorForm.getDistributor().setName(distributorForm.getDistributor().getName());
         this.distributorForm.getDistributor().setFreeText(distributorForm.getDistributor().getFreeText());

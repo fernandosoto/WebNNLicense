@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class startController {
 
     @RequestMapping(value = "/index",method = RequestMethod.GET)
-    public String index(ModelMap model){
+    public String index(){
 
         return "main/index";
     }

@@ -33,7 +33,7 @@ public class manufacturerController {
     }
 
     @RequestMapping(value = "/manufacturer_inner",method = RequestMethod.POST)
-    public String modifyIndex(@ModelAttribute ManufacturerForm manufacturerForm,ModelMap model)
+    public String modifyIndex(@ModelAttribute ManufacturerForm manufacturerForm)
     {
         this.manufacturerForm.setRadioButtonSelect(manufacturerForm.getRadioButtonSelect());
         return "redirect:/"+manufacturerForm.getRadioButtonSelect();
@@ -49,7 +49,7 @@ public class manufacturerController {
     }
 
     @RequestMapping(value = "/manufacturer_add",method = RequestMethod.POST)
-    public String manufacturerAdd(@ModelAttribute ManufacturerForm manufacturerForm,ModelMap model)
+    public String manufacturerAdd(@ModelAttribute ManufacturerForm manufacturerForm)
     {
         if(manufacturerForm.getManufacturer().getName().length()==0){
             return "redirect:/manufacturer_inner";
@@ -72,7 +72,7 @@ public class manufacturerController {
 
 
     @RequestMapping(value = "/manufacturer_modify",method = RequestMethod.POST)
-    public String manufacturerModify(@ModelAttribute ManufacturerForm manufacturerForm,ModelMap model)
+    public String manufacturerModify(@ModelAttribute ManufacturerForm manufacturerForm)
     {
 
         this.manufacturerForm.setManufacturer(manufacturerForm.getManufacturerById(manufacturers, manufacturerForm.getManufacturer().getId()));
@@ -90,7 +90,7 @@ public class manufacturerController {
 
 
     @RequestMapping(value = "/manufacturer_details",method = RequestMethod.POST)
-    public String manufacturerDetails(@ModelAttribute ManufacturerForm manufacturerForm,ModelMap model)
+    public String manufacturerDetails(@ModelAttribute ManufacturerForm manufacturerForm)
     {
         this.manufacturerForm.getManufacturer().setName(manufacturerForm.getManufacturer().getName());
         this.manufacturerForm.getManufacturer().setFreeText(manufacturerForm.getManufacturer().getFreeText());

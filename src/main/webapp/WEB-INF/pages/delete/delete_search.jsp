@@ -58,7 +58,7 @@
 							<nav>
 								<ul>
 									<li><br>Product name: <form:input path="purchase.productName" type="text"/></li>
-									<li><br><a href="delete_results"><input type="submit" value="Search" /></a>  <input type="reset" value="Clear"/></li>
+									<li><br><input type="submit" value="Search" /></li>
 								</ul>
 							</nav><!-- end navigation menu -->
 						</fieldset>

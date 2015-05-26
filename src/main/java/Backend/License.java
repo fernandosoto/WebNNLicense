@@ -19,7 +19,6 @@ public class License
 
     }
 
-
     public License(long licenseId, String user, String serialKey, long purchaseId, Date expireDate, Date deleteDate,
                    String deletedBy) {
         this.licenseId = licenseId;

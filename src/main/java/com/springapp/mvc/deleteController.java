@@ -28,7 +28,7 @@ public class deleteController {
     @Autowired
     private LicenseDAOInterface ldao;
     private DeleteForm deleteForm = new DeleteForm();
-    private List<License> dbLicenses = new ArrayList<License>();
+    private List<License> dbLicenses;
 
 
     @RequestMapping(value = "/delete_inner",method = RequestMethod.GET)
@@ -39,7 +39,7 @@ public class deleteController {
     }
 
     @RequestMapping(value = "/delete_inner",method = RequestMethod.POST)
-    public String deleteInner(@ModelAttribute DeleteForm deleteForm,ModelMap model)
+    public String deleteInner(@ModelAttribute DeleteForm deleteForm)
     {
         this.deleteForm.setRadioButtonSelect(deleteForm.getRadioButtonSelect());
         return "redirect:/delete_search";
@@ -55,7 +55,7 @@ public class deleteController {
     }
 
     @RequestMapping(value = "/delete_search",method = RequestMethod.POST)
-    public String deleteSearch(@ModelAttribute DeleteForm deleteForm,ModelMap model)
+    public String deleteSearch(@ModelAttribute DeleteForm deleteForm)
     {
 
         this.deleteForm.getPurchase().setProductName(deleteForm.getPurchase().getProductName());
@@ -78,7 +78,7 @@ public class deleteController {
     }
 
     @RequestMapping(value = "/delete_results",method = RequestMethod.POST)
-    public String deleteResults(@ModelAttribute DeleteForm deleteForm,ModelMap model)
+    public String deleteResults(@ModelAttribute DeleteForm deleteForm)
     {
         Purchase purchase = pdao.searchPurchaseById(deleteForm.getPurchase().getPurchaseId());
         this.deleteForm.setPurchase(purchase);
@@ -100,7 +100,7 @@ public class deleteController {
 
     @Transactional
     @RequestMapping(value = "/delete_purchase_details",method = RequestMethod.POST)
-    public String deletePurchaseDetails(@ModelAttribute DeleteForm deleteForm,ModelMap model)
+    public String deletePurchaseDetails(@ModelAttribute DeleteForm deleteForm)
     {
         pdao.deletePurchase(this.deleteForm.getPurchase(), User.getLoggedInUser());
         for(License l: dbLicenses) {
@@ -114,7 +114,6 @@ public class deleteController {
     @RequestMapping(value = "/delete_licenseKey_details",method = RequestMethod.GET)
     public String deleteLicenseKeyDetails(ModelMap model)
     {
-        dbLicenses.clear();
         List<License> dbLicenses = ldao.searchLicenseByPurchase(deleteForm.getPurchase());
 
         model.addAttribute("licenses", deleteForm.getLicenseKeyList(dbLicenses));
@@ -124,7 +123,7 @@ public class deleteController {
     }
 
     @RequestMapping(value = "/delete_licenseKey_details",method = RequestMethod.POST)
-    public String deleteLicenseKeyDetails(@ModelAttribute DeleteForm deleteForm,ModelMap model)
+    public String deleteLicenseKeyDetails(@ModelAttribute DeleteForm deleteForm)
     {
         this.deleteForm.setLicense(this.deleteForm.getLicenseFromId(deleteForm.getLicense().getLicenseId()));
         ldao.deleteLicense(this.deleteForm.getLicense(), User.getLoggedInUser());

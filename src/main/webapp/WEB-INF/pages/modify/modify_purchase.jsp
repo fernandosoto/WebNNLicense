@@ -79,7 +79,7 @@
 										<li><br>Created by: <form:input path="purchase.createdBy" value="${purchase.createdBy}" readonly="true" cssStyle="border: hidden"/></li>
 										<li><br>Created date: <form:input path="date" value="${date}" readonly="true" cssStyle="border: hidden"/></li>
 										<li><br>Comments: <form:textarea path="purchase.freeText" value="${purchase.freeText}" rows="5" cols="80" maxlength="300"/></li>
-										<li><br><hr> Optional: New license keys<br><hr></li>
+										<li><br> <div style="color:#00aeef; font-size: 15pt"><hr> Optional: New license keys<br><hr></div></li>
 										<li><br><div style="color:crimson; font-size: 12pt"> *</div> New expire date: <form:input path="expireDate" type="date" /><div style="color:crimson; font-size: 8pt"> (yyyy-mm-dd)</div></li>
 										<li><br><div style="color:crimson; font-size: 12pt"> *</div> License key separator: <form:input path="keySeparator" type="text"/></li>
 										<li><br>New serial keys: <form:textarea path="newSerialKeys" rows="5" cols="80"/></li>

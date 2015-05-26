@@ -67,7 +67,7 @@
 								<li><br>Comments:<br><form:textarea path="purchase.freeText" value="${purchase.freeText}" readonly="true" title="Comments" size="6" style="width: 550px; height: 100px; background-color:#f6f6f6;"/></li>
 								<li><br>Serial Keys:<br><form:select  path="license.licenseId" multiple="false" size="8" style="width: 550px;">
 									<form:option value="NONE" label="--- Select license ---" disabled="true"/>
-									<form:options items="${licenses}" itemValue="licenseId" itemLabel="label"/>
+									<form:options items="${licenses}" itemValue="licenseId" itemLabel="label" selected="selected" ondblclick="onDbClickFunction()"/>
 									</form:select>
 								</li>
 								<li><br><input type="submit"  value="Modify"/></li>
@@ -77,7 +77,11 @@
 				</div>
 			</form:form>
 
-
+			<script>
+				function onDbClickFunction() {
+					document.forms["modifyForm"].submit();
+				}
+			</script>
 
 		</div><!-- end content -->
 	</section>

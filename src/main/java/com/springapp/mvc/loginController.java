@@ -30,7 +30,7 @@ public class loginController {
     }
 
     @RequestMapping(value = "/",method = RequestMethod.POST)
-    public String showPurchase(@ModelAttribute User user, ModelMap model)
+    public String showPurchase(@ModelAttribute User user)
     {
         this.user=user;
         for(User u:userList){
@@ -46,7 +46,5 @@ public class loginController {
     private void preDefinedUsers() {
         userList.add(new User("Karl","123"));
         userList.add(new User("Finn","123"));
-        userList.add(new User("Jenny","123"));
-        userList.add(new User("Cecilia","123"));
     }
 }

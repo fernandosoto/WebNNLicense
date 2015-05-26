@@ -60,7 +60,7 @@
 								<div align="right">
 									<li>Product name: <form:input path="purchase.productName" value="${purchase.productName}" readonly="true" cssStyle="border: hidden"/><br><br></li>
 									<li>Serial key: <form:input path="license.serialKey" value="${license.serialKey}" maxlength="100" /></li>
-									<li><br>Expire date: <form:input path="expireDate"  type="date" value="${expireDate}" maxlength="10" /></li>
+									<li><br><div style="color:crimson; font-size: 12pt"> *</div>Expire date: <form:input path="expireDate"  type="date" value="${expireDate}" maxlength="10" /><div style="color:crimson; font-size: 8pt"> (yyyy-mm-dd)</div></li>
 									<li><br>User: <form:input path="license.user" value="${license.user}" maxlength="30"/></li>
 
 								</div>

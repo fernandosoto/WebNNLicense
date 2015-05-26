@@ -28,6 +28,7 @@ public class modifyController {
     private PurchaseDAOInterface pdao;
     @Autowired
     private LicenseDAOInterface ldao;
+
     private ModifyForm modifyForm = new ModifyForm();
     private List<Manufacturer> manufacturers = new ArrayList<Manufacturer>();
     private List<Distributor> distributors = new ArrayList<Distributor>();
@@ -41,7 +42,7 @@ public class modifyController {
     }
 
     @RequestMapping(value = "/modify_inner",method = RequestMethod.POST)
-    public String modifyIndex(@ModelAttribute ModifyForm modifyForm,ModelMap model)
+    public String modifyIndex(@ModelAttribute ModifyForm modifyForm)
     {
         this.modifyForm.setRadioButtonSelect(modifyForm.getRadioButtonSelect());
         return "redirect:/modify_search";
@@ -57,9 +58,9 @@ public class modifyController {
     }
 
     @RequestMapping(value = "/modify_search",method = RequestMethod.POST)
-    public String modifySearch(@ModelAttribute ModifyForm modifyForm,ModelMap model)
+    public String modifySearch(@ModelAttribute ModifyForm modifyForm)
     {
-        this.modifyForm.getPurchase().setProductName(modifyForm.getPurchase().getProductName()); // Sätter namnet från webben
+        this.modifyForm.getPurchase().setProductName(modifyForm.getPurchase().getProductName());
         return "redirect:/modify_results";
     }
 
@@ -75,7 +76,7 @@ public class modifyController {
     }
 
     @RequestMapping(value = "/modify_results",method = RequestMethod.POST)
-    public String modifyResults(@ModelAttribute ModifyForm modifyForm,ModelMap model)
+    public String modifyResults(@ModelAttribute ModifyForm modifyForm)
     {
         Purchase purchase = pdao.searchPurchaseById(modifyForm.getPurchase().getPurchaseId());
         this.modifyForm.setPurchase(purchase);
@@ -95,11 +96,11 @@ public class modifyController {
     }
 
     @RequestMapping(value = "/modify_assign_remove",method = RequestMethod.POST)
-    public String modifyAssignRemove(@ModelAttribute ModifyForm modifyForm,ModelMap model)
+    public String modifyAssignRemove(@ModelAttribute ModifyForm modifyForm)
     {
         this.modifyForm.setLicense(this.modifyForm.getLicenseFromId(modifyForm.getLicense().getLicenseId()));
         this.modifyForm.getLicense().setUser(modifyForm.getLicense().getUser());
-        ldao.editLicense(this.modifyForm.getLicense(), "user");
+        ldao.editLicense(this.modifyForm.getLicense(), User.getLoggedInUser());
         this.modifyForm.clearLicenseKeys();
         return "redirect:/modify_assign_remove";
     }
@@ -116,7 +117,7 @@ public class modifyController {
     }
 
     @RequestMapping(value = "/modify_licenseKeys",method = RequestMethod.POST)
-    public String modifyLicenseKeys(@ModelAttribute ModifyForm modifyForm,ModelMap model)
+    public String modifyLicenseKeys(@ModelAttribute ModifyForm modifyForm)
     {
         this.modifyForm.setLicense(this.modifyForm.getLicenseFromId(modifyForm.getLicense().getLicenseId()));
         return "redirect:/modify_licenseKeyDetails";
@@ -134,7 +135,7 @@ public class modifyController {
 
 
     @RequestMapping(value = "/modify_licenseKeyDetails",method = RequestMethod.POST)
-    public String modifyLicenseDetails(@ModelAttribute ModifyForm modifyForm,ModelMap model)
+    public String modifyLicenseDetails(@ModelAttribute ModifyForm modifyForm)
     {
 
         Date date = this.modifyForm.getDateFromString(modifyForm.getExpireDate());
@@ -161,7 +162,7 @@ public class modifyController {
     }
 
     @RequestMapping(value = "/modify_purchase",method = RequestMethod.POST)
-    public String modifyPurchase(@ModelAttribute ModifyForm modifyForm,ModelMap model) {
+    public String modifyPurchase(@ModelAttribute ModifyForm modifyForm) {
         this.modifyForm.getPurchase().setProductName(modifyForm.getPurchase().getProductName());
         this.modifyForm.getPurchase().setFreeText(modifyForm.getPurchase().getFreeText());
         this.modifyForm.getPurchase().setType(modifyForm.getPurchase().getType());

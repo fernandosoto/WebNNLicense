@@ -41,7 +41,7 @@ public class searchController
     }
 
     @RequestMapping(value = "/search_inner",method = RequestMethod.POST)
-    public String showPurchase(@ModelAttribute SearchForm searchForm, ModelMap model)
+    public String showPurchase(@ModelAttribute SearchForm searchForm)
     {
         this.searchForm.setRadioButtonSelect(searchForm.getRadioButtonSelect());
         this.searchForm.getPurchase().setProductName(searchForm.getPurchase().getProductName());
@@ -51,7 +51,7 @@ public class searchController
             if(this.searchForm.getSearchUserName().length()==0){
                 return "redirect:/search_inner";
             }
-            return "redirect:/user_results"; // search licenses by user ---> user_results.jsp
+            return "redirect:/user_results";
         }
 
         return "redirect:/search_results";
@@ -78,7 +78,7 @@ public class searchController
 
 
     @RequestMapping(value = "/search_results",method = RequestMethod.POST)
-    public String searchResults(@ModelAttribute SearchForm searchForm, ModelMap model)
+    public String searchResults(@ModelAttribute SearchForm searchForm)
     {
         Purchase purchase;
         if(this.searchForm.getRadioButtonSelect().equals("active")) {

@@ -58,7 +58,7 @@
 						<ul>
 							<li><br>Manufacturer name: <form:input path="manufacturer.name" value="${manufacturer.name}" type="text" maxlength="50"/></li>
 							<li><br>Comments: <form:textarea path="manufacturer.freeText" value="${manufacturer.freeText}" rows="5" cols="80" maxlength="300"/></li>
-							<li><br><input type="submit" value="Modify" />  <input type="reset" value="Clear"/></li>
+							<li><br><input type="submit" value="Modify" /></li>
 						</ul>
 					</nav><!-- end navigation menu -->
 				</form:form>
