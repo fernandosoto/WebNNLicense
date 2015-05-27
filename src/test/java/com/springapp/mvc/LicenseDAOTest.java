@@ -35,8 +35,7 @@ import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
@@ -104,6 +103,8 @@ public class LicenseDAOTest {
         when(jdbcTemplate.query(ldao.SQL_SEARCH_DELETED_LICENSE, deletedLicenseRowMapper))
                 .thenReturn(expectedDeleted);
         assertEquals(expectedDeleted, ldao.searchDeletedLicenses());
+
+        verify(jdbcTemplate,times(1)).query(ldao.SQL_SEARCH_DELETED_LICENSE,deletedLicenseRowMapper);
     }
 
     @Test
@@ -111,7 +112,9 @@ public class LicenseDAOTest {
         when(jdbcTemplate.query(ldao.SQL_SEARCH_LICENSE_BY_USER,licenseRowMapper,expectedLicense.get(0).getUser()))
                 .thenReturn(expectedLicense);
 
-        assertEquals(expectedLicense,ldao.searchLicenseByUser(expectedLicense.get(0).getUser()));
+        assertEquals(expectedLicense, ldao.searchLicenseByUser(expectedLicense.get(0).getUser()));
+
+        verify(jdbcTemplate,times(1)).query(ldao.SQL_SEARCH_LICENSE_BY_USER,licenseRowMapper,expectedLicense.get(0).getUser());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -133,6 +136,8 @@ public class LicenseDAOTest {
         when(jdbcTemplate.query(ldao.SQL_SEARCH_LICENSE_BY_PURCHASE,licenseRowMapper,p.getPurchaseId())).thenReturn(expectedLicense);
 
         assertEquals(expectedLicense, ldao.searchLicenseByPurchase(p));
+
+        verify(jdbcTemplate,times(1)).query(ldao.SQL_SEARCH_LICENSE_BY_PURCHASE,licenseRowMapper,p.getPurchaseId());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -146,6 +151,8 @@ public class LicenseDAOTest {
         when(jdbcTemplate.query(ldao.SQL_SEARCH_LICENSE_BY_ID,licenseRowMapper,expectedLicense.get(0).getLicenseId())).thenReturn(expectedLicense);
 
         assertEquals(expectedLicense.get(0), ldao.searchLicenseById(expectedLicense.get(0).getLicenseId()));
+
+        verify(jdbcTemplate,times(1)).query(ldao.SQL_SEARCH_LICENSE_BY_ID,licenseRowMapper,expectedLicense.get(0).getLicenseId());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -160,6 +167,8 @@ public class LicenseDAOTest {
                 .thenReturn(expectedLicense);
 
         ldao.searchDeletedLicensesByPurchaseId(expectedLicense.get(0).getPurchaseId());
+
+        verify(jdbcTemplate,times(1)).query(ldao.SQL_SEARCH_DELETED_LICENSE_BY_PURCHASE_ID,licenseRowMapper,expectedLicense.get(0).getPurchaseId());
     }
 
     @Test(expected = IllegalArgumentException.class)
