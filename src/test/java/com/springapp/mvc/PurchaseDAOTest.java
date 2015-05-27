@@ -112,15 +112,6 @@ public class PurchaseDAOTest {
     }
 
     @Test
-    public void addViewTest()throws Exception{
-        mockMvc.perform(get("/addPurchase"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("add/add_inner"));
-
-    }
-
-
-    @Test
     public void searchByNameDAOTest(){
         when(jdbcTemplate.query(pdao.SQL_SEARCH_BY_PRODUCT_NAME, purchaseRowMapper, expected.get(0).getProductName()+"%")).thenReturn(expected);
 
