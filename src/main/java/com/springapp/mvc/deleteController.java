@@ -125,10 +125,9 @@ public class deleteController {
     @RequestMapping(value = "/delete_licenseKey_details",method = RequestMethod.POST)
     public String deleteLicenseKeyDetails(@ModelAttribute DeleteForm deleteForm)
     {
-        this.deleteForm.setLicense(this.deleteForm.getLicenseFromId(deleteForm.getLicense().getLicenseId()));
+        this.deleteForm.setLicense(ldao.searchLicenseById(deleteForm.getLicense().getLicenseId()));
         ldao.deleteLicense(this.deleteForm.getLicense(), User.getLoggedInUser());
         this.deleteForm.clearLicenseKeys();
         return "redirect:/delete_licenseKey_details";
     }
-
 }
