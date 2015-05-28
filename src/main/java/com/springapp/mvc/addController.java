@@ -29,14 +29,24 @@ public class addController{
     private List<Manufacturer> manufacturers = new ArrayList<Manufacturer>();
     private List<Distributor> distributors = new ArrayList<Distributor>();
 
+
+    @RequestMapping(value = "/addPurchase",method = RequestMethod.GET)
+    public String addInner(ModelMap model)
+    {
+        getManufacturersAndDistributors();
+        model.addAttribute("manufacturers", manufacturers);
+        model.addAttribute("distributors", distributors);
+        model.addAttribute("registerForm",new RegisterForm());
+        return "add/add_inner";
+    }
+
     @RequestMapping(value = "/addPurchase",method = RequestMethod.POST)
     public String printWelcome(@ModelAttribute RegisterForm regForm)throws Exception {
         Long purchaseID;
-        List<License> licenses;
+        List<License> licenses=regForm.getSerialKeysWithSeparatedLicenses();;
 
-        licenses = regForm.getSerialKeysWithSeparatedLicenses();
         Purchase p= regForm.getPurchases();
-        purchaseID = db.addPurchase(p,User.getLoggedInUser(),regForm.getDistributor().getId(),regForm.getManufacturer().getId());
+        purchaseID = db.addPurchase(p, User.getLoggedInUser(), regForm.getDistributor().getId(), regForm.getManufacturer().getId());
 
         for(License L: licenses){
             L.setPurchaseId(purchaseID);
@@ -48,16 +58,6 @@ public class addController{
     private void getManufacturersAndDistributors(){
         manufacturers =  manufacturerDAO.searchManufacturerByName("");
         distributors = distributorDAO.searchDistributorByName("");
-    }
-
-    @RequestMapping("/addPurchase")
-    public String addInner(ModelMap model)
-    {
-        getManufacturersAndDistributors();
-        model.addAttribute("manufacturers", manufacturers);
-        model.addAttribute("distributors", distributors);
-        model.addAttribute("registerForm",new RegisterForm());
-        return "add/add_inner";
     }
 
     }
