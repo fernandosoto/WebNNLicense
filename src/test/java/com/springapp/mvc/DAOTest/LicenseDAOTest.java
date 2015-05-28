@@ -1,4 +1,4 @@
-package com.springapp.mvc;
+package com.springapp.mvc.DAOTest;
 
 import Backend.*;
 import Backend.DAO.LicenseDAO;

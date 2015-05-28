@@ -1,13 +1,11 @@
 package com.springapp.mvc;
 
-import Backend.DAO.LicenseDAO;
 import Backend.DAO.LicenseDAOInterface;
-import Backend.DAO.PurchaseDAO;
 import Backend.DAO.PurchaseDAOInterface;
 import Backend.DeletedPurchase;
 import Backend.License;
 import Backend.Purchase;
-import Backend.SearchForm;
+import Backend.form.SearchForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**

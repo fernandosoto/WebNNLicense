@@ -1,4 +1,6 @@
-package Backend;
+package Backend.form;
+
+import Backend.Manufacturer;
 
 import java.util.List;
 

@@ -1,16 +1,11 @@
 package com.springapp.mvc;
 
 import Backend.DAO.ManufacturerDAO;
-import Backend.DAO.ManufacturerDAOInterface;
-import Backend.Distributor;
 import Backend.Manufacturer;
-import Backend.RegisterForm;
-import com.sun.org.apache.xpath.internal.SourceTree;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import static org.mockito.Mockito.*;
 
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +15,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +47,7 @@ public class AppTests {
     public void simpleAddWebTest() throws Exception {
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("main/index"));
+                .andExpect(view().name("login/login"));
 
         mockMvc.perform(get("/addPurchase"))
                 .andExpect(status().isOk())
@@ -79,15 +73,4 @@ public class AppTests {
                 .andExpect(view().name(""));
     }
 
-    @Test
-    public void manufacturerDAOTest()throws Exception{
-        manufacturerDAO = new ManufacturerDAO();
-        List<Manufacturer> mList = new ArrayList<Manufacturer>();
-        mList.add(new Manufacturer(1,"Microsoft","Niklas säljer bra grejer!"));
-        Mockito.when(manufacturerDAO.searchManufacturerByName("")).thenReturn(mList);
-
-        List<Manufacturer> test = manufacturerDAO.searchManufacturerByName("Microsoft");
-        assert(test.get(0).getName().equals(mList.get(0).getName()));
-
-    }
 }

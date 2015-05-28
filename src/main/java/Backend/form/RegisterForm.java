@@ -1,4 +1,4 @@
-package Backend;
+package Backend.form;
 
 
 import java.sql.Date;
@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import Backend.Distributor;
+import Backend.License;
+import Backend.Manufacturer;
+import Backend.Purchase;
 
 /**
  * Created by Thomas on 2015-04-28.

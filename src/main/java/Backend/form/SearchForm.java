@@ -1,4 +1,7 @@
-package Backend;
+package Backend.form;
+
+import Backend.License;
+import Backend.Purchase;
 
 import java.sql.Date;
 import java.util.ArrayList;

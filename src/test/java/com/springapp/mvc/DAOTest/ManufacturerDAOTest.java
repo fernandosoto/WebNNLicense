@@ -1,4 +1,4 @@
-package com.springapp.mvc;
+package com.springapp.mvc.DAOTest;
 
 import Backend.Manufacturer;
 import Backend.DAO.ManufacturerDAO;
@@ -102,7 +102,7 @@ public class ManufacturerDAOTest {
     public void shouldReturnManufacturerByNameQuery(){
         when(jdbcTemplate.query(mDAO.SQL_SEARCH_BY_MANUFACTURER_NAME,manufacturerRowMapper, mList.get(0).getName()+"%")).thenReturn(mList);
         assertEquals(mList, mDAO.searchManufacturerByName(mList.get(0).getName()));
-        verify(jdbcTemplate, times(1)).query(mDAO.SQL_SEARCH_BY_MANUFACTURER_NAME,manufacturerRowMapper, mList.get(0).getName()+"%");
+        verify(jdbcTemplate, times(1)).query(mDAO.SQL_SEARCH_BY_MANUFACTURER_NAME, manufacturerRowMapper, mList.get(0).getName() + "%");
     }
 
     @Test(expected = IllegalArgumentException.class)
