@@ -59,14 +59,6 @@ public class DeleteForm {
         licenseKeys.clear();
     }
 
-    public License getLicenseFromId(Long id){
-        for(LicenseKey l : licenseKeys){
-            if(id==l.getLicenseId()){
-                return l;
-            }
-        }
-        return null;
-    }
 
     public List<LicenseKey> getLicenseKeyList(List<License> licenses){
         clearLicenseKeys();

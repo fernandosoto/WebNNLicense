@@ -4,6 +4,7 @@ import Backend.*;
 import Backend.DAO.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -95,10 +96,11 @@ public class modifyController {
         return "modify/modify_assign_remove";
     }
 
+    @Transactional
     @RequestMapping(value = "/modify_assign_remove",method = RequestMethod.POST)
     public String modifyAssignRemove(@ModelAttribute ModifyForm modifyForm)
     {
-        this.modifyForm.setLicense(this.modifyForm.getLicenseFromId(modifyForm.getLicense().getLicenseId()));
+        this.modifyForm.setLicense(ldao.searchLicenseById(modifyForm.getLicense().getLicenseId()));
         this.modifyForm.getLicense().setUser(modifyForm.getLicense().getUser());
         ldao.editLicense(this.modifyForm.getLicense(), User.getLoggedInUser());
         this.modifyForm.clearLicenseKeys();
@@ -119,7 +121,7 @@ public class modifyController {
     @RequestMapping(value = "/modify_licenseKeys",method = RequestMethod.POST)
     public String modifyLicenseKeys(@ModelAttribute ModifyForm modifyForm)
     {
-        this.modifyForm.setLicense(this.modifyForm.getLicenseFromId(modifyForm.getLicense().getLicenseId()));
+        this.modifyForm.setLicense(ldao.searchLicenseById(modifyForm.getLicense().getLicenseId()));
         return "redirect:/modify_licenseKeyDetails";
     }
 

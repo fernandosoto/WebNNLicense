@@ -105,15 +105,6 @@ public class ModifyForm {
         licenseKeys.clear();
     }
 
-    public License getLicenseFromId(Long id){
-        for(LicenseKey l : licenseKeys){
-            if(id==l.getLicenseId()){
-                return l;
-            }
-        }
-
-        return null;
-    }
 
     public Date getDateFromString(String strDate){
         int year = Integer.parseInt(strDate.substring(0, 4));
