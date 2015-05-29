@@ -18,13 +18,14 @@ import java.util.Properties;
 public class ContextListener implements ServletContextListener {
     public static Logger log = Logger.getRootLogger();
 
+    /**Initializes the log4j with the log4j.properties file.
+     * @param servletContextEvent
+     */
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
-        System.out.println("\n\n\n\nFUNK\n\n\n\n");
         ServletContext context = servletContextEvent.getServletContext();
         String log4jConfigFile = context.getInitParameter("log4j");
         String fullPath = context.getRealPath("") + File.separator + log4jConfigFile;
-        //System.out.println("\n\n\n\n" + fullPath + "\n\n\n\n" + log4jConfigFile + "\n\n\n\n");
 
         Properties props = new Properties();
         try {
@@ -34,6 +35,9 @@ public class ContextListener implements ServletContextListener {
 
     }
 
+    /**
+     * @param servletContextEvent
+     */
     @Override
     public void contextDestroyed(ServletContextEvent servletContextEvent) {
 
