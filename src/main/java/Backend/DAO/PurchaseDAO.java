@@ -38,6 +38,20 @@ public class PurchaseDAO implements PurchaseDAOInterface {
     @Autowired
     DeletedPurchaseRowMapper deletedPurchaseRowMapper;
 
+    /**
+     * Takes a Purchase object as input and adds it to the database.
+     * Takes a String as input that represents the name of the User that adds the object to the Database for
+     * logging purposes.
+     * Takes two long as input that represent the Ids of a Manufacturer and a Distributor.
+     * Returns the Purchase_ID of the newly inserted Purchase in the database.
+     *
+     * @param pur Purchase that is to be added in the database.
+     * @param userName Name of the user that is adding the object to the database.1
+     * @param distrId Id of the distributor in the database.
+     * @param manuId Id of the manufacturer in the database.
+     * @return Id of new created purchase.
+     * @throws IllegalArgumentException If any input is null.
+     */
     @Transactional
     public long addPurchase(final Purchase pur, final String userName, final long distrId, final long manuId) throws IllegalArgumentException {
         final KeyHolder holder = new GeneratedKeyHolder();
@@ -80,6 +94,12 @@ public class PurchaseDAO implements PurchaseDAOInterface {
         return holder.getKey().longValue();
     }
 
+    /**
+     * Takes a purchase object that is to be deleted as input and adds it to the deleted_purchase table in the database.
+     * @param pur The purchase to be deleted.
+     * @param userName The name of the user deleting.
+     * @throws IllegalArgumentException If any input is null.
+     */
     @Override
     public void deletePurchase(final Purchase pur, final String userName) throws IllegalArgumentException{
         if (pur == null){
@@ -102,10 +122,24 @@ public class PurchaseDAO implements PurchaseDAOInterface {
         });
     }
 
+    /**
+     * Returns all the deleted_purchases in the database.
+     * @return List of all the deleted_purchase in the database.
+     */
     public List<DeletedPurchase> searchDeletedPurchases(){
         return db.query(SQL_SEARCH_ALL_DELETED, deletedPurchaseRowMapper);
     }
 
+    /**
+     * Takes a long as input representing an id for a purchase in the database.
+     * Returns the purchase corresponding with the id.
+     *
+     * @param id of the Purchase that is searched for in the database.
+     * @return Purchase with the purchase_id that matches the input.
+     * @throws IllegalArgumentException when id == 0.
+     * @throws DataAccessException
+     * @throws NullPointerException
+     */
     public Purchase searchPurchaseById(long id) throws IllegalArgumentException, DataAccessException, NullPointerException{
         if(id == 0) {
             ContextListener.log.error("Id must be separate from 0, Id is : " + id, new IllegalArgumentException());
@@ -122,6 +156,14 @@ public class PurchaseDAO implements PurchaseDAOInterface {
         }
     }
 
+    /**
+     * Takes a String as an input representing the product_name for the purchase in the database.
+     * Returns a list of purchases with the matching product_name and other purchases with similar product_names.
+     *
+     * @param product_name The product_name search for
+     * @return A list of purchases with the product_name that matches the input.
+     * @throws IllegalArgumentException if the String input is null.
+     */
     public List<Purchase> searchPurchaseByName(String product_name) throws IllegalArgumentException{
         if(product_name == null) {
             ContextListener.log.error("Purchase name cannot be null.", new IllegalArgumentException(product_name));
@@ -131,6 +173,15 @@ public class PurchaseDAO implements PurchaseDAOInterface {
         return db.query(SQL_SEARCH_BY_PRODUCT_NAME, purchaseRowMapper, product_name + "%");
     }
 
+    /**
+     * Takes a String as an input that represents the distributor_name of a purchase in the database.
+     * Returns a list of all the purchases with the matching distributor_name and other purchases with similar distributor_name.
+     *
+     * @param name The Distributor_Name of the purchase searched for.
+     * @return A list of purchases with the Distributor_name that matches the input.
+     * and other purchases with similar Distributor_name.
+     * @throws IllegalArgumentException if param name is null
+     */
     public List<Purchase> searchPurchaseByDistributorName(String name) throws IllegalArgumentException{
         if(name == null) {
             ContextListener.log.error("Distributor name cannot be null.", new IllegalArgumentException(name));
@@ -140,6 +191,14 @@ public class PurchaseDAO implements PurchaseDAOInterface {
         return db.query(SQL_SEARCH_BY_DISTRIBUTOR, purchaseRowMapper, name + "%");
     }
 
+    /**
+     * Takes a String as an input that represents the Manufacturer_name of a purchase in the database.
+     * Returns a list of all the purchases with the matching Manufacturer_name and other purchases with similar Manufacturer_name.
+     *
+     * @param name The manufacturer_name of the purchase searched for.
+     * @return A list of purchases with the Manufacturer_name that matches the input.
+     * @throws IllegalArgumentException If the input is null.
+     */
     public List<Purchase> searchPurchaseByManufacturerName(String name) throws IllegalArgumentException{
         if(name == null){
             ContextListener.log.error("Manufacturer name cannot be null.", new IllegalArgumentException(name));
@@ -149,6 +208,14 @@ public class PurchaseDAO implements PurchaseDAOInterface {
         return db.query(SQL_SEARCH_BY_MANUFACTURER, purchaseRowMapper, name + "%");
     }
 
+    /**
+     * Takes a String as an input that represents the Type of a purchase in the database.
+     * Returns a list of all the purchases with matching Type of a purchase and other purchases with a similar Type.
+     *
+     * @param type The type of the purchase searched for.
+     * @return List of purchases with the Type that matches the input.
+     * @throws IllegalArgumentException If input is null.
+     */
     public List<Purchase> searchPurchaseByType(String type) throws IllegalArgumentException{
         if(type == null){
             ContextListener.log.error("Purchase type cannot be null.", new IllegalArgumentException(type));
@@ -158,10 +225,28 @@ public class PurchaseDAO implements PurchaseDAOInterface {
         return db.query(SQL_SEARCH_BY_TYPE, purchaseRowMapper, type+"%");
     }
 
+    /**
+     * Returns a list of all the purchases in the database.
+     *
+     * @return List of all purchases in the database.
+     */
     public List<Purchase> searchAllPurchases(){
         return db.query(SQL_SEARCH_ALL_PRODUCT, purchaseRowMapper);
     }
 
+    /**
+     * Takes a purchase object that is edited, a String that represents the name of the user editing,
+     * the Id of the manufacturer in the purchase object and id of the distributor.
+     * Searches for the id of the purchase object inputed and compares the purchase from the database to the edited purchase.
+     *
+     * @param pur Purchase Object that is edited
+     * @param userName Name of the user that has edited the purchase
+     * @param manufacturerId Id of manufacturer.
+     * @param distributorId Id of distributor.
+     * @throws IllegalArgumentException If any input is null.
+     * @throws DataAccessException
+     * @throws NullPointerException
+     */
     @Override
     @Transactional
     public void editPurchase(final Purchase pur, final String userName, final long manufacturerId, final long distributorId) throws IllegalArgumentException, DataAccessException, NullPointerException{
@@ -229,6 +314,16 @@ public class PurchaseDAO implements PurchaseDAOInterface {
         });
     }
 
+    /**
+     * Takes an Long as an input that represents the ID of a Deleted_purchase in the database.
+     * Returns the Deleted_purchase that matches the ID.
+     *
+     * @param id The id of a deleted_purchase searched for.
+     * @return The Deleted_purchase with the matching Id.
+     * @throws IllegalArgumentException If the Id is 0.
+     * @throws DataAccessException If there is a database connection error.
+     * @throws NullPointerException If there are no deleted_purchase with the input id.
+     */
     public DeletedPurchase searchDeletedPurchaseById(long id) throws IllegalArgumentException, DataAccessException, NullPointerException{
         if(id == 0) {
             ContextListener.log.error("Id must be separate from 0, Id is : " + id, new IllegalArgumentException());
@@ -245,6 +340,14 @@ public class PurchaseDAO implements PurchaseDAOInterface {
         }
     }
 
+    /**
+     * Takes a String as an input that represents the product_name of a Deleted_purchase.
+     * Returns a List of Deleted_purchases with matching product_name.
+     *
+     * @param name The product_name of a Deleted_purchase searched for.
+     * @return A list of deleted_purchases with matching product_name
+     * @throws IllegalArgumentException if the input is null
+     */
     public List<DeletedPurchase> searchDeletedPurchaseByName(String name) throws IllegalArgumentException{
         if(name == null) {
             ContextListener.log.error("Name must not be null: ", new IllegalArgumentException());
@@ -253,6 +356,12 @@ public class PurchaseDAO implements PurchaseDAOInterface {
         return db.query(SQL_SEARCH_DELETED_BY_NAME,deletedPurchaseRowMapper, name+"%");
     }
 
+    /**
+     * Takes a long as an input that represents the Purchase_id of an upgraded_purchase.
+     * Returns the id of purchase that was upgraded.
+     * @param newPurchaseId
+     * @return Id of purchase that was upgraded.
+     */
     public long getUpgradedFrom(long newPurchaseId){
         long id;
         try {
@@ -264,6 +373,12 @@ public class PurchaseDAO implements PurchaseDAOInterface {
 
     }
 
+    /**
+     * Takes a DataSource object as an input. Creates a JdbcTemplate Object with connection to a database.
+     * Used by Spring Autowire.
+     *
+     * @param dataSource
+     */
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
         db = new JdbcTemplate(dataSource);
