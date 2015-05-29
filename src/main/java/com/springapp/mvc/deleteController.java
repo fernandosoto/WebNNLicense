@@ -2,7 +2,7 @@ package com.springapp.mvc;
 
 import Backend.DAO.LicenseDAOInterface;
 import Backend.DAO.PurchaseDAOInterface;
-import Backend.DeleteForm;
+import Backend.form.DeleteForm;
 import Backend.License;
 import Backend.Purchase;
 import Backend.User;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

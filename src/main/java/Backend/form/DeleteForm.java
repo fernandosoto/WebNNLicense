@@ -1,4 +1,8 @@
-package Backend;
+package Backend.form;
+
+import Backend.License;
+import Backend.LicenseKey;
+import Backend.Purchase;
 
 import java.util.ArrayList;
 import java.util.List;
