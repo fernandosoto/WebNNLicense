@@ -17,6 +17,13 @@ public class LicenseRowMapper implements RowMapper {
     public static final String EXPIRE_DATE = "EXPIRE_DATE";
 
 
+    /**
+     * Creates a License object from a row of the ResultSet.
+     * @param rs The ResultSet to map
+     * @param i The number of the current row.
+     * @return License object for the current row.
+     * @throws SQLException
+     */
     public License mapRow(ResultSet rs, int i) throws SQLException {
         return new License(rs.getLong(LICENSE_ID),
                 rs.getString(LICENSE_USER),
