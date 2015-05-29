@@ -35,6 +35,11 @@ public class ManufacturerDAO implements ManufacturerDAOInterface {
     public final static String SQL_SEARCH_BY_MANUFACTURER_NAME = "SELECT * FROM MANUFACTURER WHERE MANUFACTURER.MANUFACTURER_NAME LIKE ?";
     public static final String SQL_UPDATE_MANUFACTURER = "UPDATE MANUFACTURER SET MANUFACTURER_NAME = ?, FREE_TEXT = ? WHERE MANUFACTURER_ID = ?";
 
+    /**Takes a Manufacturer object as input. Adds input object to the database.
+     * Throws IllegalArgumentException if input is null.
+     * @param m
+     * @throws IllegalArgumentException
+     */
     @Override
     @Transactional
     public void addManufacturer(final Manufacturer m) throws IllegalArgumentException{
@@ -53,6 +58,16 @@ public class ManufacturerDAO implements ManufacturerDAOInterface {
         });
     }
 
+    /**Takes a long as input representing a id of and Manufacturer object in the database.
+     * Searches in the database after input id. Returns Manufacturer object if there is one in the database.
+     * Throws IllegalArgumentException if input is 0, DataAccessException if there is a connection problem with the database
+     * and a NullPointerException if there is no Manufacturer in the database with input id.
+     * @param id
+     * @return
+     * @throws IllegalArgumentException
+     * @throws DataAccessException
+     * @throws NullPointerException
+     */
     @Override
     public Manufacturer searchManufacturerById(long id) throws IllegalArgumentException, DataAccessException, NullPointerException{
         if (id == 0){
@@ -70,6 +85,13 @@ public class ManufacturerDAO implements ManufacturerDAOInterface {
         }
     }
 
+    /**Takes a String as input representing a Manufacturer name in the database. Returns a list of all Manufacturers with
+     * names with the same characters and it's not case-sensitive. Sending a empty String as input returns all Distributors in the database.
+     * Thorws IllegalArgumentException if input String is null.
+     * @param name
+     * @return
+     * @throws IllegalArgumentException
+     */
     @Override
     public List<Manufacturer> searchManufacturerByName(String name) throws IllegalArgumentException{
         if (name == null){
@@ -79,6 +101,13 @@ public class ManufacturerDAO implements ManufacturerDAOInterface {
         return db.query(SQL_SEARCH_BY_MANUFACTURER_NAME, mRowMapper, name + "%");
     }
 
+    /**Takes a Manufacturer object as input. This object is used to update an old Manufacturer object in the database.
+     * Throws a IllegalArgumentException if input is null.
+     * @param manuf
+     * @throws IllegalArgumentException
+     * @throws DataAccessException
+     * @throws NullPointerException
+     */
     @Override
     public void editManufacturer(final Manufacturer manuf) throws IllegalArgumentException, DataAccessException, NullPointerException{
         if (manuf == null){
@@ -100,6 +129,10 @@ public class ManufacturerDAO implements ManufacturerDAOInterface {
         });
     }
 
+    /**Takes a DataSource object as input. Creates a JdbcTemplate object with connection to the database.
+     * Used by Spring Autowiring.
+     * @param dataSource
+     */
     public void setDataSource(DataSource dataSource){
         this.dataSource = dataSource;
         db = new JdbcTemplate(dataSource);
