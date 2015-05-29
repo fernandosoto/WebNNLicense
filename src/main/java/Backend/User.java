@@ -17,8 +17,8 @@ public class User {
 
     /**
      * Constructor
-     * @param userName
-     * @param password
+     * @param userName userName of User
+     * @param password password of User.
      */
     public User(String userName, String password){
         this.userName=userName;
@@ -27,7 +27,7 @@ public class User {
 
     /**
      * Return loggedInUser which is static
-     * @return
+     * @return LoggedInUser.
      */
     public static String getLoggedInUser() {
         return LoggedInUser;
@@ -35,7 +35,7 @@ public class User {
 
     /**
      * Set the loggedInUser which is static
-     * @param loggedInUser
+     * @param loggedInUser The new LoggedInUser of User.
      */
     public static void setLoggedInUser(String loggedInUser) {
         LoggedInUser = loggedInUser;
@@ -43,7 +43,7 @@ public class User {
 
     /**
      * Return password of User.
-     * @return
+     * @return password of User
      */
     public String getPassword() {
         return password;
@@ -51,7 +51,7 @@ public class User {
 
     /**
      * Sets password of User.
-     * @param password
+     * @param password The new password of user.
      */
     public void setPassword(String password) {
         this.password = password;
@@ -59,7 +59,7 @@ public class User {
 
     /**
      * Return userName of User
-     * @return
+     * @return userName of User
      */
     public String getUserName() {
         return userName;
@@ -67,7 +67,7 @@ public class User {
 
     /**
      * Set the userName of user.
-     * @param userName
+     * @param userName The new userName of user.
      */
     public void setUserName(String userName) {
         this.userName = userName;
