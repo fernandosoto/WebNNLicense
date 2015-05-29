@@ -60,6 +60,7 @@ public class DeleteForm {
 
     /**
      * Sets the value of radiobutton in String format.
+     * Used by Spring.
      * @param radioButtonSelect String format.
      */
     public void setRadioButtonSelect(String radioButtonSelect) {
@@ -68,6 +69,7 @@ public class DeleteForm {
 
     /**
      * Returns License object
+     * Used by Spring.
      * @return License.
      */
     public License getLicense() {
