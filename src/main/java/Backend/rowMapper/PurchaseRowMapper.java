@@ -27,7 +27,13 @@ public class PurchaseRowMapper implements RowMapper{
     public final static String CREATED_DATE = "CREATED_DATE";
 
 
-
+    /**
+     * Creates a purchase object from a row of the resultset.
+     * @param rs the ResultSet to map
+     * @param i Number of the current row
+     * @return Purchase Object for the current row.
+     * @throws SQLException
+     */
     public Purchase mapRow(ResultSet rs, int i) throws SQLException {
         Purchase purchase = new Purchase(rs.getLong(PURCHASE_ID),
                 rs.getString(MANUFACTURER_NAME),

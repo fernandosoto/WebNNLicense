@@ -3,7 +3,7 @@ package com.springapp.mvc;
 
 import Backend.DAO.ManufacturerDAOInterface;
 import Backend.Manufacturer;
-import Backend.ManufacturerForm;
+import Backend.form.ManufacturerForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

@@ -1,6 +1,5 @@
 package com.springapp.mvc;
 
-import Backend.SearchForm;
 import Backend.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

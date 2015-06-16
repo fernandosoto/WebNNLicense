@@ -2,11 +2,8 @@ package com.springapp.mvc;
 
 
 import Backend.DAO.DistributorDAOInterface;
-import Backend.DAO.ManufacturerDAOInterface;
 import Backend.Distributor;
-import Backend.DistributorForm;
-import Backend.Manufacturer;
-import Backend.ManufacturerForm;
+import Backend.form.DistributorForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

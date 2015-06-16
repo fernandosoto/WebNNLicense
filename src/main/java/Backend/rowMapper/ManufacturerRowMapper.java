@@ -21,6 +21,13 @@ public class ManufacturerRowMapper implements RowMapper {
     public final static String MANUFACTURER_NAME = "MANUFACTURER_NAME";
     public final static String FREE_TEXT = "FREE_TEXT";
 
+    /**
+     * Creates a Manufacturer object from a row of the resultset.
+     * @param rs The ResultSet to map
+     * @param i Number for the current row.
+     * @return Manufacturer object for the current row.
+     * @throws SQLException
+     */
     public Manufacturer mapRow(ResultSet rs, int i) throws SQLException {
         return new Manufacturer(rs.getLong(MANUFACTURER_ID),
                 rs.getString(MANUFACTURER_NAME),

@@ -35,6 +35,11 @@ public class DistributorDAO implements DistributorDAOInterface {
     public static final String SQL_SEARCH_DISTRIBUTOR_BY_NAME = "SELECT * FROM DISTRIBUTOR WHERE DISTRIBUTOR.DISTRIBUTOR_NAME LIKE ?";
     public static final String SQL_UPDATE_DISTRIBUTOR = "UPDATE DISTRIBUTOR SET DISTRIBUTOR_NAME = ?, FREE_TEXT = ? WHERE DISTRIBUTOR_ID = ?";
 
+    /**Takes the input Distributor object and adds it to the database through JDBC.
+     * Throws IllegalArgumentException if input Distributor is null.
+     * @param d
+     * @throws IllegalArgumentException
+     */
     @Override
     @Transactional
     public void addDistributor(final Distributor d) throws IllegalArgumentException{
@@ -53,6 +58,15 @@ public class DistributorDAO implements DistributorDAOInterface {
         });
     }
 
+    /**Takes a long as input representing a id for a Distributor and returns the Distributor object corresponding to this id in the database.
+     * Throws IllegalArgumentException if input id is 0, DataAccessException if there is a connection problem with the database
+     * and a NullPointerException if there is no Distributor object in the database with that id.
+     * @param id
+     * @return
+     * @throws IllegalArgumentException
+     * @throws DataAccessException
+     * @throws NullPointerException
+     */
     @Override
     public Distributor searchDistributorById(long id) throws IllegalArgumentException, DataAccessException, NullPointerException{
         if (id == 0){
@@ -70,6 +84,13 @@ public class DistributorDAO implements DistributorDAOInterface {
         }
     }
 
+    /**Takes a String as input representing a Distributor name in the database. Returns a list of all Distributors with
+     * names with the same characters and it's not case-sensitive. Sending a empty String as input returns all Distributors in the database.
+     * Thorws IllegalArgumentException if input String is null.
+     * @param name
+     * @return
+     * @throws IllegalArgumentException
+     */
     @Override
     public List<Distributor> searchDistributorByName(String name) throws IllegalArgumentException{
         if (name == null){
@@ -79,6 +100,13 @@ public class DistributorDAO implements DistributorDAOInterface {
         return db.query(SQL_SEARCH_DISTRIBUTOR_BY_NAME, dRowMapper, name+"%");
     }
 
+    /**Takes a Distributor object as input. This object is used to update an old Distributor object in the database.
+     * Throws a IllegalArgumentException if input is null.
+     * @param distr
+     * @throws IllegalArgumentException
+     * @throws DataAccessException
+     * @throws NullPointerException
+     */
     @Override
     public void editDistributor(final Distributor distr) throws IllegalArgumentException, DataAccessException, NullPointerException{
         if (distr == null){
@@ -99,6 +127,10 @@ public class DistributorDAO implements DistributorDAOInterface {
         });
     }
 
+    /**Takes a DataSource object as input. Creates a JdbcTemplate object with connection to the database.
+     * Used by Spring Autowiring.
+     * @param dataSource
+     */
     @Override
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;

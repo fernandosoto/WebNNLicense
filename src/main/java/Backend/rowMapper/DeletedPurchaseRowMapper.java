@@ -23,6 +23,13 @@ public class DeletedPurchaseRowMapper implements RowMapper{
     public final static String DELETED_BY = "DELETED_BY";
     public final static String DELETED_DATE = "DELETED_DATE";
 
+    /**
+     * Creates a DeletedPurchase Object from the ResultSet.
+     * @param rs The ResultSet to map.
+     * @param i The Number of the current row.
+     * @return DeletedPurchase Object of the current row.
+     * @throws SQLException
+     */
     public DeletedPurchase mapRow(ResultSet rs, int i) throws SQLException {
         DeletedPurchase deletedPurchase = new DeletedPurchase(rs.getLong(PURCHASE_ID),
                 rs.getString(MANUFACTURER_NAME),

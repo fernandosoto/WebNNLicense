@@ -2,6 +2,7 @@ package com.springapp.mvc;
 
 import Backend.*;
 import Backend.DAO.*;
+import Backend.form.ModifyForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;

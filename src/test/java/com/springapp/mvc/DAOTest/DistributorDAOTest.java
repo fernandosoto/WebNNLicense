@@ -1,4 +1,4 @@
-package com.springapp.mvc;
+package com.springapp.mvc.DAOTest;
 
 import Backend.DAO.DistributorDAO;
 import Backend.DAO.LicenseDAO;
@@ -87,7 +87,7 @@ public class DistributorDAOTest {
 
         assertEquals(allDistributor, dDao.searchDistributorByName(allDistributor.get(0).getName()));
 
-        verify(jdbcTemplate,times(1)).query(dDao.SQL_SEARCH_DISTRIBUTOR_BY_NAME,distributorRowMapper,allDistributor.get(0).getName()+"%");
+        verify(jdbcTemplate,times(1)).query(dDao.SQL_SEARCH_DISTRIBUTOR_BY_NAME, distributorRowMapper, allDistributor.get(0).getName() + "%");
     }
 
     @Test(expected = IllegalArgumentException.class)

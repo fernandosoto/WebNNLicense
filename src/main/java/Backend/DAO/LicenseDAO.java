@@ -31,6 +31,11 @@ public class LicenseDAO implements LicenseDAOInterface {
     @Autowired
     LicenseRowMapper licenseRowMapper;
 
+    /**Takes a License object as input. Adds input object to the database.
+     * Throws IllegalArgumentException if input is null.
+     * @param l
+     * @throws IllegalArgumentException
+     */
     @Override
     @Transactional
     public void addLicense(final License l) throws IllegalArgumentException{
@@ -52,6 +57,13 @@ public class LicenseDAO implements LicenseDAOInterface {
         });
     }
 
+    /**Takes a License object and String object representing the user's username who wants to delete this License.
+     * Adds input License to deleted license table in database. Input License is not deleted from the database, just marked as deleted.
+     * Throws IllegalArgumentException if the input License or String is null.
+     * @param l
+     * @param userName
+     * @throws IllegalArgumentException
+     */
     @Transactional
     @Override
     public void deleteLicense(final License l, final String userName) throws IllegalArgumentException{
@@ -74,11 +86,22 @@ public class LicenseDAO implements LicenseDAOInterface {
         });
     }
 
+    /**Returns all licenses marked as deleted in the deleted_license table.
+     *
+     * @return
+     */
     public List<License> searchDeletedLicenses(){
         List<License> l = db.query(SQL_SEARCH_DELETED_LICENSE, deletedLicenseRowMapper);
         return l;
     }
 
+    /**Takes a String as input representing the user who a license can be assigned to.
+     * Returns all licenses assigned to input user name.
+     * Throws IllegalArgumentException if input is null.
+     * @param name
+     * @return
+     * @throws IllegalArgumentException
+     */
     @Override
     public List<License> searchLicenseByUser(String name) throws IllegalArgumentException{
         if (name == null){
@@ -89,6 +112,12 @@ public class LicenseDAO implements LicenseDAOInterface {
         return l;
     }
 
+    /**Takes a Purchase object as input. Returns all licenses with the id from the input Purchase and that is not marked as deleted.
+     * Throws exception if input Purchase is null.
+     * @param p
+     * @return
+     * @throws IllegalArgumentException
+     */
     @Override
     public List<License> searchLicenseByPurchase(Purchase p) throws IllegalArgumentException{
         if (p == null){
@@ -99,6 +128,15 @@ public class LicenseDAO implements LicenseDAOInterface {
         return l;
     }
 
+    /**Takes a long as input representing a License id. Returns the license with input id.
+     * Throws IllegalArgumentException if input is 0, DataAccessException if there is a connection problem
+     * and a NullPointerException if there is no license with input id.
+     * @param id
+     * @return
+     * @throws IllegalArgumentException
+     * @throws DataAccessException
+     * @throws NullPointerException
+     */
     @Override
     public License searchLicenseById(long id) throws IllegalArgumentException, DataAccessException, NullPointerException{
         if (id == 0){
@@ -111,11 +149,19 @@ public class LicenseDAO implements LicenseDAOInterface {
             ContextListener.log.error("DataAccessException, probably because of database connection error", e);
             throw e;
         } catch (NullPointerException e){
-            ContextListener.log.error("searchPurchaseById returned empty list with id :" + id, e);
+            ContextListener.log.error("searchLicenseById returned empty list with id :" + id, e);
             throw e;
         }
     }
 
+    /**Takes a long as input representing a Purchase id, returns all licenses which match input id even if it's marked as deleted.
+     * Throws IllegalArgumentException if id is 0.
+     * @param id
+     * @return
+     * @throws IllegalArgumentException
+     * @throws DataAccessException
+     * @throws NullPointerException
+     */
     public List<License> searchDeletedLicensesByPurchaseId(long id) throws IllegalArgumentException, DataAccessException, NullPointerException{
         if (id == 0){
             ContextListener.log.error("Id cannot be 0.", new IllegalArgumentException());
@@ -124,6 +170,17 @@ public class LicenseDAO implements LicenseDAOInterface {
         return db.query(SQL_SEARCH_DELETED_LICENSE_BY_PURCHASE_ID, licenseRowMapper, id);
     }
 
+    /**Takes a License object and String object representing a user name as inputs. The License object is used to compare
+     * with the License already in the database to find differences, which will be recorded in a separate table. The user name
+     * is used to store which user edited this license.
+     * Throws IllegalArgumentException if the License object or the String object is null.
+     * Method is transactional since it is working with two tables.
+     * @param lic
+     * @param userName
+     * @throws IllegalArgumentException
+     * @throws DataAccessException
+     * @throws NullPointerException
+     */
     @Override
     @Transactional
     public void editLicense(final License lic, final String userName) throws IllegalArgumentException, DataAccessException, NullPointerException{
@@ -172,6 +229,10 @@ public class LicenseDAO implements LicenseDAOInterface {
         });
     }
 
+    /**Takes a DataSource object as input. Creates a JdbcTemplate object with connection to the database.
+     * Used by Spring Autowiring.
+     * @param dataSource
+     */
     @Override
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;

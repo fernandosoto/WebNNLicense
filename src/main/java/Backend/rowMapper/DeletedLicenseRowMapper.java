@@ -21,6 +21,13 @@ public class DeletedLicenseRowMapper implements RowMapper {
     public static final String DELETED_DATE = "DELETED_DATE";
 
 
+    /**
+     * Creates a DeletedLicense object from a ResultSet.
+     * @param rs The ResultSet to map.
+     * @param i The number of the current row.
+     * @return A DeletedLicense object from the current row.
+     * @throws SQLException
+     */
     public DeletedLicense mapRow(ResultSet rs, int i) throws SQLException {
         return new DeletedLicense(rs.getLong(LICENSE_ID),
                 rs.getString(LICENSE_USER),
