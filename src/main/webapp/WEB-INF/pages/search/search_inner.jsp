@@ -64,8 +64,8 @@
 								<li><hr><br></li>
 								<li><form:radiobutton path="radioButtonSelect" name="group1" value="user"/> Search for licenses by user<br><br></li>
 								<li><br>Username: <form:input path="searchUserName" type="text"/></li>
-								<li><hr><br><br></li>
-							<li><br><a href="search_results"><input type="submit" value="Search" /></a>  <input type="reset" value="Clear"/></li>
+								<li><hr><br></li>
+							<li><br><input type="submit" value="Search" /></li>
 								</div>
 						</ul>
 					</nav><!-- end navigation menu -->

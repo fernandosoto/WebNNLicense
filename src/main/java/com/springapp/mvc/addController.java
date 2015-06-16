@@ -4,6 +4,7 @@ import Backend.*;
 import Backend.DAO.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import java.sql.Date;
@@ -40,6 +41,7 @@ public class addController{
         return "add/add_inner";
     }
 
+    @Transactional
     @RequestMapping(value = "/addPurchase",method = RequestMethod.POST)
     public String printWelcome(@ModelAttribute RegisterForm regForm)throws Exception {
         Long purchaseID;
@@ -55,6 +57,7 @@ public class addController{
         return "main/index";
     }
 
+    @Transactional
     private void getManufacturersAndDistributors(){
         manufacturers =  manufacturerDAO.searchManufacturerByName("");
         distributors = distributorDAO.searchDistributorByName("");

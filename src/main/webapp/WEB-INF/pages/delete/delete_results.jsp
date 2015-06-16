@@ -59,7 +59,7 @@
 								<ul style="list-style: none;">
 									<li><br>Search results:</li>
 									<li>
-										<form:select path="purchase.purchaseId" title="results" size="8" style="width: 300px;">
+										<form:select path="purchase.purchaseId" title="results" size="9" style="width: 400px;">
 											<form:option value="NONE" label="--- Select purchase ---" disabled="true"/>
 											<form:options items="${purchases}" itemValue="purchaseId" itemLabel="productName" selected="selected" ondblclick="onDbClickFunction()"/>
 										</form:select>

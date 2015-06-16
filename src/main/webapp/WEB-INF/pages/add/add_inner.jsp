@@ -33,7 +33,6 @@
 
 
 		<div class="footer clearfix">
-
 			<!-- FOOTER KOD HÄR!! -->
 
 		</div ><!-- end footer -->
@@ -46,7 +45,7 @@
 		<section class="top">	
 			<div class="wrapper content_header clearfix">
 
-				<h1 class="title">Add License</h1>
+				<h1 class="title">Add purchase</h1>
 			</div>		
 		</section><!-- end top -->
 
@@ -76,7 +75,7 @@
 							<li><br>License type: <form:input path="purchases.type" type="text" maxlength="50"/></li>
 							<li><br>Serial keys: <form:textarea path="serialKeys" rows="5" cols="80"/></li>
 							<li><br>Comments: <form:textarea path="purchases.freeText" rows="5" cols="80" maxlength="300"/></li>
-							<li><br><input type="submit" value="Add" />  <input type="reset" value="Clear"/></li>
+							<li><br><input type="submit" value="Add" /></li>
 						</ul>
 
 					</nav><!-- end navigation menu -->

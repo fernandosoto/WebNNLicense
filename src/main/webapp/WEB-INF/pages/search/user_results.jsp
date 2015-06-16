@@ -59,9 +59,9 @@
 								<ul style="list-style: none;">
 									<div align="left">
 									<li><br>Username: <form:input path="searchUserName" type="text" value="${searchUserName}" readonly="true" cssStyle="border: hidden"/></li>
-										<br><form:select path="" title="Licenses" size="10" style="width: 600px;">
+										<br><form:select path="" title="Licenses" size="10" style="width: 750px;">
 											<form:option value="NONE" label="" disabled="true"/>
-											<form:options items="${userLicenseList}" itemValue="label" itemLabel="label" disabled="true"/>
+											<form:options items="${userLicenseList}" itemValue="label" itemLabel="label" />
 										</form:select>
 										</div>
 									<li><br><input type="button"  onClick="window.print()"  value="Print details"/></li>
